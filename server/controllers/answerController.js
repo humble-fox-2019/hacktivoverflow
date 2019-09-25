@@ -46,7 +46,7 @@ class AnswerController {
         Answer
             .findByIdAndUpdate(req.params.id, {
                 content: req.body.content,
-            }, { new: true })
+            }, { new: true, omitUndefined: true })
             .populate('questionId')
             .populate('userId', 'name email')
             .then(data => {

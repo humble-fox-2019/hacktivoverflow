@@ -1,28 +1,38 @@
 <template>
-  <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>STUCK</span>
-        <span class="font-weight-light">OVERFLOW</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn text>
-        <span class="mr-2">Add</span>
-      </v-btn>
-    </v-app-bar>
+  <div id="app">
+    <div
+      id="page-container"
+      class="enable-page-overlay side-scroll main-content-boxed side-trans-enabled page-header-fixed"
+    >
+      <Navigation />
 
-    <v-content>
-      <router-view></router-view>
-    </v-content>
-  </v-app>
+      <main id="main-container">
+        <router-view />
+      </main>
+    </div>
+  </div>
 </template>
 
 <script>
+import Navigation from "@/components/Navigation.vue";
 
 export default {
-  name: 'App',
-  data: () => ({
-    //
-  }),
+  name: "app",
+  components: {
+    Navigation
+  },
+  created() {
+    if(localStorage.getItem('token')) {
+      let token = localStorage.getItem('token');
+      let userData = JSON.parse(localStorage.getItem('userData'));
+      
+      this.$store.commit('SET_TOKEN', token);
+      this.$store.commit('SET_USER', userData);
+    }
+  }
 };
 </script>
+
+
+<style>
+</style>

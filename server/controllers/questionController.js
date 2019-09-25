@@ -20,6 +20,10 @@ class QuestionController {
                     sort: {
                         'createdAt': -1
                     }
+                },
+                populate: {
+                    path: 'userId',
+                    select: 'name email createdAt'
                 }
             })
             .populate('userId', 'name email')
@@ -31,11 +35,17 @@ class QuestionController {
     }
 
     static store(req, res, next) {
+        const { title, content } = req.body;
+        let tags = req.body.tags;
+        if (tags) {
+            tags = tags.split(',')
+        }
+        
         Question
             .create({
-                title: req.body.title,
-                content: req.body.content,
-                tags: req.body.tags,
+                title,
+                content,
+                tags,
                 userId: req.decode.id,
             })
             .then(data => {
@@ -48,12 +58,17 @@ class QuestionController {
     }
 
     static update(req, res, next) {
+        const { title, content } = req.body;
+        let tags = req.body.tags;
+        if (tags) {
+            tags = tags.split(',')
+        }
         Question
             .findByIdAndUpdate(req.params.id, {
-                title: req.body.title,
-                content: req.body.content,
-                tags: req.body.tags,
-            }, { new: true })
+                title,
+                content,
+                tags,
+            }, { new: true, omitUndefined: true })
             .populate('userId', 'name email')
             .then(data => {
                 if (!data) {
