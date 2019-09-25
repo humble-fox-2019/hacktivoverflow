@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const user = require('../routes/userRouter')
-const question = require('../routes/questionRoutes')
+const question = require('../routes/questionRouter')
 const answer = require('../routes/answerRouter')
 
 router.get('/', (req, res)=> {

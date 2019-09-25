@@ -14,7 +14,7 @@ const answerSchema = new Schema(
         type: String, ref: "User" 
     },
     likes: [],
-    dislikes: []
+    dislikes: [],
   },
  {
      timestamps: true,

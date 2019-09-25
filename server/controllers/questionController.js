@@ -1,4 +1,5 @@
 const Question = require('../models/question')
+const Answer = require('../models/answer')
 
 class QuestionController {
   static create(req, res) {
@@ -59,68 +60,6 @@ class QuestionController {
     ;
   };
 
-  // --------------------------------------
-
-  static getAll(req, res) {
-    Question.find({})
-      .populate("userId")
-      .populate("answerId")
-      .sort({ createdAt: "desc" })
-      .then(data_questions => {
-        res.status(200).json({
-          message: `Success get all questions list`,
-          data: data_questions
-        });
-      })
-      .catch(err => {
-        res.status(400).json({
-          message: `Internal Server Error!`
-        });
-      });
-  };
-
-  static getOne(req, res) {
-    Question.findOne({
-      _id: req.params.id
-    })
-      .populate("userId")
-      .populate("answerId")
-      .then(data_question => {
-        res.status(200).json({
-          message: `Successfully get a question with id ${data_question._id}`,
-          data: data_question
-        });
-      })
-      .catch(err => {
-        res.status(400).json({
-          message: err.message
-        });
-      });
-  };
-
-  static getMyQuestions(req, res) {
-    let token = req.headers.token;
-    let loggedInUser = req.loggedInUser;
-
-    Question.find({
-      userId: req.loggedInUser._id
-    })
-      .populate("userId")
-      .populate("answerId")
-      .sort({ createdAt: "desc" })
-      .then(data_question => {
-        res.status(200).json({
-          message: "List of my questions",
-          data: data_question
-        });
-      })
-      .catch(err => {
-        res.status(400).json({
-          message: err.message
-        });
-      });
-  };
-
   static likeQuestion(req, res) {
     let loggedInUser = req.decoded._id
     Question.findOne({
@@ -128,18 +67,21 @@ class QuestionController {
     })
       .then(data_question => {
         if (data_question) {
-          if (String(data_question.userId) == String(loggedInUser)) {
+          // console.log(loggedInUser, '<<<<< here');
+          // console.log(data_question, 'its here <<<<');
+          if (data_question.userId === loggedInUser) {
             res.status(400).json({
               message: `you cannot like your own question!`
             });
           } else {
             let status = false;
-            for (let i = 0; i < data_question.likes.length; i++) {
+            // console.log(data_question.likes);
+            for (let i in data_question.likes) {
               if (data_question.likes[i].userId == loggedInUser) {
                 status = true;
               }
             }
-            if (status == true) {
+            if (status) {
               res.status(400).json({
                 message: `You already like this question!`
               });
@@ -152,15 +94,17 @@ class QuestionController {
                   $push: { likes: { userId: loggedInUser } },
                   $pull: { dislikes: { userId: loggedInUser } }
                 }
-              )
+                )
                 .then(result => {
                   res.status(201).json({
                     message: `Like++`
                   });
                 })
                 .catch(err => {
+                  // console.log(data_question);
+                  // console.log(err , '<< err status');
                   res.status(400).json({
-                    message: err.message
+                    message: "You can't like your own answer"
                   });
                 });  
             }
@@ -178,29 +122,53 @@ class QuestionController {
       });
   };
 
+  static getOne(req, res) {
+    Question.findOne({
+      _id: req.params.id
+    })
+      .populate({path: 'userId', select: 'email name'})
+      .then(data_question => {
+        Answer.find({questionId : req.params.id})
+        .then(answer => {
+          res.status(200).json({
+            message: `Successfully get a question with id ${data_question._id}`,
+            question: data_question,
+            answer : answer
+          });
+        })
+        .catch(err => {
+          res.status(400).json({
+            message: 'Data Not Found'
+          });
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json({
+          message: err.message
+        });
+      });
+  };
+
   static dislikeQuestion(req, res) {
-    let token = req.headers.token;
-    let loggedInUser = req.loggedInUser;
+    let loggedInUser = req.decoded._id
     Question.findOne({
       _id: req.params.id
     })
       .then(data_question => {
         if (data_question) {
-          if (String(data_question.userId) == String(loggedInUser._id)) {
+          if (data_question.userId === loggedInUser) {
             res.status(400).json({
               message: `you cannot dislike your own question!`
             });
           } else {
             let status = false;
-            for (let i = 0; i < data_question.dislikes.length; i++) {
-              if (
-                String(data_question.dislikes[i].userId) ==
-                String(loggedInUser._id)
-              ) {
+            for (let i in data_question.dislikes) {
+              if ( data_question.dislikes[i].userId == loggedInUser){
                 status = true;
               }
             }
-            if (status == true) {
+            if (status) {
               res.status(400).json({
                 message: `You already disllike this question!`
               });
@@ -210,8 +178,8 @@ class QuestionController {
                   _id: req.params.id
                 },
                 {
-                  $push: { dislikes: { userId: loggedInUser.id } },
-                  $pull: { likes: { userId: loggedInUser.id } }
+                  $push: { dislikes: { userId: loggedInUser } },
+                  $pull: { likes: { userId: loggedInUser} }
                 }
               )
                 .then(result => {
@@ -238,6 +206,68 @@ class QuestionController {
         });
       });
   };
+
+  static getAll(req, res) {
+    Question.find({})
+    .populate({path: 'userId', select: 'email name'})
+    .sort({ createdAt: -1 })
+    .then(data_questions => {
+            res.status(200).json({
+              message: `Success get all questions list`,
+              questions: {
+               question : data_questions
+              }
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(400).json({
+          message: `Internal Server Error!`
+        });
+      });
+  };
+ 
+  static userQuestion(req, res) {
+    Question.find({
+      userId: req.decoded._id
+    })
+      .sort({ createdAt: -1 })
+      .then(data_question => {
+        res.status(200).json({
+          message: "List of my questions",
+          questions: data_question
+        });
+      })
+      .catch(err => {
+        res.status(400).json({
+          message: err.message
+        });
+      });
+  };
+
+  static normalizeOpinion(req, res){{
+      let loggedInUser = req.decoded._id
+      Question.updateOne(
+        {
+          _id: req.params.id
+        },
+        {
+          $pull: { likes: { userId: loggedInUser } },
+          $pull: { dislikes: { userId: loggedInUser } }
+        }
+      )
+        .then(result => {
+          res.status(201).json({
+            message: `Your opinion is updated to netral `
+          })
+        })
+        .catch(err => {
+          res.status(400).json({
+            message: "Data Not Found"
+          })
+        })
+    }
+  }
 }
 
 module.exports = QuestionController

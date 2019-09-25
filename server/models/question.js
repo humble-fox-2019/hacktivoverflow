@@ -11,13 +11,13 @@ const questionSchema = new Schema(
       type: String,
       required : [true, 'Description is required'] 
     },
-    userId: { type: String, ref: "User" },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     likes: [{
-      type: String,
+      type: Object,
       ref: 'User',
     }],
     dislikes: [{
-      type: String,
+      type: Object,
       ref: 'User',
     }]
   },

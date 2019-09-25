@@ -3,7 +3,7 @@ const Answer = require("../models/answer");
 class AnswerController {
   static create(req, res) {
     let loggedInUser = req.decoded._id
-    console.log(req.decoded);
+    // console.log(req.decoded);
     Answer.create({
       answer: req.body.answer,
       questionId: req.params.id,
@@ -57,37 +57,13 @@ class AnswerController {
     })
   }
   
-  static getAllAnswerInQuestion(req, res) {
-  console.log(req.params);
-
-  Answer.find({
-    questionId: req.params.question
-  })
-    .populate("userId")
-    .populate("questionId")
-    .sort({ createdAt: "asc" })
-    .then(result => {
-      res.status(200).json({
-        message: `Success get All Answer with questionId ${
-          req.params.question
-          }`,
-        data: result
-      });
-    })
-    .catch(err => {
-      res.status(400).json({
-        message: err.message
-      });
-    });
-};
 
 static getOneAnswer(req, res) {
-  let token = req.headers.token;
   Answer.findOne({
     _id: req.params.id
-    // userId: req.loggedInUser.id
   })
-    .populate("userId")
+    .populate({path: 'userId', select: 'email name'})
+    .populate("questionId")
     .then(result => {
       res.status(200).json({
         message: `Success get answer with id ${req.params.id}`,
@@ -96,27 +72,26 @@ static getOneAnswer(req, res) {
     })
     .catch(err => {
       res.status(400).json({
-        message: err.message
+        message: 'Data Not Found'
       });
     });
 };
 
 static likeAnswer(req, res){
-  let token = req.headers.token;
-  let loggedInUser = req.loggedInUser;
+  let loggedInUser = req.decoded._id;
   Answer.findOne({
     _id: req.params.id
   })
     .then(result => {
       if (result) {
-        if (String(result.userId) == String(loggedInUser._id)) {
+        if (result.userId == loggedInUser) {
           res.status(400).json({
             message: `you cannot like your own answer!`
-          });
+          })
         } else {
           let status = false;
-          for (let i = 0; i < result.likes.length; i++) {
-            if (result.likes[i].userId == loggedInUser._id) {
+          for (let i in result.likes) {
+            if (result.likes[i].userId == loggedInUser) {
               status = true;
             }
           }
@@ -130,8 +105,8 @@ static likeAnswer(req, res){
                 _id: req.params.id
               },
               {
-                $push: { likes: { userId: loggedInUser.id } },
-                $pull: { dislikes: { userId: loggedInUser.id } }
+                $push: { likes: { userId: loggedInUser } },
+                $pull: { dislikes: { userId: loggedInUser } }
               }
             )
               .then(result => {
@@ -160,21 +135,20 @@ static likeAnswer(req, res){
 };
 
 static dislikeAnswer(req, res) {
-  let token = req.headers.token;
-  let loggedInUser = req.loggedInUser;
+  let loggedInUser = req.decoded._id;
   Answer.findOne({
     _id: req.params.id
   })
     .then(result => {
       if (result) {
-        if (String(result.userId) == String(loggedInUser._id)) {
+        if (result.userId == loggedInUser) {
           res.status(400).json({
             message: `you cannot dislike your own answer!`
           });
         } else {
           let status = false;
-          for (let i = 0; i < result.dislikes.length; i++) {
-            if (String(result.dislikes[i].userId) == String(loggedInUser._id)) {
+          for (let i in result.dislikes) {
+            if (result.dislikes[i].userId == loggedInUser) {
               status = true;
             }
           }
@@ -188,8 +162,8 @@ static dislikeAnswer(req, res) {
                 _id: req.params.id
               },
               {
-                $push: { dislikes: { userId: loggedInUser.id } },
-                $pull: { likes: { userId: loggedInUser.id } }
+                $push: { dislikes: { userId: loggedInUser } },
+                $pull: { likes: { userId: loggedInUser } }
               }
             )
               .then(result => {
@@ -216,6 +190,55 @@ static dislikeAnswer(req, res) {
       });
     });
 };
+
+static normalizeOpinion(req, res){{
+  let loggedInUser = req.decoded._id
+  Answer.updateOne(
+    {
+      _id: req.params.id
+    },
+    {
+      $pull: { likes: { userId: loggedInUser } },
+      $pull: { dislikes: { userId: loggedInUser } }
+    }
+  )
+    .then(result => {
+      res.status(201).json({
+        message: `Your opinion is updated to netral `
+      })
+    })
+    .catch(err => {
+      res.status(400).json({
+        message: "Data Not Found"
+      })
+    })
+}
+}
+
+// static getAllAnswerInQuestion(req, res) {
+//   console.log(req.params);
+
+//   Answer.find({
+//     questionId: req.params.id
+//   })
+//     .populate("userId")
+//     .populate("questionId")
+//     .sort({ createdAt: "asc" })
+//     .then(result => {
+//       res.status(200).json({
+//         message: `Success get All Answer with questionId ${
+//           req.params.question
+//           }`,
+//         data: result
+//       });
+//     })
+//     .catch(err => {
+//       res.status(400).json({
+//         message: err.message
+//       });
+//     });
+// };
+
 }
 
 module.exports = AnswerController
