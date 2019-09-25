@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app flat>
+  <v-navigation-drawer clipped v-model="drawerToggle" app flat>
     <v-list dense>
       <v-list-item>
         <v-list-item-action>
@@ -23,7 +23,17 @@
 
 <script>
 export default {
-  props: ["drawer"]
+  props: ["drawer"],
+  computed: {
+    drawerToggle: {
+      get() {
+        return this.drawer;
+      },
+      set() {
+        return;
+      }
+    }
+  }
 };
 </script>
 

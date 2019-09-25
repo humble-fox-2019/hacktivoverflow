@@ -14,12 +14,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/thread',
+      path: '/thread/:post_id',
       name: 'thread',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
       // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Thread.vue')
+      component: () => import(/* webpackChunkName: "about" */ './views/Thread.vue'),
+      // beforeEnter: (to, from, next) => { next() }
     }
-  ]
+  ],
 })
+

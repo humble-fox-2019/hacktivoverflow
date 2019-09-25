@@ -20,7 +20,7 @@ export default {
     SideNav
   },
   data: () => ({
-    drawer: null
+    drawer: false
   })
 };
 </script>
