@@ -10,7 +10,7 @@ module.exports = {
       for (let key in err.errors) {
         errors.push(err.errors[key].message)
       }
-      res.status(400).json(errors)
+      res.status(400).json({ errors })
     } else {
       res.status(status).json({
         errors: [message]

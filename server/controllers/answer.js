@@ -98,8 +98,8 @@ class AnswerController {
           next({status: 404, message: 'Answer ID not found'})
         }
       })
-      .then((ok) => {
-        res.status(200).json({ message: ok })
+      .then((answer) => {
+        res.status(200).json({ message: 'Update upvote success', answer })
       })
       .catch(next)
   }
@@ -133,8 +133,8 @@ class AnswerController {
           next({status: 404, message: 'Answer ID not found'})
         }
       })
-      .then((ok) => {
-        res.status(200).json({ message: ok })
+      .then((answer) => {
+        res.status(200).json({ message: 'Update downvote success', answer })
       })
       .catch(next)
   }

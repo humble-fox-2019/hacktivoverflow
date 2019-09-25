@@ -347,9 +347,9 @@ http://localhost:3000
 
 
 
-- ### Add Vote
+- ### Up Vote
 
-  Method : `POST`<br>Endpoint: `/questions/:id/vote`
+  Method : `POST`<br>Endpoint: `/questions/:questionId/upvote`
 
   ### _Request_ :
 
@@ -367,7 +367,28 @@ http://localhost:3000
 
     ```javascript
     {
-        message: 'Add vote success'
+        "message": "Update upvote success",
+        "question": {
+            "tags": [
+                "sejarah",
+                "dunia",
+                "alam"
+            ],
+            "upvotes": [
+                "5d8aed788c293b30d3b0e248"
+            ],
+            "downvotes": [],
+            "answers": [
+                "5d8b632ab0c0071b8a4d7a94"
+            ],
+            "_id": "5d8b2a9dfff384555cfe5990",
+            "title": "kapan hujan pertama kali turun?",
+            "description": "ada kah yang tau?",
+            "user": "5d8aed788c293b30d3b0e248",
+            "createdAt": "2019-09-25T08:51:41.827Z",
+            "updatedAt": "2019-09-25T13:06:53.591Z",
+            "__v": 23
+        }
     }
     ```
 
@@ -381,93 +402,9 @@ http://localhost:3000
     }
     ```
 
-- ### Add Vote
+- ### Down Vote
 
-  Method : `POST`<br>Endpoint: `/questions/:id/vote`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Down vote success'
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Create
-
-  Method : `POST`<br>Endpoint: `/questions`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  - body:
-
-    ```javascript
-    {
-        title: String (required),
-        description: String (required),
-        tags: Array (minimal 1)
-    }
-    ```
-
-  ### _Response_ :
-
-  - 201 (Created)
-
-    ```javascript
-    {
-        message: 'Qustion added successfully'
-    }
-    ```
-
-  - 400 (Bad Request)
-
-    ```javascript
-    {
-        errors: [
-            "Title field is required", 
-            "Description field is required", 
-            "Tags must be filled minimal 1"
-        ]
-    }
-    ```
-
-
-
-- ### Read
-
-  Method : `GET`<br>Endpoint: `/questions`
+  Method : `POST`<br>Endpoint: `/questions/:id/downvote`
 
   ### _Request_ :
 
@@ -485,184 +422,33 @@ http://localhost:3000
 
     ```javascript
     {
-    
+        "message": "Update downvote success",
+        "question": {
+            "tags": [
+              "sejarah",
+                "dunia",
+              "alam"
+            ],
+            "upvotes": [],
+            "downvotes": [
+                "5d8aed788c293b30d3b0e248"
+            ],
+            "answers": [
+                "5d8b632ab0c0071b8a4d7a94"
+            ],
+            "_id": "5d8b2a9dfff384555cfe5990",
+            "title": "kapan hujan pertama kali turun?",
+            "description": "ada kah yang tau?",
+            "user": "5d8aed788c293b30d3b0e248",
+            "createdAt": "2019-09-25T08:51:41.827Z",
+            "updatedAt": "2019-09-25T13:10:08.532Z",
+            "__v": 25
+        }
     }
     ```
-
+  
   - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Update
-
-  Method : `PUT`<br>Endpoint: `/questions/:id`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  - body:
-
-    ```javascript
-    {
-        title: String (required),
-        description: String (required),
-        tags: Array (minimal 1)
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Question updated successfully'
-    }
-    ```
-
-  - 401 (Not authorized)
-
-    ```javascript
-    {
-        errors: [
-            "You haven't authorize with this question"
-        ]
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Delete
-
-  Method : `DELETE`<br>Endpoint: `/questions/:id`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Question deleted successfully'
-    }
-    ```
-
-  - 401 (Not Authorize)
-
-    ```javascript
-    {
-        errors: [
-            "You haven't authorize with this question"
-        ]
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Add Vote
-
-  Method : `POST`<br>Endpoint: `/questions/:id/vote`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Add vote success'
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-- ### Add Vote
-
-  Method : `DELETE`<br>Endpoint: `/questions/:id/vote`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Down vote success'
-    }
-    ```
-
-  - 403 (Forbidden)
-
+  
     ```javascript
     {
         errors: [
@@ -738,13 +524,21 @@ http://localhost:3000
   - 200 (OK)
 
     ```javascript
-    {
-    
-    }
+    [
+        {
+            "upvotes": [],
+            "downvotes": [],
+          "_id": "5d8b632ab0c0071b8a4d7a94",
+            "description": "kagak tau lahh guaa",
+          "createdAt": "2019-09-25T12:52:58.142Z",
+            "updatedAt": "2019-09-25T13:12:09.480Z",
+            "__v": 8
+        }
+    ]
     ```
-
+  
   - 403 (Forbidden)
-
+  
     ```javascript
     {
         errors: [
@@ -757,7 +551,7 @@ http://localhost:3000
 
 - ### Update
 
-  Method : `PUT`<br>Endpoint: `/answers/:id`
+  Method : `PATCH`<br>Endpoint: `/answers/:id`
 
   ### _Request_ :
 
@@ -829,7 +623,7 @@ http://localhost:3000
 
     ```javascript
     {
-        message: 'Question deleted successfully'
+        message: 'Answer deleted successfully'
     }
     ```
 
@@ -838,7 +632,7 @@ http://localhost:3000
     ```javascript
     {
         errors: [
-            "You haven't authorize with this question"
+            "You haven't authorize with this answer"
         ]
     }
     ```
@@ -855,9 +649,9 @@ http://localhost:3000
 
 
 
-- ### Add Vote
+- ### Up Vote
 
-  Method : `POST`<br>Endpoint: `/answers/:id/vote`
+  Method : `POST`<br>Endpoint: `/answers/:id/upvote`
 
   ### _Request_ :
 
@@ -875,7 +669,18 @@ http://localhost:3000
 
     ```javascript
     {
-        message: 'Add vote success'
+        "message": "Update upvote success",
+        "answer": {
+            "upvotes": [
+                "5d8aed788c293b30d3b0e248"
+            ],
+            "downvotes": [],
+            "_id": "5d8b632ab0c0071b8a4d7a94",
+            "description": "kagak tau lahh guaa",
+            "createdAt": "2019-09-25T12:52:58.142Z",
+            "updatedAt": "2019-09-25T13:11:29.078Z",
+            "__v": 7
+        }
     }
     ```
 
@@ -889,9 +694,9 @@ http://localhost:3000
     }
     ```
 
-- ### Add Vote
+- ### Down Vote
 
-  Method : `DELETE`<br>Endpoint: `/answers/:id/vote`
+  Method : `POST`<br>Endpoint: `/answers/:id/downvote`
 
   ### _Request_ :
 
@@ -909,12 +714,23 @@ http://localhost:3000
 
     ```javascript
     {
-        message: 'Down vote success'
+        "message": "Update downvote success",
+        "answer": {
+            "upvotes": [],
+          "downvotes": [
+                "5d8aed788c293b30d3b0e248"
+          ],
+            "_id": "5d8b632ab0c0071b8a4d7a94",
+            "description": "kagak tau lahh guaa",
+            "createdAt": "2019-09-25T12:52:58.142Z",
+            "updatedAt": "2019-09-25T13:12:09.480Z",
+            "__v": 8
+        }
     }
     ```
-
+  
   - 403 (Forbidden)
-
+  
     ```javascript
     {
         errors: [
