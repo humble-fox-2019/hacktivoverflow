@@ -75,7 +75,6 @@ class QuestionController {
             });
           } else {
             let status = false;
-            // console.log(data_question.likes);
             for (let i in data_question.likes) {
               if (data_question.likes[i].userId == loggedInUser) {
                 status = true;
@@ -101,8 +100,6 @@ class QuestionController {
                   });
                 })
                 .catch(err => {
-                  // console.log(data_question);
-                  // console.log(err , '<< err status');
                   res.status(400).json({
                     message: "You can't like your own answer"
                   });
@@ -214,9 +211,7 @@ class QuestionController {
     .then(data_questions => {
             res.status(200).json({
               message: `Success get all questions list`,
-              questions: {
-               question : data_questions
-              }
+              questions:  data_questions
         })
       })
       .catch(err => {
