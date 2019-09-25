@@ -10,7 +10,15 @@ const questionSchema = new Schema({
     type: String,
     required: [true, 'Description field is required']
   },
-  tags: [String],
+  tags: {
+    type: Array,
+    validate: {
+      validator: function(tags) {
+        return tags.length >= 1
+      },
+      msg: 'Tags must be filled min 1'
+    }
+  },
   upvotes: [
     {
       type: Schema.Types.ObjectId,
@@ -23,11 +31,16 @@ const questionSchema = new Schema({
       ref: 'User'
     }
   ],
+  answers: [{
+    type: Schema.Types.ObjectId,
+    ref: 'Answer'
+  }],
   user: {
     type: Schema.Types.ObjectId,
-    ref: 'User'
+    ref: 'User',
+    required: [true, 'User field is required']
   }
-})
+}, { timestamps: true })
 
 const question = mongoose.model('Question', questionSchema)
 

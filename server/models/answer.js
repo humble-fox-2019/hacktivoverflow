@@ -18,16 +18,12 @@ const answerSchema = new Schema({
       ref: 'User'
     }
   ],
-  question: {
-    type: Schema.Types.ObjectId,
-    ref: 'Question'
-  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'
   }
-})
+}, { timestamps: true })
 
-const answer = mongoose.model('answer', answerSchema)
+const answer = mongoose.model('Answer', answerSchema)
 
 module.exports = answer

@@ -42,7 +42,7 @@ const userSchema = new Schema({
     type: String,
     default: 'https://i0.wp.com/www.winhelponline.com/blog/wp-content/uploads/2017/12/user.png'
   }
-})
+}, { timestamps: true })
 
 userSchema.pre('save', function(next) {
   this.password = hashPassword(this.password)

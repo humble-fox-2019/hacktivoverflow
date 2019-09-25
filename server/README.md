@@ -118,7 +118,7 @@ http://localhost:3000
             "Incorrect email or password"
         ]
     }
-    ```
+  ```
   
 
 
@@ -145,7 +145,7 @@ http://localhost:3000
     {
         title: String (required),
         description: String (required),
-        tags: Array (minimal 1)
+        tags: String (separated by comma)
     }
     ```
 
@@ -155,7 +155,20 @@ http://localhost:3000
 
     ```javascript
     {
-        message: 'Qustion added successfully'
+        "message": "Question added succesfully",
+        "question": {
+            "tags": [
+                "sejarah",
+                "dunia",
+                "alam"
+            ],
+            "upvotes": [],
+            "downvotes": [],
+            "_id": "5d8b0a8836cc863fe4b6e9d5",
+            "title": "kapan hujan pertama kali turun?",
+            "description": "ada kah yang tau?",
+            "__v": 0
+        }
     }
     ```
 
@@ -166,7 +179,7 @@ http://localhost:3000
         errors: [
             "Title field is required", 
             "Description field is required", 
-            "Tags must be filled minimal 1"
+            "Tags must be filled min 1"
         ]
     }
     ```
@@ -192,9 +205,32 @@ http://localhost:3000
   - 200 (OK)
 
     ```javascript
-    {
-    
-    }
+    [
+        {
+            "tags": [
+                "alam"
+            ],
+            "upvotes": [],
+            "downvotes": [],
+            "_id": "5d8b0a6036cc863fe4b6e9d4",
+            "title": "Berapa kali bumi berputar",
+            "description": "Selama 200 tahun, berapa kali bumi berputar?",
+            "__v": 0
+        },
+        {
+            "tags": [
+                "sejarah",
+                "dunia",
+                "alam"
+            ],
+            "upvotes": [],
+            "downvotes": [],
+            "_id": "5d8b0a8836cc863fe4b6e9d5",
+            "title": "kapan hujan pertama kali turun?",
+            "description": "ada kah yang tau?",
+            "__v": 0
+        }
+    ]
     ```
 
   - 403 (Forbidden)
@@ -347,7 +383,7 @@ http://localhost:3000
 
 - ### Add Vote
 
-  Method : `DELETE`<br>Endpoint: `/questions/:id/vote`
+  Method : `POST`<br>Endpoint: `/questions/:id/vote`
 
   ### _Request_ :
 
@@ -602,264 +638,6 @@ http://localhost:3000
     ```
 
 - ### Add Vote
-
-  Method : `DELETE`<br>Endpoint: `/questions/:id/vote`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Down vote success'
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-## Question
-
-- ### Create
-
-  Method : `POST`<br>Endpoint: `/questions`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  - body:
-
-    ```javascript
-    {
-        title: String (required),
-        description: String (required),
-        tags: Array (minimal 1)
-    }
-    ```
-
-  ### _Response_ :
-
-  - 201 (Created)
-
-    ```javascript
-    {
-        message: 'Qustion added successfully'
-    }
-    ```
-
-  - 400 (Bad Request)
-
-    ```javascript
-    {
-        errors: [
-            "Title field is required", 
-            "Description field is required", 
-            "Tags must be filled minimal 1"
-        ]
-    }
-    ```
-
-
-
-- ### Read
-
-  Method : `GET`<br>Endpoint: `/questions`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-    
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Update
-
-  Method : `PUT`<br>Endpoint: `/questions/:id`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  - body:
-
-    ```javascript
-    {
-        title: String (required),
-        description: String (required),
-        tags: Array (minimal 1)
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Question updated successfully'
-    }
-    ```
-
-  - 401 (Not authorized)
-
-    ```javascript
-    {
-        errors: [
-            "You haven't authorize with this question"
-        ]
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Delete
-
-  Method : `DELETE`<br>Endpoint: `/questions/:id`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Question deleted successfully'
-    }
-    ```
-
-  - 401 (Not Authorize)
-
-    ```javascript
-    {
-        errors: [
-            "You haven't authorize with this question"
-        ]
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-
-
-- ### Add Vote
-
-  Method : `POST`<br>Endpoint: `/questions/:id/vote`
-
-  ### _Request_ :
-
-  - header
-
-    ```javascript
-    {
-        token: "{your token}"
-    }
-    ```
-
-  ### _Response_ :
-
-  - 200 (OK)
-
-    ```javascript
-    {
-        message: 'Add vote success'
-    }
-    ```
-
-  - 403 (Forbidden)
-
-    ```javascript
-    {
-        errors: [
-            "You must login first!"
-        ]
-    }
-    ```
-
-- ### Down Vote
 
   Method : `DELETE`<br>Endpoint: `/questions/:id/vote`
 
