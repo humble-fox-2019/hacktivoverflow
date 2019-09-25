@@ -27,7 +27,6 @@ class UserController {
                 if (!user) {
                     next({ statusCode: 400, msg: "email/password not found" });
                 } else {
-
                     if (bcrypt.compare(password, user.password)) {
                         let userData = {
                             'name': user.name,

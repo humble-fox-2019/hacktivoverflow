@@ -1,7 +1,11 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
-const answerSchema = new Schema({
+const questionSchema = new Schema({
+    title: {
+        type: String,
+        required: [true, 'title is required']
+    },
     content: {
         type: String,
         required: [true, 'content is required']
@@ -14,9 +18,13 @@ const answerSchema = new Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
     }],
-    questionId: {
+    answers: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Question',
+        ref: 'Answer',
+    }],
+    tags: {
+        type: Array,
+        dafault: []
     },
     userId: {
         type: mongoose.Schema.Types.ObjectId,
@@ -26,6 +34,6 @@ const answerSchema = new Schema({
     timestamps: true
 })
 
-const Answer = mongoose.model('Answer', answerSchema)
+const Question = mongoose.model('Question', questionSchema)
 
-module.exports = Answer
+module.exports = Question
