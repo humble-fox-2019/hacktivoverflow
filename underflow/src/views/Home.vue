@@ -1,13 +1,41 @@
 <template>
-  <HelloWorld />
+  <v-row>
+    <v-col>
+      <v-responsive>
+        <v-card elevation="12">
+          <v-container>
+            <v-row justify="center">
+              <v-col cols="12">
+                <h1 class="display-2">All Threads</h1>
+              </v-col>
+              <v-col cols="12">
+                <FilterBar />
+              </v-col>
+              <ThreadCards />
+            </v-row>
+          </v-container>
+        </v-card>
+      </v-responsive>
+    </v-col>
+  </v-row>
 </template>
 
 <script>
-import HelloWorld from '../components/HelloWorld';
+import FilterBar from "../components/Filter";
+import ThreadCards from "../components/ThreadCards";
 
 export default {
-  components: {
-    HelloWorld,
+  data() {
+    return { drawer: null };
   },
+  components: {
+    FilterBar,
+    ThreadCards
+  },
+  methods: {
+    // toggleDrawer() {
+    //   this.drawer = !this.drawer
+    // }
+  }
 };
 </script>
