@@ -8,7 +8,7 @@ function errorHandler(err){
             title: 'Oops...',
             text: `${errorMessage}`
         })
-        if(errorMessage == 'You need to login first'){
+        if(errorMessage == 'You need to login first' || errorMessage == "You've been idle for too long. Please log in again"){
             alert('')
             localStorage.removeItem('token')
             localStorage.removeItem('id')

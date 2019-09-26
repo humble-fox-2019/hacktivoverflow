@@ -9,5 +9,5 @@ module.exports = (req, res, next) => {
             next({ status: 403, message: "You don't have the authority to do this action" })
         }
     })
-    .next(next)
+    .catch(next)
 }
