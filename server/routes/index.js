@@ -4,6 +4,7 @@ const questionRoutes = require('./question')
 const answerRoutes = require('./answer')
 const authentication = require('../middlewares/authentication')
 
+router.get('/', (req, res) => res.send({ message: 'App is connected' }))
 router.use('/users', userRoutes)
 
 router.use(authentication)
