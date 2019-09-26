@@ -8,9 +8,17 @@ http://jack-overflow.jackbloo.com
 
     npm install
 
-For running
+For running Server
 
     npm run dev
+
+For running Client
+
+    npm run serve
+
+For running Cron
+
+    node cron.js
 
 ## Special Features
 
