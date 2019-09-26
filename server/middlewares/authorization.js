@@ -1,5 +1,5 @@
 const Question = require('../models/question')
-const answer = require('../models/answer')
+const Answer = require('../models/answer')
 
 module.exports = {
   isQuestionOwner (req, res, next) {
@@ -20,9 +20,11 @@ module.exports = {
   isAnswerOwner (req, res, next) {
     const user = req.decoded._id
     const _id = req.params.id // answer id
-
+    
+    // console.log(user)
     Answer.findOne({ _id, user })
       .then(answer => {
+        console.log(answer)
         if (answer) {
           next()
         } else {

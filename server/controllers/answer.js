@@ -16,6 +16,15 @@ class AnswerController {
       })
   }
 
+  static findOne(req, res, next) {
+    const _id = req.params.answerId
+    Answer.findById(_id).populate('user')
+      .then(answer => {
+        res.status(200).json(answer)
+      })
+      .catch(next)
+  }
+
   static create(req, res, next) {
     const { description } = req.body
     const questionId = req.params.questionId
@@ -26,7 +35,7 @@ class AnswerController {
       .then(found => {
         if (found) {
           question = found
-          return Answer.create({ description, user })
+          return Answer.create({ description, user, question: questionId })
         } else {
           next({status: 404, message: 'Question ID not found'})
         }
