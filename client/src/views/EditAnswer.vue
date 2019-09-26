@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     doneEdit () {
-      if ( this.answer.length < 1) {
+      if (this.answer.length < 1) {
         this.$router.push({ path: '/' })
       } else {
         axios({

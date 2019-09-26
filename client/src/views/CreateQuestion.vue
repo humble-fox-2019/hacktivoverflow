@@ -36,7 +36,7 @@ export default {
           this.$router.push({ path: '/' })
         })
         .catch(err => {
-          console.log(data.response)
+          console.log(err.response)
         })
     }
   }

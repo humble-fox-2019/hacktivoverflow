@@ -18,6 +18,11 @@ export default new Router({
       component: () => import('./views/Questions.vue')
     },
     {
+      path: '/register',
+      name: 'register',
+      component: () => import('./views/Register.vue')
+    },
+    {
       path: '/create',
       name: 'create',
       component: () => import('./views/CreateQuestion.vue')
@@ -33,8 +38,8 @@ export default new Router({
       component: () => import('./views/Read.vue')
     },
     {
-      path : '/changeAnswer/:id',
-      name : 'edit-answer',
+      path: '/changeAnswer/:id',
+      name: 'edit-answer',
       component: () => import('./views/EditAnswer.vue')
     }
   ]

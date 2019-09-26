@@ -34,14 +34,14 @@ export default {
       inputPassword: '',
       isLogin: false,
       show: 'none',
-      myheight : 0
+      myheight: 0
     }
   },
   methods: {
     ...mapActions(['login', 'putToken', 'removeToken']),
     toLogin () {
       this.show = 'flex'
-      this.myheight = document.getElementById('app').clientHeight +'px'
+      this.myheight = document.getElementById('app').clientHeight + 'px'
     },
     loginUser () {
       let obj = {

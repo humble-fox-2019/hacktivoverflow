@@ -80,6 +80,6 @@ export default new Vuex.Store({
     },
     removeToken (context) {
       context.commit('setToken', false)
-    },
+    }
   }
 })

@@ -26,65 +26,63 @@
 </template>
 
 <script>
-import OneAnswer from "../components/OneAnswer";
-import axios from "axios";
+import OneAnswer from '../components/OneAnswer'
+import axios from 'axios'
 export default {
-  data() {
+  data () {
     return {
-      title: "",
-      description: "",
-      baseUrl: "http://localhost:3000",
+      title: '',
+      description: '',
+      baseUrl: 'http://localhost:3000',
       answers: [],
-      newAnswer: "",
-      baseUrl: "http://localhost:3000"
-    };
+      newAnswer: ''
+    }
   },
   components: {
     OneAnswer
   },
   methods: {
-    toLogin() {
-      console.log("heee");
-      this.$emit("toLogin");
+    toLogin () {
+      console.log('heee')
+      this.$emit('toLogin')
     },
-    getData() {
+    getData () {
       axios({
-        method: "get",
+        method: 'get',
         url: `${this.baseUrl}/question/${this.$route.params.id}`
       }).then(data => {
-        let result = data.data.question;
-        this.title = result.title;
-        this.description = result.description;
-        let answers = data.data.answer;
-        this.answers = answers;
-      });
+        let result = data.data.question
+        this.title = result.title
+        this.description = result.description
+        let answers = data.data.answer
+        this.answers = answers
+      })
     },
-    createAnswer() {
-        if (localStorage.token){
-            axios({
-              method: "post",
-              url: `${this.baseUrl}/answer/${this.$route.params.id}`,
-              headers: {
-                token: localStorage.token
-              },
-              data: {
-                answer: this.newAnswer
-              }
-            }).then(data => {
-              this.getData();
-              this.newAnswer = "";
-            });
-        }
-        else{
-            this.$emit('toLogin')
-        }
+    createAnswer () {
+      if (localStorage.token) {
+        axios({
+          method: 'post',
+          url: `${this.baseUrl}/answer/${this.$route.params.id}`,
+          headers: {
+            token: localStorage.token
+          },
+          data: {
+            answer: this.newAnswer
+          }
+        }).then(data => {
+          this.getData()
+          this.newAnswer = ''
+        })
+      } else {
+        this.$emit('toLogin')
+      }
     }
   },
-  created() {
-    console.log(this.$route.params.id);
-    this.getData();
+  created () {
+    console.log(this.$route.params.id)
+    this.getData()
   }
-};
+}
 </script>
 
 <style scoped>
