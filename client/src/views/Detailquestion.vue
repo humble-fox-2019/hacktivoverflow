@@ -27,7 +27,7 @@
                     :token="token"
                     :upvotes="question.upvotes"
                     :downvotes="question.downvotes"
-                    :id="question._id"
+                    :actionId="question._id"
                     :upAction="doUpVoteQuestion"
                     :downAction="doDownVoteQuestion"
                     :removeAction="doRemoveVoteQuestion"
@@ -41,7 +41,8 @@
                 <td>
                   <h2>{{question.title}}</h2>
 
-                  <p>{{question.content}}</p>
+                  <p v-html="question.content"></p>
+                  
                   <hr />
                   <router-link
                     v-for="(tag, index) in question.tags"
@@ -80,7 +81,7 @@
                       :token="token"
                       :upvotes="answer.upvotes"
                       :downvotes="answer.downvotes"
-                      :id="answer._id"
+                      :actionId="answer._id"
                       :upAction="doUpVoteAnswer"
                       :downAction="doDownVoteAnswer"
                       :removeAction="doRemoveVoteAnswer"

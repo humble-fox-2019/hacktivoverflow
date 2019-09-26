@@ -98,21 +98,27 @@ class QuestionController {
 
     static upVote(req, res, next) {
         Question
-            .findByIdAndUpdate(req.params.id, {
+            .findByIdAndUpdate({ _id: req.params.id}, {
                 $pull: { downvotes: req.decode.id }
             })
             .then(data => {
+                console.log(data);
                 return Question
                     .findOne({
+                        _id: req.params.id,
                         upvotes: req.decode.id
                     })
             })
             .then(data => {
-                if (data) return data
-                return Question
-                    .findByIdAndUpdate(req.params.id, {
-                        $push: { upvotes: req.decode.id }
-                    })
+                console.log(data, req.decode.id);
+                if (data) {
+                    throw next({ statusCode: 400, msg: "You has vote this question" })
+                } else {
+                    return Question
+                        .findByIdAndUpdate({ _id: req.params.id}, {
+                            $push: { upvotes: req.decode.id }
+                        })
+                }
             })
             .then(data => {
                 if (!data) {

@@ -84,15 +84,19 @@ class AnswerController {
             .then(data => {
                 return Answer
                     .findOne({
+                        _id: req.params.id,
                         upvotes: req.decode.id
                     })
             })
             .then(data => {
-                if (data) return data
-                return Answer
-                    .findByIdAndUpdate(req.params.id, {
-                        $push: { upvotes: req.decode.id }
-                    })
+                if (data) {
+                    throw next({ statusCode: 400, msg: "You has vote this question" })
+                } else {
+                    return Answer
+                        .findByIdAndUpdate(req.params.id, {
+                            $push: { upvotes: req.decode.id }
+                        })
+                }
             })
             .then(data => {
                 if (!data) next({ statusCode: 404, msg: 'Answer not found' })

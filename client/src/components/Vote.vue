@@ -4,7 +4,7 @@
       :class="`btn btn-link ${(checkUpvote) ? 'text-primary' : 'text-secondary'} p-0 m-0`"
       style="font-size:30px;"
       v-if="token"
-      @click="`${(checkUpvote) ? removeAction(id) : upAction(id)}`"
+      @click="`${(checkUpvote) ? removeAction(actionId) : upAction(actionId)}`"
     >
       <i class="fas fa-sort-up"></i>
     </button>
@@ -13,7 +13,7 @@
       :class="`btn btn-link ${(checkDownvote) ? 'text-primary' : 'text-secondary'} p-0 m-0`"
       style="font-size:30px;"
       v-if="token"
-      @click="`${(checkDownvote) ? removeAction(id) : downAction(id)}`"
+      @click="`${(checkDownvote) ? removeAction(actionId) : downAction(actionId)}`"
     >
       <i class="fas fa-sort-down"></i>
     </button>
@@ -23,7 +23,7 @@
 <script>
 
 export default {
-  props: ["token", "upvotes", "downvotes", "id", "upAction", "downAction", "removeAction"],
+  props: ["token", "upvotes", "downvotes", "actionId", "upAction", "downAction", "removeAction"],
   name: "vote",
   computed: {
     checkUpvote() {

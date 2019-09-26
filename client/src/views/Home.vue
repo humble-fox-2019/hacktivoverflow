@@ -8,9 +8,9 @@
       <div class="block-header block-header-default">
         <h3 class="block-title">Questions</h3>
         <div class="block-options" v-if="token">
-          <button type="button" class="btn-block-option">
+          <router-link class="btn-block-option" to="/question/add">
             <i class="fas fa-plus"></i> Ask a question
-          </button>
+          </router-link>
         </div>
       </div>
       <div class="block-content">

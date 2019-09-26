@@ -24,6 +24,11 @@ export default new Router({
       component: () => import('./views/Register.vue'),
     },
     {
+      path: '/question/add',
+      name: 'Addquestion',
+      component: () => import('./views/Addquestion.vue'),
+    },
+    {
       path: '/question/:id',
       name: 'Detailquestion',
       component: () => import('./views/Detailquestion.vue'),
