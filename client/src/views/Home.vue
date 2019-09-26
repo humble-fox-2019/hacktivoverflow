@@ -100,6 +100,7 @@ export default {
   },
   methods:{
     createQuestion(){
+      this.$swal.showLoading()
       this.$store.dispatch("createQuestion", this.formQuestion)
       .then(success=>{
         this.dialog = false
