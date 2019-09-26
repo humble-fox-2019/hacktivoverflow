@@ -3,19 +3,22 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 const express = require('express'),
-      cors = require('cors'),
-      mongoose = require('mongoose'),
-      routes = require('./routes'),
-      errorHandler = require('./middlewares/errorHandler'),
-      PORT = process.env.PORT || 3000,
-      MONGO_CONNECTION = process.env.MONGO_CONNECTION,
-      app = express()
+    cors = require('cors'),
+    mongoose = require('mongoose'),
+    routes = require('./routes'),
+    errorHandler = require('./middlewares/errorHandler'),
+    cronMail = require('./helpers/cronMail'),
+    PORT = process.env.PORT || 3000,
+    MONGO_CONNECTION = process.env.MONGO_CONNECTION,
+    app = express()
 
-
-mongoose.connect(MONGO_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, function(err) {
-  if(err) console.log('Database connection failed')
-  else console.log('Database connection success')
+mongoose.connect(MONGO_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, function (err) {
+    if (err) console.log('Database connection failed')
+    else console.log('Database connection success')
 });
+
+// Cron mail service
+cronMail();
 
 // Middleware
 app.use(cors())
