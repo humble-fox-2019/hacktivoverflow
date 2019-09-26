@@ -9,6 +9,7 @@ export default new Vuex.Store({
   state: {
     token: "",
     user: {},
+    question: {},    
     questions: []
   },
   mutations: {
@@ -26,6 +27,9 @@ export default new Vuex.Store({
     },
     SET_QUESTIONS: (state, payload) => {
       state.questions = payload
+    },
+    SET_QUESTION: (state, payload) => {
+      state.question = payload
     }
   },
   actions: {
@@ -34,7 +38,7 @@ export default new Vuex.Store({
         url: '/questions/' + id
       })
         .then(({ data }) => {
-        commit('SET_QUESTIONS', data)
+        commit('SET_QUESTION', data)
       })
       .catch(({ response }) => console.log(response))
     },
@@ -44,6 +48,7 @@ export default new Vuex.Store({
         method: 'get'
       }).then(({data}) => {
         commit('SET_QUESTIONS', data);
+        
       })
       .catch(({ response }) => console.log(response))
     }

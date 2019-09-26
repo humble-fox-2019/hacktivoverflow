@@ -4,7 +4,7 @@
       <nav class="breadcrumb bg-white push">
         <a class="breadcrumb-item" href="#">Forum</a>
         <a class="breadcrumb-item" href="#">Question</a>
-        <span class="breadcrumb-item active">{{questions.title}}</span>
+        <span class="breadcrumb-item active">{{question.title}}</span>
       </nav>
       <div class="block">
         <div class="block-header block-header-default">
@@ -17,32 +17,37 @@
               <tr class="table-active">
                 <td class="d-none d-sm-table-cell"></td>
                 <td class="font-size-sm text-muted">
-                  <a href="#">{{questions.userId.name}}</a> asked
-                  <em>{{getTimeAgo(questions.createdAt)}}</em>
+                  <a href="#">{{question.userId.name}}</a> asked
+                  <em>{{getTimeAgo(question.createdAt)}}</em>
                 </td>
               </tr>
               <tr>
                 <td class="d-none d-sm-table-cell text-center" style="width: 140px;">
-                  <div class="mb-10">
-                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
-                        <i class="fas fa-sort-up"></i>
-                      </button>
-                      <h4 class="font-weight-bold p-0 m-0">{{questions.upvotes.length - questions.downvotes.length}}</h4>
-                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
-                        <i class="fas fa-sort-down"></i>
-                      </button>
-                    </div>
+                  <Vote
+                    :token="token"
+                    :upvotes="question.upvotes"
+                    :downvotes="question.downvotes"
+                    :id="question._id"
+                    :upAction="doUpVoteQuestion"
+                    :downAction="doDownVoteQuestion"
+                    :removeAction="doRemoveVoteQuestion"
+                  />
+
                   <small>
                     446 Reputation
                     <br />
                   </small>
                 </td>
                 <td>
-                  <h2>{{questions.title}}</h2>
+                  <h2>{{question.title}}</h2>
 
-                  <p>{{questions.content}}</p>
+                  <p>{{question.content}}</p>
                   <hr />
-                  <router-link v-for="(tag, index) in questions.tags" :key="index" :to="`/tag/${tag}`">
+                  <router-link
+                    v-for="(tag, index) in question.tags"
+                    :key="index"
+                    :to="`/tag/${tag}`"
+                  >
                     <span class="badge badge-primary ml-1">{{tag}}</span>
                   </router-link>
                 </td>
@@ -61,7 +66,7 @@
           <!-- Discussion -->
           <table class="table table-borderless">
             <tbody>
-              <template v-for="answer in questions.answers">
+              <template v-for="answer in question.answers">
                 <tr class="table-active" id="forum-reply-form" :key="`headAnsware${answer._id}`">
                   <td class="d-none d-sm-table-cell"></td>
                   <td class="font-size-sm text-muted">
@@ -71,16 +76,16 @@
                 </tr>
                 <tr :key="`bodyAnsware${answer._id}`">
                   <td class="d-none d-sm-table-cell text-center" style="width: 140px;">
-                    <div class="mb-10">
-                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
-                        <i class="fas fa-sort-up"></i>
-                      </button>
-                      <h4 class="font-weight-bold p-0 m-0">{{answer.upvotes.length - answer.downvotes.length}}</h4>
-                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
-                        <i class="fas fa-sort-down"></i>
-                      </button>
-                    </div>
-                    
+                    <Vote
+                      :token="token"
+                      :upvotes="answer.upvotes"
+                      :downvotes="answer.downvotes"
+                      :id="answer._id"
+                      :upAction="doUpVoteAnswer"
+                      :downAction="doDownVoteAnswer"
+                      :removeAction="doRemoveVoteAnswer"
+                    />
+
                     <small>
                       446 Reputation
                       <br />
@@ -135,9 +140,14 @@
                   </form>
                 </td>
               </tr>
-              
-              <tr  v-else>
-                <td colspan="2"><h4>You must login first to leave a comment. <router-link to="/login">login</router-link></h4></td>
+
+              <tr v-else>
+                <td colspan="2">
+                  <h4>
+                    You must login first to leave a comment.
+                    <router-link to="/login">login</router-link>
+                  </h4>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -156,22 +166,137 @@ import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 
 import { quillEditor } from "vue-quill-editor";
-import moment from 'moment';
- 
+import moment from "moment";
+
+import Vote from "@/components/Vote.vue";
+import axios from "@/apis/axios";
+import errorHandling from "@/helpers/errorHandling";
+import Toast from "@/helpers/toast";
+
 export default {
+  name: "detailquestion",
   created() {
     this.FETCH_QUESTION(this.$route.params.id);
   },
   components: {
-    quillEditor
+    quillEditor,
+    Vote
   },
   computed: {
-    ...mapState(["questions", "token"])
+    ...mapState(["question", "token"])
   },
   methods: {
     ...mapActions(["FETCH_QUESTION"]),
-    getTimeAgo: (date) => {
+    getTimeAgo: date => {
       return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
+    },
+    doUpVoteQuestion(questionId) {
+      axios({
+        url: "/questions/upvote/" + questionId,
+        method: "put",
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
+    },
+    doDownVoteQuestion(questionId) {
+      axios({
+        url: "/questions/downvote/" + questionId,
+        method: "put",
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
+    },
+    doRemoveVoteQuestion(questionId) {
+      axios({
+        url: "/questions/removevote/" + questionId,
+        method: "put",
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
+    },
+    doUpVoteAnswer(answerId) {
+      axios({
+        url: "/answers/upvote/" + answerId,
+        method: "put",
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
+    },
+    doDownVoteAnswer(answerId) {
+      axios({
+        url: "/answers/downvote/" + answerId,
+        method: "put",
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
+    },
+    doRemoveVoteAnswer(answerId) {
+      axios({
+        url: "/answers/removevote/" + answerId,
+        method: "put",
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
     }
   }
 };
