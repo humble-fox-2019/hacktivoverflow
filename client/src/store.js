@@ -11,7 +11,9 @@ export default new Vuex.Store({
     isLogin: false,
     menuShow: false,
     allQuestions: [],
-    detailQuestion: {}
+    detailQuestion: {},
+    content: "",
+    title: ""
   },
   mutations: {
     showMenu(state, payload) {
@@ -31,6 +33,12 @@ export default new Vuex.Store({
     },
     setDetail(state, payload) {
       state.detailQuestion = payload
+    },
+    setContent(state, payload) {
+      state.content = payload
+    },
+    setTitle(state, payload) {
+      state.title = payload
     }
   },
   actions: {
@@ -113,6 +121,36 @@ export default new Vuex.Store({
         })
         .catch(error => {
           console.log(error)
+        })
+    },
+    postQuest(context) {
+      let title = state.title
+      let description = state.content
+      Swal.fire({
+        title: `Creating Your Question...`,
+        allowOutsideClick: () => !Swal.isLoading()
+      });
+      Swal.showLoading();
+      Axios({
+        method: `post`,
+        url: `${baseUrlServer}/questions`,
+        data: {
+          title,
+          description
+        },
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          Swal.close();
+          Swal.fire("Success!", 'Create Question Success', "success");
+
+        })
+        .catch(error => {
+          console.log(error)
+          let msg = error.response.data.message
+          Swal.fire("Error!", msg, "error");
         })
     }
 

@@ -11,6 +11,11 @@ export default {
     return {
       myHTML: ""
     };
+  },
+  watch: {
+    myHTML: function() {
+      this.$store.commit("setContent", this.myHTML);
+    }
   }
 };
 </script>

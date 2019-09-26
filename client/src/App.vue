@@ -2,7 +2,7 @@
   <div id="app">
     <div id="nav">
       <div class="search">
-        <router-link to="/">Logo</router-link>
+        <router-link to="/">Tanyao</router-link>
         <input type="search" placeholder="search" />
       </div>
       <div class="question">

@@ -1,10 +1,10 @@
 <template>
   <div class="ask">
     <h2 style="text-align:left; margin-top:10px">Title</h2>
-    <input type="text" />
+    <input type="text" v-model="title" />
     <Wysiwyg />
     <div class="btn">
-      <button>POST YOUR QUESTION</button>
+      <button @click="postQuest">POST YOUR QUESTION</button>
     </div>
   </div>
 </template>
@@ -14,6 +14,21 @@ import Wysiwyg from "../components/wysiwyg";
 export default {
   components: {
     Wysiwyg
+  },
+  data: function() {
+    return {
+      title: ""
+    };
+  },
+  watch: {
+    title: function() {
+      this.$store.commit("setTitle", this.title);
+    }
+  },
+  methods: {
+    postQuest() {
+      this.store.dispatch("postQuest");
+    }
   }
 };
 </script>
