@@ -1,6 +1,6 @@
 # HacktivOverflow
 
-Welcome to HacktivOverflow! All the service is running on http://localhost:3000/.
+Welcome to HacktivOverflow! All the service is running on http://3.19.240.39/.
 
 ## User Endpoints
 
