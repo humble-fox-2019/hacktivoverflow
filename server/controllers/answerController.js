@@ -198,8 +198,7 @@ static normalizeOpinion(req, res){{
       _id: req.params.id
     },
     {
-      $pull: { likes: { userId: loggedInUser } },
-      $pull: { dislikes: { userId: loggedInUser } }
+      $pull: { dislikes: { userId: loggedInUser} , likes: { userId: loggedInUser} } 
     }
   )
     .then(result => {

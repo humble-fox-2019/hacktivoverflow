@@ -2,21 +2,20 @@ const Question = require('../models/question')
 const Answer = require('../models/answer')
 
 function questionAuth(req, res, next){
+  console.log(req.decoded);
   Question.findById(req.params.id)
   .then(isFound =>{
-      if (isFound.userId === req.decoded._id){
+    if (isFound.userId == req.decoded._id){
         next()
       }
       else {
-        next({
-          status : 401,
+        res.status(401).json({
           message : 'Unathorized'
         })
       }
   })
   .catch(() =>{
-    next({
-      status: 404,
+    res.status(404),json({
       message: 'Not Found'
     })
   })
@@ -26,19 +25,17 @@ function questionAuth(req, res, next){
 function answerAuth(req, res, next){
     Answer.findById(req.params.id)
     .then(isFound =>{
-        if (isFound.userId === req.decoded._id){
+        if (isFound.userId == req.decoded._id){
           next()
         }
         else {
-          next({
-            status : 401,
+          res.status(401).json({
             message : 'Unathorized'
           })
         }
     })
     .catch(() =>{
-      next({
-        status: 404,
+      res.status(404).json({
         message: 'Not Found'
       })
     })

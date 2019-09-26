@@ -69,7 +69,7 @@ class QuestionController {
         if (data_question) {
           // console.log(loggedInUser, '<<<<< here');
           // console.log(data_question, 'its here <<<<');
-          if (data_question.userId === loggedInUser) {
+          if (data_question.userId == loggedInUser) {
             res.status(400).json({
               message: `you cannot like your own question!`
             });
@@ -126,6 +126,7 @@ class QuestionController {
       .populate({path: 'userId', select: 'email name'})
       .then(data_question => {
         Answer.find({questionId : req.params.id})
+        .sort({ createdAt: -1 })
         .then(answer => {
           res.status(200).json({
             message: `Successfully get a question with id ${data_question._id}`,
@@ -154,7 +155,8 @@ class QuestionController {
     })
       .then(data_question => {
         if (data_question) {
-          if (data_question.userId === loggedInUser) {
+          // console.log(d);
+          if (data_question.userId == loggedInUser) {
             res.status(400).json({
               message: `you cannot dislike your own question!`
             });
@@ -242,16 +244,18 @@ class QuestionController {
 
   static normalizeOpinion(req, res){{
       let loggedInUser = req.decoded._id
+      console.log(loggedInUser);
       Question.updateOne(
         {
           _id: req.params.id
         },
         {
-          $pull: { likes: { userId: loggedInUser } },
-          $pull: { dislikes: { userId: loggedInUser } }
+          $pull: { dislikes: { userId: loggedInUser} , likes: { userId: loggedInUser} } 
         }
+        
       )
         .then(result => {
+          console.log(result);
           res.status(201).json({
             message: `Your opinion is updated to netral `
           })

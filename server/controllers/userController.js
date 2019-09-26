@@ -44,8 +44,8 @@ class UserController {
             res.status(200).json({
               message: `Welcome to Coder Fairy!`,
               token: token,
-              token2: token + "," + data._id,
-              email: data.email
+              email: data.email,
+              _id : data._id
             });
           } else {
             res.status(400).json({

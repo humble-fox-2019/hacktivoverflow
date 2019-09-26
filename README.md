@@ -58,8 +58,8 @@ Response :
 {
     "message": "Welcome to Coder Fairy!",
     "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOGEzZGM2NGQwZTIxMjM2ZDljYzM5YSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaUBtYWlsLmNvbSIsImlhdCI6MTU2OTM0MTEyNH0.1KSHNh6QVTx8aHGjcuqgYJt22OX9-SmArCNKknDfG2M",
-    "token2": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjVkOGEzZGM2NGQwZTIxMjM2ZDljYzM5YSIsIm5hbWUiOiJhZG1pbiIsImVtYWlsIjoiYWRtaUBtYWlsLmNvbSIsImlhdCI6MTU2OTM0MTEyNH0.1KSHNh6QVTx8aHGjcuqgYJt22OX9-SmArCNKknDfG2M,5d8a3dc64d0e21236d9cc39a",
     "email": "admi@mail.com"
+    "_id" : "D66ewewd12wq212121a"
 }
 ```
 

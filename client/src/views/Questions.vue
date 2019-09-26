@@ -6,7 +6,7 @@
     </div>
     <div class="box">
       <div v-for="(question, index) in questionList" :key="index">
-        <OneQuestion :question="question"></OneQuestion>
+        <OneQuestion :question="question" @toLogin="toLogin"></OneQuestion>
         <hr v-if="index < questionList.length-1">
       </div>
     </div>
@@ -14,28 +14,32 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import OneQuestion from "../components/OneQuestion.vue";
+import { mapActions, mapState } from 'vuex'
+import OneQuestion from '../components/OneQuestion.vue'
 export default {
-  name: "Questions",
-  data() {
+  name: 'Questions',
+  data () {
     return {
-      message: "haii"
-    };
+      message: 'haii'
+    }
   },
   components: {
     OneQuestion
   },
   computed: {
-    ...mapState(["questionList"])
+    ...mapState(['questionList'])
   },
   methods: {
-    ...mapActions(["getAllQuestion"])
+    ...mapActions(['getAllQuestion']),
+    toLogin () {
+      console.log('heee')
+      this.$emit('toLogin')
+    }
   },
-  created() {
-    this.getAllQuestion();
+  created () {
+    this.getAllQuestion()
   }
-};
+}
 </script>
 
 <style scoped>
