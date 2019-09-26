@@ -4,9 +4,10 @@ module.exports = (req, res, next) => {
         _id: req.params.id
     })
     .then(question => {
-        if(question.user == req.decode.id)next()
+        if(question.user == req.decode._id)next()
         else{
             next({ status: 403, message: "You don't have the authority to do this action" })
         }
     })
+    .next(next)
 }

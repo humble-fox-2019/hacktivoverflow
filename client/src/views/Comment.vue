@@ -33,7 +33,7 @@
                 </div>
             </div>
             <div style="width: 100%; display: flex; border-bottom: 1px solid silver;" v-for="(answer, index) in question.answers" :key="index">
-                <div style="width: 10%; height: 20vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #69737C;">
+                <div style="width: 30%; height: 20vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #69737C;">
                     <a class="vote" href="" @click.prevent="upvoteAnswer(answer._id)"><i class="fas fa-arrow-circle-up"></i></a>
                     <p class="vote" style="margin: 0.3rem 0px; font-size: 1rem;" >{{answer.upvotes.length - answer.downvotes.length}}</p>
                     <a class="vote" href="" @click.prevent="downvoteAnswer(answer._id)"><i class="fas fa-arrow-circle-down"></i></a>
@@ -43,7 +43,7 @@
                 </div>
                 <div style=" width: 100%; height: 100%;padding: 1em; display: flex; justify-content:flex-end; position:relative; bottom: 0px;">
                     <div v-if="belong(answer.user)">
-                        <button class="not" @click="updateForm(answer)">update</button>
+                        <button href="#form" class="not" @click="updateForm(answer)">update</button>
                     </div>
                     <setting v-if="belong(answer.user)" :id="answer._id" :category="category('answers')"/>
                 </div>
@@ -59,7 +59,7 @@
             </div>
             <div v-else>
                 <div style="width: 80%;">
-                    <wysiwyg class="formQuestion" v-model="description" />
+                    <wysiwyg id="form" class="formQuestion" v-model="description" />
                 </div>
                 <div style="margin-bottom: 10 vh;">
                     <button style="margin-right: 1vw;" v-if="this.$store.state.isLogin" @click.prevent="updateAnswer">Update</button>

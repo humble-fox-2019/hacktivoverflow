@@ -24,7 +24,7 @@ class QuestionController {
         .catch(next)
     }
     static getAllQuestions(req, res, next){
-        Question.find().sort({ updatedAt: 'desc'}).populate('answers').then(questions => {
+        Question.find().sort({ createdAt: 'desc'}).populate('answers').then(questions => {
             if(questions){
                 res.status(200).json(questions)
             }else{

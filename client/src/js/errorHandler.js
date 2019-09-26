@@ -1,3 +1,4 @@
+import router from '../router'
 function errorHandler(err){
     let errorMessage = null
     if(err.response){
@@ -7,6 +8,12 @@ function errorHandler(err){
             title: 'Oops...',
             text: `${errorMessage}`
         })
+        if(errorMessage == 'You need to login first'){
+            alert('')
+            localStorage.removeItem('token')
+            localStorage.removeItem('id')
+            router.push('/auth')
+        }
     }else if(err.request){
         errorMessage = `500 Internal Server Error`
         Swal.fire({

@@ -12,7 +12,10 @@ module.exports = (err, req, res, next) =>{
             }
         }
         message = errArray.join(', ')
-    }else if(err.name === "TokenExpiredError" || err.name === "JsonWebTokenError"){
+    }else if(err.name === "TokenExpiredError"){
+        status = 401
+        message = "You've been idle for too long. Please log in again"
+    }else if(err.name === "JsonWebTokenError"){
         status = 401
         message = "You need to login first"
     }

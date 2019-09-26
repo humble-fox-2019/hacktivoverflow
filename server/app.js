@@ -8,7 +8,7 @@ const cors = require('cors');
 app.use(cors())
 
 const mongoose = require('mongoose');
-mongoose.connect(process.env.ATLAS_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: true})
+mongoose.connect(process.env.ATLAS_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
 .then(_=>{
     console.log('connected to database');
 })

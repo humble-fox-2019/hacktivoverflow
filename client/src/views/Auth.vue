@@ -69,7 +69,7 @@ export default {
         color: white;
         background-color: #3c85e6;
     }
-    button:hover{
+    button:hover {
         background-color: #2c73d1;
     }
     .link {
