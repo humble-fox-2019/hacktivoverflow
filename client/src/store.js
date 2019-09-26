@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-let baseUrl = 'http://35.185.181.102'
+let baseUrl = 'http://localhost:3000'
 import axios from 'axios'
 import errorHandler from './js/errorHandler'
 import router from './router'

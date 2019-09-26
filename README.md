@@ -35,8 +35,9 @@ Response:
 
 ```
 {
-"token":     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjVkOGFlMDA4NjUyN2RmMDkxOGJlNzEzMCIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsInVzZXJuYW1lIjoidGVzdCJ9LCJpYXQiOjE1NjkzODI0NjUsImV4cCI6MTU2OTM4NjA2NX0.eoUIWhJzjmKiPb7QNHOs5EHG50eg0pGA6Yh5IChzLxg",
-    "username": "test"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJkYXRhIjp7Il9pZCI6IjVkOGM1YTgzNmE5MmJmM2Y0YTQ2NmRhMiIsImVtYWlsIjoiYWRtaW5AYWRtaW4uY29tIiwidXNlcm5hbWUiOiJhZG1pbiJ9LCJpYXQiOjE1Njk0OTE5MDAsImV4cCI6MTU2OTQ5NTUwMH0.OwVcoQNxficWhXrdKi3hpYDaqMtNQyKO2kHc0gKCl7U",
+    "username": "admin",
+    "id": "5d8c5a836a92bf3f4a466da2"
 }
 ```
 
@@ -62,19 +63,72 @@ Response:
 ```
 [
     {
-        "upvotes": 0,
-        "downvotes": 0,
+        "upvotes": [],
+        "downvotes": [],
         "answers": [],
-        "_id": "5d8ae0f16527df0918be7131",
-        "title": "how to how",
-        "description": "gini cara nya",
-        "user": "5d8ae0086527df0918be7130",
+        "_id": "5d8c893dabba132be67d98cd",
+        "title": "baruuu",
+        "description": "baruuu",
+        "user": "5d8c8908abba132be67d98cb",
+        "createdAt": "2019-09-26T09:47:41.386Z",
+        "updatedAt": "2019-09-26T09:47:41.386Z",
         "__v": 0
     }
 ]
 ```
 
 500
+
+```
+
+```
+
+
+
+|        ROUTE        | HTTP  | HEADERS |                          BODY                           |   DESCRIPTION   | ADDITIONAL INFO |
+| :-----------------: | :---: | :-----: | :-----------------------------------------------------: | :-------------: | :-------------: |
+| /questions/edit/:id | PATCH |  token  | text:String(required)<br />description:String(required) | Edit a question |  Authenticated  |
+
+Response:
+201
+
+```
+{
+    "message": "successfully updated"
+}
+```
+
+401
+
+```
+{
+    "message": "You need to login first"
+}
+```
+
+
+
+|        ROUTE        | HTTP | HEADERS | BODY |  DESCRIPTION   | ADDITIONAL INFO |
+| :-----------------: | :--: | :-----: | :--: | :------------: | :-------------: |
+| /questions/find/:id | GET  |    -    |  -   | Get a question |        -        |
+
+Response:
+201
+
+```
+{
+    "upvotes": 0,
+    "downvotes": 0,
+    "answers": [],
+    "_id": "5d8ae0f16527df0918be7131",
+    "title": "how to how",
+    "description": "gini cara nya",
+    "user": "5d8ae0086527df0918be7130",
+    "__v": 0
+}
+```
+
+
 
 ```
 
@@ -153,33 +207,33 @@ Response:
 
 ```
 
+{
     "upvotes": [
-        "5d8b707ffbb4cc15be820f15"
+        "5d8c5a836a92bf3f4a466da2"
     ],
     "downvotes": [],
-    "answers": [
-        {
-            "upvotes": [],
-            "downvotes": [],
-            "_id": "5d8ba8c860999c2b4755006c",
-            "description": "bau",
-            "user": "5d8b1362fab52211c169dffc",
-            "__v": 0
-        }
-    ],
-    "_id": "5d8ba8c260999c2b4755006b",
-    "title": "telolet",
-    "description": "uizeeee",
-    "user": "5d8b1362fab52211c169dffc",
+    "answers": [],
+    "_id": "5d8c893dabba132be67d98cd",
+    "title": "baruuu",
+    "description": "baruuu",
+    "user": {
+        "_id": "5d8c8908abba132be67d98cb",
+        "username": "google",
+        "email": "google@google.com",
+        "password": "$2a$10$6bI0z5fVlpd66u.CW.S77.V9FKm5eLvpv7MObNWs4AUy1qL2Lj0na",
+        "__v": 0
+    },
+    "createdAt": "2019-09-26T09:47:41.386Z",
+    "updatedAt": "2019-09-26T10:14:54.635Z",
     "__v": 0
 }
 ```
 
-400
+401
 
 ```
 {
-    "message": "You already upvoted this question"
+    "message": "You need to login first"
 }
 ```
 
@@ -193,34 +247,33 @@ Response:
 200
 
 ```
-
+{
     "upvotes": [],
     "downvotes": [
-    	"5d8b707ffbb4cc15be820f15"
+        "5d8c5a836a92bf3f4a466da2"
     ],
-    "answers": [
-        {
-            "upvotes": [],
-            "downvotes": [],
-            "_id": "5d8ba8c860999c2b4755006c",
-            "description": "bau",
-            "user": "5d8b1362fab52211c169dffc",
-            "__v": 0
-        }
-    ],
-    "_id": "5d8ba8c260999c2b4755006b",
-    "title": "telolet",
-    "description": "uizeeee",
-    "user": "5d8b1362fab52211c169dffc",
+    "answers": [],
+    "_id": "5d8c893dabba132be67d98cd",
+    "title": "baruuu",
+    "description": "baruuu",
+    "user": {
+        "_id": "5d8c8908abba132be67d98cb",
+        "username": "google",
+        "email": "google@google.com",
+        "password": "$2a$10$6bI0z5fVlpd66u.CW.S77.V9FKm5eLvpv7MObNWs4AUy1qL2Lj0na",
+        "__v": 0
+    },
+    "createdAt": "2019-09-26T09:47:41.386Z",
+    "updatedAt": "2019-09-26T10:15:20.739Z",
     "__v": 0
 }
 ```
 
-400
+401
 
 ```
 {
-    "message": "You already downvoted this question"
+    "message": "You need to login first"
 }
 ```
 
@@ -247,7 +300,34 @@ Response:
 }
 ```
 
+
+
+
+
 **Answer API**
+
+
+
+|        ROUTE        |  HTTP  | HEADERS | BODY |   DESCRIPTION    | ADDITIONAL INFO |
+| :-----------------: | :----: | :-----: | :--: | :--------------: | :-------------: |
+| /answers/delete/:id | DELETE |  token  |  -   | Delete an answer |  authenticated  |
+
+Response:
+201
+
+```
+{
+    "message": "success"
+}
+```
+
+401
+
+```
+{
+    "message": "You need to login first"
+}
+```
 
 
 
@@ -259,19 +339,19 @@ Response:
 201
 
 ```
-{
-    "upvotes": 0,
-    "downvotes": 0,
-    "answers": [
-        "5d8ae7cc9176260a83d3b0db",
-        "5d8ae93ca51a3d0a998ff898"
-    ],
-    "_id": "5d8ae44dec787a09e75aefcd",
-    "title": "gini ya",
-    "description": "gini cara nya",
-    "user": "5d8ae0086527df0918be7130",
-    "__v": 2
-}
+[
+    {
+        "upvotes": [
+            "5d8c5b476a92bf3f4a466da4"
+        ],
+        "downvotes": [],
+        "_id": "5d8c6841bccdf0241f894397",
+        "description": "testtt",
+        "user": "5d8c5a836a92bf3f4a466da2",
+        "question": "5d8c682fbccdf0241f894396",
+        "__v": 0
+    }
+ ]
 ```
 
 400
@@ -292,13 +372,48 @@ Response:
 200
 
 ```
-
+{
+    "upvotes": [
+        "5d8c5a836a92bf3f4a466da2",
+        "5d8c8720abba132be67d98ca"
+    ],
+    "downvotes": [],
+    "answers": [
+        {
+            "upvotes": [
+                "5d8c5b476a92bf3f4a466da4",
+                "5d8c5a836a92bf3f4a466da2"
+            ],
+            "downvotes": [],
+            "_id": "5d8c6841bccdf0241f894397",
+            "description": "testtt",
+            "user": "5d8c5a836a92bf3f4a466da2",
+            "question": "5d8c682fbccdf0241f894396",
+            "__v": 0
+        }
+    ],
+    "_id": "5d8c682fbccdf0241f894396",
+    "title": "minum",
+    "description": "makan",
+    "user": {
+        "_id": "5d8c5a836a92bf3f4a466da2",
+        "username": "admin",
+        "email": "admin@admin.com",
+        "password": "$2a$10$p.TAlcTsI4GSIwxx9YQYtO214OSbCXBwqV9m2vZrVkj/Tvb21Caum",
+        "__v": 0
+    },
+    "createdAt": "2019-09-26T07:26:39.941Z",
+    "updatedAt": "2019-09-26T10:09:38.490Z",
+    "__v": 0
+}
 ```
 
 401
 
 ```
-
+{
+    "message": "You need to login first"
+}
 ```
 
 
@@ -313,12 +428,144 @@ Response:
 200
 
 ```
-
+{
+    "upvotes": [
+        "5d8c5a836a92bf3f4a466da2",
+        "5d8c8720abba132be67d98ca"
+    ],
+    "downvotes": [],
+    "answers": [
+        {
+            "upvotes": [
+                "5d8c5b476a92bf3f4a466da4"
+            ],
+            "downvotes": [
+                "5d8c5b476a92bf3f4a466da4",
+                "5d8c5a836a92bf3f4a466da2"
+            ],
+            "_id": "5d8c6841bccdf0241f894397",
+            "description": "testtt",
+            "user": "5d8c5a836a92bf3f4a466da2",
+            "question": "5d8c682fbccdf0241f894396",
+            "__v": 0
+        }
+    ],
+    "_id": "5d8c682fbccdf0241f894396",
+    "title": "minum",
+    "description": "makan",
+    "user": {
+        "_id": "5d8c5a836a92bf3f4a466da2",
+        "username": "admin",
+        "email": "admin@admin.com",
+        "password": "$2a$10$p.TAlcTsI4GSIwxx9YQYtO214OSbCXBwqV9m2vZrVkj/Tvb21Caum",
+        "__v": 0
+    },
+    "createdAt": "2019-09-26T07:26:39.941Z",
+    "updatedAt": "2019-09-26T10:09:38.490Z",
+    "__v": 0
+}
 ```
 
 401
 
 ```
+{
+    "message": "You need to login first"
+}
+```
 
+
+
+
+
+|       ROUTE       | HTTP  | HEADERS |             BODY             |   DESCRIPTION    | ADDITIONAL INFO |
+| :---------------: | :---: | :-----: | :--------------------------: | :--------------: | :-------------: |
+| /answers/desc/:id | PATCH |  token  | description:String(required) | Update an answer |  authenticated  |
+
+Response:
+200
+
+```
+{
+    "upvotes": [
+        "5d8c5a836a92bf3f4a466da2",
+        "5d8c8720abba132be67d98ca"
+    ],
+    "downvotes": [],
+    "answers": [
+        {
+            "upvotes": [],
+            "downvotes": [],
+            "_id": "5d8c751e8b09694272882e93",
+            "description": "makan cabe",
+            "user": "5d8c5a836a92bf3f4a466da2",
+            "question": "5d8c682fbccdf0241f894396",
+            "__v": 0
+        }
+    ],
+    "_id": "5d8c682fbccdf0241f894396",
+    "title": "minum",
+    "description": "makan",
+    "user": {
+        "_id": "5d8c5a836a92bf3f4a466da2",
+        "username": "admin",
+        "email": "admin@admin.com",
+        "password": "$2a$10$p.TAlcTsI4GSIwxx9YQYtO214OSbCXBwqV9m2vZrVkj/Tvb21Caum",
+        "__v": 0
+    },
+    "createdAt": "2019-09-26T07:26:39.941Z",
+    "updatedAt": "2019-09-26T10:24:11.912Z",
+    "__v": 0
+}
+```
+
+401
+
+```
+{
+    "message": "You need to login first"
+}
+```
+
+
+
+
+
+|        ROUTE         | HTTP | HEADERS | BODY |      DESCRIPTION      | ADDITIONAL INFO |
+| :------------------: | :--: | :-----: | :--: | :-------------------: | :-------------: |
+| /answers/:questionId | GET  |    -    |  -   | Get an Quest's answer |                 |
+
+Response:
+200
+
+```
+[
+    {
+        "upvotes": [],
+        "downvotes": [],
+        "_id": "5d8c751e8b09694272882e93",
+        "description": "makan cabe",
+        "user": "5d8c5a836a92bf3f4a466da2",
+        "question": "5d8c682fbccdf0241f894396",
+        "__v": 0
+    },
+    {
+        "upvotes": [],
+        "downvotes": [],
+        "_id": "5d8c7547f7bef543f8ef70f8",
+        "description": "ancurr",
+        "user": "5d8c5a836a92bf3f4a466da2",
+        "question": "5d8c682fbccdf0241f894396",
+        "__v": 0
+    }
+]
+```
+
+401
+
+```
+{
+    "message": "You need to login first"
+}
 ```
 

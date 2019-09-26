@@ -15,8 +15,6 @@ module.exports = (err, req, res, next) =>{
     }else if(err.name === "TokenExpiredError" || err.name === "JsonWebTokenError"){
         status = 401
         message = "You need to login first"
-        localStorage.removeItem('token')
-        localStorage.removeItem('id')
     }
     console.log(err)
     res.status(status).json({message})
