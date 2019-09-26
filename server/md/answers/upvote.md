@@ -18,20 +18,17 @@ Used to update single Answer `upvote`.
 
 ```json
 {
-  "_id": ObjectId("5d8b740a708781569159e5af"),
-  "upvotes": [
-    ObjectId("5d8b6647d343a34f32102e4a")
+  "_id": ObjectId("5d8c60da430cfb9a4d2560d0"),
+  "upvotes": [ 
+		ObjectId("5d8c17e297e077653a4f62b7")
   ],
   "downvotes": [ ],
-  "answers": [
-    ObjectId("5d8b756fed775c56edde2daa")
-  ],
-  "title": "Test",
-  "description": "<p>Wow</p>",
-  "userId": ObjectId("5d8b6647d343a34f32102e4a"),
-  "createdAt": ISODate("2019-09-25T14:04:58.775Z"),
-  "updatedAt": ISODate("2019-09-25T14:10:55.481Z"),
-  "__v": 5
+  "description": "<p>Nice bro</p>",
+  "userId": ObjectId("5d8bab191410476117af1d51"),
+  "questionId": ObjectId("5d8c5dff2d38dc95f36867d2"),
+  "createdAt": ISODate("2019-09-26T06:55:22.281Z"),
+  "updatedAt": ISODate("2019-09-26T06:55:22.281Z"),
+  "__v": 0
 }
 ```
 
