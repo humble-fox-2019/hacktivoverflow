@@ -43,9 +43,9 @@ export default {
   name: 'register',
   data() {
     return {
-      name: 'admin',
-      email: 'admin@gmail.com',
-      password: '123456'
+      name: '',
+      email: '',
+      password: ''
     }
   },
   methods: {
