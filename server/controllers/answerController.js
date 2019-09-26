@@ -59,11 +59,11 @@ class AnswerController {
     static delete(req, res, next) {
         let answerData;
         Answer
-            .deleteOne({ _id: req.params.id })
+            .findByIdAndDelete({ _id: req.params.id })
             .then(data => {
                 answerData = data;
                 return Question
-                    .findByIdAndUpdate(req.params.questionId, {
+                    .findByIdAndUpdate(data.questionId, {
                         $pull: { answers: req.params.id }
                     })
             })

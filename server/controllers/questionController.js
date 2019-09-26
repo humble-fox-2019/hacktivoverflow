@@ -5,7 +5,7 @@ class QuestionController {
     static findAll(req, res, next) {
         let where = {}
         if (req.query.tags) {
-            where = { "tags": { $regex: '.*' + req.query.tags + '.*', $options: 'i' } }
+            where = { "tags": { $regex: '' + req.query.tags + '', $options: 'i' } }
         }
         
         Question.find(where)
@@ -91,7 +91,7 @@ class QuestionController {
         Question
             .findByIdAndDelete(req.params.id)
             .then(data => {                
-                return Answer.deleteMany({})
+                return Answer.deleteMany({ questionId: req.params.id })
             })
             .then(data => {
                 res.json({ message: 'Successfully Delete Question' })
