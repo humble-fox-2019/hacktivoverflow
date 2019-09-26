@@ -17,24 +17,24 @@
               <tr class="table-active">
                 <td class="d-none d-sm-table-cell"></td>
                 <td class="font-size-sm text-muted">
-                  <a href="#">{{questions.userId.name}}</a> on
-                  <em>{{questions.createdAt}}</em>
+                  <a href="#">{{questions.userId.name}}</a> asked
+                  <em>{{getTimeAgo(questions.createdAt)}}</em>
                 </td>
               </tr>
               <tr>
                 <td class="d-none d-sm-table-cell text-center" style="width: 140px;">
                   <div class="mb-10">
-                    <a href="#">
-                      <img
-                        class="img-avatar"
-                        src="https://icon-library.net/images/profile-image-icon/profile-image-icon-25.jpg"
-                        alt
-                      />
-                    </a>
-                  </div>
+                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
+                        <i class="fas fa-sort-up"></i>
+                      </button>
+                      <h4 class="font-weight-bold p-0 m-0">{{questions.upvotes.length - questions.downvotes.length}}</h4>
+                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
+                        <i class="fas fa-sort-down"></i>
+                      </button>
+                    </div>
                   <small>
-                    446 Posts
-                    <br />Level 10
+                    446 Reputation
+                    <br />
                   </small>
                 </td>
                 <td>
@@ -42,7 +42,9 @@
 
                   <p>{{questions.content}}</p>
                   <hr />
-                  <!-- Some action -->
+                  <router-link v-for="(tag, index) in questions.tags" :key="index" :to="`/tag/${tag}`">
+                    <span class="badge badge-primary ml-1">{{tag}}</span>
+                  </router-link>
                 </td>
               </tr>
             </tbody>
@@ -60,26 +62,27 @@
           <table class="table table-borderless">
             <tbody>
               <template v-for="answer in questions.answers">
-                <tr class="table-active" id="forum-reply-form" :key="answer._id">
+                <tr class="table-active" id="forum-reply-form" :key="`headAnsware${answer._id}`">
                   <td class="d-none d-sm-table-cell"></td>
                   <td class="font-size-sm text-muted">
-                    <a href="#">{{answer.userId.name}}</a> on
-                    <em>{{answer.userId.createdAt}}</em>
+                    <a href="#">{{answer.userId.name}}</a> answared
+                    <em>{{getTimeAgo(answer.userId.createdAt)}}</em>
                   </td>
                 </tr>
-                <tr :key="answer._id">
+                <tr :key="`bodyAnsware${answer._id}`">
                   <td class="d-none d-sm-table-cell text-center" style="width: 140px;">
                     <div class="mb-10">
-                      <a href="#">
-                        <img
-                          class="img-avatar"
-                          src="https://icon-library.net/images/profile-image-icon/profile-image-icon-25.jpg"
-                          alt
-                        />
-                      </a>
+                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
+                        <i class="fas fa-sort-up"></i>
+                      </button>
+                      <h4 class="font-weight-bold p-0 m-0">{{answer.upvotes.length - answer.downvotes.length}}</h4>
+                      <button class="btn btn-link text-dark p-0 m-0" style="font-size:30px;" v-if="token">
+                        <i class="fas fa-sort-down"></i>
+                      </button>
                     </div>
+                    
                     <small>
-                      446 Posts
+                      446 Reputation
                       <br />
                     </small>
                   </td>
@@ -106,7 +109,7 @@
                     </a>
                   </div>
                   <small>
-                    240 Posts
+                    240 Reputation
                     <br />Level 9
                   </small>
                 </td>
@@ -153,7 +156,8 @@ import "quill/dist/quill.snow.css";
 import "quill/dist/quill.bubble.css";
 
 import { quillEditor } from "vue-quill-editor";
-
+import moment from 'moment';
+ 
 export default {
   created() {
     this.FETCH_QUESTION(this.$route.params.id);
@@ -165,7 +169,10 @@ export default {
     ...mapState(["questions", "token"])
   },
   methods: {
-    ...mapActions(["FETCH_QUESTION"])
+    ...mapActions(["FETCH_QUESTION"]),
+    getTimeAgo: (date) => {
+      return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
+    }
   }
 };
 </script>

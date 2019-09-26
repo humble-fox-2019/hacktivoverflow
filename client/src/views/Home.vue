@@ -46,8 +46,8 @@
                 <span class="font-size-sm">
                   by
                   <a href="#">{{question.userId.name}}</a>
-                  <br />on
-                  <em>{{question.createdAt}}</em>
+                  <br /> asked
+                  <em>{{getTimeAgo(question.createdAt)}}</em>
                 </span>
               </td>
             </tr>
@@ -59,12 +59,19 @@
 </template>
 
 <script>
+import moment from 'moment';
+
 export default {
   name: "home",
   data() {
     return {
       token: ""
     };
+  },
+  methods: {
+    getTimeAgo: (date) => {
+      return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
+    }
   },
   computed: {
     questions() {
