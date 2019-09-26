@@ -36,6 +36,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+a {
+  text-decoration: none;
+  color: #000;
+}
 .card {
   width: 80vw;
   height: 100px;
