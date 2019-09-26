@@ -5,7 +5,7 @@
       @toggleDialog="dialog = !dialog"
       :mode="mode"
       :key="modalKey"
-      :payload="{title: title, body: body}"
+      :payload="{title: currentThread.title, body: body}"
     />
     <v-row>
       <v-col cols="12" class="d-flex px-4">
@@ -13,13 +13,13 @@
         <v-spacer></v-spacer>
       </v-col>
       <v-col cols="12">
-        <h1>{{title}}</h1>
+        <h1>{{currentThread.title}}</h1>
       </v-col>
       <v-col cols="12" class="d-flex mt-n6">
-        <span class="caption font-italic">Started by: {{creator}}</span>
+        <span class="caption font-italic">Started by: {{currentThread.owner.username}}</span>
         <v-spacer></v-spacer>
-        <span class="caption font-italic mr-4">Posted date: {{creationTime}}</span>
-        <span class="caption font-italic">Last Active: {{updateTime}}</span>
+        <span class="caption font-italic mr-4">Posted date: {{getCreationDate}}</span>
+        <span class="caption font-italic">Last Active: {{getUpdatedTime}}</span>
       </v-col>
       <v-col cols="12" class="mt-n5">
         <v-divider></v-divider>
@@ -49,7 +49,7 @@
       <v-col cols="11" class="mt-n4">
         <v-row>
           <v-col cols="12">
-            <p v-html="body"></p>
+            <p v-html="currentThread.body"></p>
           </v-col>
           <v-col v-if="owner" cols="12" class="mb-n4 mt-n4">
             <v-divider></v-divider>
@@ -75,8 +75,8 @@
       </v-col>
 
       <!-- Start Loop Answers -->
-      <v-col cols="12" v-for="n in 10" :key="n">
-        <ThreadAnswer :index="n" />
+      <v-col cols="12" v-for="reply in currentThread.replies" :key="reply._id">
+        <ThreadAnswer :reply="reply" />
       </v-col>
 
       <!-- End Loop -->
@@ -114,10 +114,9 @@ export default {
     return {
       modalKey: 0,
       voteStatus: 0,
-      owner: true,
+      owner: false,
       mode: "create",
       dialog: false,
-      title: "Thread Title",
       creator: "Tigor",
       createdAt: new Date(),
       lastUpdated: new Date(),
@@ -146,6 +145,20 @@ export default {
   methods: {
     randomizeModalKey() {
       this.modalKey = Math.floor(Math.random() * 100000);
+    }
+  },
+  created() {
+    this.$store.dispatch("fetchCurrentThread", this.$route.params.postId);
+  },
+  computed: {
+    currentThread() {
+      return this.$store.state.currentThread;
+    },
+    getCreationDate() {
+      return new Date(this.currentThread.createdAt).toString().substring(0, 15);
+    },
+    getUpdatedTime() {
+      return new Date(this.currentThread.updatedAt).toString().substring(0, 15);
     }
   }
 };

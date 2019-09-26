@@ -26,8 +26,10 @@
       <v-col cols="11" class="pl-4">
         <v-container>
           <v-row>
-            <v-col cols="12" class="mt-n8 pr-8 d-flex">
-              <span class="caption font-italic">{{creator}} Replied</span>
+            <v-col cols="12" class="mt-n8 headline">{{reply.title}}</v-col>
+
+            <v-col cols="12" class="pr-8 d-flex">
+              <span class="caption font-italic">{{reply.owner.username}} Replied</span>
               <v-spacer></v-spacer>
               <span class="caption font-italic mr-4">Reply Date: {{creationTime}}</span>
               <span class="caption font-italic">Last Edit: {{updateTime}}</span>
@@ -35,7 +37,7 @@
             <v-col cols="12" class="mt-n4 pr-8">
               <v-divider></v-divider>
             </v-col>
-            <v-col cols="12">Lorem Ipsum {{index}}</v-col>
+            <v-col cols="12">{{reply.body}}</v-col>
             <v-col v-if="owner" cols="12" class="mb-n4 mt-4">
               <v-divider></v-divider>
             </v-col>
@@ -54,40 +56,25 @@
 
 <script>
 export default {
-  props: ["index"],
+  props: ["reply"],
   data() {
     return {
       voteStatus: 0,
-      owner: true,
+      owner: false,
       mode: "create",
       dialog: false,
-      title: "Thread Title",
-      creator: "",
-      createdAt: new Date(),
-      lastUpdated: new Date(),
-      body: `Thread Reply
-              <br />Thread Reply
-              <br />Thread Reply
-              <br />Thread Reply
-              <br />Thread Reply
-              <br />Thread Reply
-              <br />Thread Reply
-              <br />Thread Reply`,
       votes: 200
     };
   },
   watch: {
     voteStatus: function(val) {}
   },
-  created: function() {
-    this.creator = `Tigor${this.index}`;
-  },
   computed: {
     creationTime() {
-      return this.createdAt.toString().substring(0, 15);
+      return new Date(this.reply.createdAt).toString().substring(0, 15);
     },
     updateTime() {
-      return this.lastUpdated.toString().substring(0, 15);
+      return new Date(this.reply.updatedAt).toString().substring(0, 15);
     }
   }
 };

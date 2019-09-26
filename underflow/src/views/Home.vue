@@ -9,11 +9,15 @@
                 <h1 class="display-2">All Threads</h1>
               </v-col>
               <v-col cols="12">
-                <FilterBar />
+                <!-- <FilterBar /> -->
               </v-col>
 
               <!-- Loop Cards -->
-              <ThreadCards v-for="(n, i) in 12" :key="n" :metaThread="i" />
+              <ThreadCards
+                v-for="thread in $store.state.threads"
+                :key="thread._id"
+                :metaThread="thread"
+              />
               <!-- Loop End -->
             </v-row>
           </v-container>
@@ -44,11 +48,13 @@
 </template>
 
 <script>
-import FilterBar from "../components/Filter";
+// import FilterBar from "../components/Filter";
 import ThreadCards from "../components/ThreadCards";
 import PostModal from "../components/PostModal";
+import { mapState, mapActions } from "vuex";
 
 export default {
+  name: "home",
   data() {
     return {
       dialog: false,
@@ -58,7 +64,7 @@ export default {
     };
   },
   components: {
-    FilterBar,
+    // FilterBar,
     ThreadCards,
     PostModal
   },
@@ -66,6 +72,10 @@ export default {
     randomizeModalKey() {
       this.modalKey = Math.floor(Math.random() * 100000);
     }
+  },
+  computed: {},
+  created: function() {
+    this.$store.dispatch("fetchThreads");
   }
 };
 </script>
