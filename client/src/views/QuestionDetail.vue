@@ -1,7 +1,10 @@
 <template>
   <div class="question-detail">
     <h1> {{ question.title }} </h1>
-    <div class="question">
+    <div v-if="loading">
+      <h1>Loading...</h1>
+    </div>
+    <div class="question" v-else>
       <div class="vote">
         <button class="active" @click="vote('up')" v-if="isUpvote"><i class="fas fa-chevron-up"></i></button>
         <button @click="vote('up')" v-else><i class="fas fa-chevron-up"></i></button>
@@ -97,7 +100,8 @@ export default {
       isShowCommentForm: false,
       isShowAnswerForm: false,
       comment: '',
-      answer: ''
+      answer: '',
+      loading: true
     }
   },
   methods: {
@@ -180,12 +184,10 @@ export default {
           }
         }) 
       }
-    }
-  },
-  created() {
-    axios.get(`/question/${this.$route.params.id}`)
+    },
+    fetchQuestionDetail() {
+      axios.get(`/question/${this.$route.params.id}`)
       .then(({data}) => {
-
         this.question = data.question
 
         let upvote = data.question.upvote
@@ -203,10 +205,22 @@ export default {
             this.isUpvote = false
           }
         }
+        
+        this.loading = false
       })
       .catch(err => {
         console.log(err.response.data)
       })
+    }
+  },
+  created() {
+    if(this.$store.state.user._id === undefined) {
+      setTimeout(() => {
+        this.fetchQuestionDetail()
+      }, 500)
+    } else {
+      this.fetchQuestionDetail()
+    }
   },
   computed: {
     getTime() {

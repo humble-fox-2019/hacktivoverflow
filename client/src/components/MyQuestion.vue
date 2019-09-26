@@ -15,9 +15,9 @@
       <div class="tag">
         <button v-for="(tag, index) in question.tags" :key="index">{{ tag }}</button>
       </div>
-      <div class="user">
-        <span>Asked {{ getTime }}</span>
-        <h2>{{ question.owner.username }}</h2>
+      <div class="action">
+        <button class="edit" @click="$router.push(`/edit-question/${question._id}`)">Edit</button>
+        <button class="delete" @click="$emit('confirm', question._id)">Delete</button>
       </div>
     </div>
   </div>
@@ -28,9 +28,8 @@
 import moment from 'moment'
 
 export default {
-  name: 'Question',
+  name: 'MyQuestion',
   props: ['question'],
-
   methods: {
     
   },
@@ -104,16 +103,24 @@ export default {
 .tag button:not(:last-child) {
   margin-right: 5px;
 }
-.user{
+.action{
   justify-self: right;
 }
-.user span{
-  font-size: 10pt;
-  color: #ffffff;
+.action button{
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }
-.user h2{
-  font-size: 12pt;
-  font-weight: bold;
-  color: #00fff0;
+.action button.delete{
+  background-color: #eb2626;
+  color: #ffffff;
+  padding: 7px 10px;
+}
+.action button.edit{
+  background-color: transparent;
+  border: 2px solid #00ff8a;
+  color: #00ff8a;
+  margin-right: 10px;
 }
 </style>

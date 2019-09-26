@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import QuestionDetail from './views/QuestionDetail.vue'
 import Ask from './views/Ask.vue'
 import Account from './views/Account.vue'
+import EditQuestion from './views/EditQuestion.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/account',
       name: 'Account',
       component: Account
+    },
+    {
+      path: '/edit-question/:id',
+      name: 'EditQuestion',
+      component: EditQuestion
     }
   ]
 })

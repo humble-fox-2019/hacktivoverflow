@@ -3,11 +3,18 @@ if(process.env.NODE_ENV === 'development') {
 }
 require('./config/mongoose')
 const express = require('express')
+const CronJob = require('cron').CronJob
 const routes = require('./routes')
 const cors = require('cors')
 const morgan = require('morgan')
 const errorHandler = require('./middleware/errorHandler')
 const app = express()
+const PopularTagController = require('./controllers/popularTag')
+
+
+new CronJob('0 0 0 * * *', function() {
+  PopularTagController.create()
+}, null, true, 'Asia/Jakarta')
 
 app.use(cors())
 app.use(morgan('dev'))

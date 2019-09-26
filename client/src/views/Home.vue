@@ -50,6 +50,8 @@
 <script>
 
 import Question from '../components/Question.vue'
+import axios from '../api/server'
+
 export default {
   name: 'home',
   components: {
@@ -57,7 +59,7 @@ export default {
   },
   data() {
     return {
-      popularTags: ['Css', 'Html', 'Javascript', 'Php', 'Dart', 'Heroku', 'Aws'],
+      popularTags: [],
       watchTags: ['Angular', 'React', 'Azure'],
       listColor: ['#00fff0', '#00ff8a', '#ff49f9', '#f17532', '#f1cb32', '#00a8ff', '#91ffd9'],
       tag: ''
@@ -84,6 +86,14 @@ export default {
   },
   created() {
     this.$store.dispatch('getAllQuestion')
+    axios.get('/popular-tag')
+      .then(({data}) => {
+        console.log(data)
+        this.popularTags = data.tags.tags
+      })
+      .catch(err => {
+        console.log(err.response.data)
+      })
   }
 }
 </script>

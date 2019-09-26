@@ -28,10 +28,19 @@ class questionController {
 
     const userId = req.decode.id
 
-    Question.find({ owner: userId }, 'title upvote downvote answers tags')
+    Question.find({ owner: userId }, 'title upvote downvote answers owner tags createdAt')
+      .populate('owner', 'username')
       .sort({ createdAt: -1 })
       .then(questions => {
         res.json({ questions })
+      })
+      .catch(next)
+  }
+
+  static getOneMy(req, res, next) {
+    Question.findById(req.params.id)
+      .then(question => {
+        res.json({ question })
       })
       .catch(next)
   }
@@ -114,11 +123,12 @@ class questionController {
   static update(req, res, next) {
 
     const questionId = req.params.id
-    const { title, content } = req.body
+    const { title, content, tags } = req.body
 
     Question.findByIdAndUpdate(questionId, {
       title,
-      content
+      content,
+      tags
     }, {
       new: true,
       omitUndefined: true
