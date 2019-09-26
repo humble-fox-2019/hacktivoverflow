@@ -13,6 +13,7 @@ class ThreadController {
     };
     static read(req, res, next) {
         Thread.find({ thread: true })
+            .populate('owner')
             .then((Threads) => {
                 res.status(200).json(Threads)
             })
@@ -30,7 +31,12 @@ class ThreadController {
     static readThread(req, res, next) {
         const id = req.params.id
         Thread.findById({ _id: id })
-            .populate('replies')
+            .populate('owner', '-password')
+            .populate({
+                path: ' replies',
+                populate: { path: 'owner' }
+            })
+
             .then((result) => {
                 res.status(200).json(result)
             }).catch(next);
@@ -87,6 +93,33 @@ class ThreadController {
                 res.status(200).json(Thread)
             })
             .catch(next)
+    }
+
+    static upvote(req, res, next) {
+        let id = req.params.id
+        let userId = req.decode.id
+        Thread.findByIdAndUpdate(id, { $pull: { downvotes: userId }, $push: { upvotes: userId } })
+            .then((Thread) => {
+                res.status(200).json(Thread)
+            }).catch(next);
+    }
+
+    static downvote(req, res, next) {
+        let id = req.params.id
+        let userId = req.decode.id
+        Thread.findByIdAndUpdate(id, { $pull: { upvotes: userId }, $push: { downvotes: userId } })
+            .then((Thread) => {
+                res.status(200).json(Thread)
+            }).catch(next);
+    }
+
+    static removeVote(req, res, next) {
+        let id = req.params.id
+        let userId = req.decode.id
+        Thread.findByIdAndUpdate(id, { $pull: { upvotes: userId, downvotes: userId } })
+            .then((Thread) => {
+                res.status(200).json(Thread)
+            }).catch(next);
     }
 };
 
