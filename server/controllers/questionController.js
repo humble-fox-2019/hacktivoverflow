@@ -1,4 +1,5 @@
 const Question = require('../models/question');
+const Answer = require('../models/answer');
 
 class QuestionController {
     static findAll(req, res, next) {
@@ -83,15 +84,12 @@ class QuestionController {
 
     static delete(req, res, next) {
         Question
-            .deleteOne({ _id: req.params.id })
+            .findByIdAndDelete(req.params.id)
+            .then(data => {                
+                return Answer.deleteMany({})
+            })
             .then(data => {
-                if (data.deletedCount === 0) {
-                    next({ statusCode: 404, msg: 'Question not found' })
-                } else {
-                    res.json({
-                        message: 'Successfully Delete Question',
-                    })
-                }
+                res.json({ message: 'Successfully Delete Question' })
             })
             .catch(next);
     }
