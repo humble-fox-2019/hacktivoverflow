@@ -8,8 +8,8 @@
         </div>
         <div class="right">
             <div class="box">
-                <router-link v-if="!this.$store.state.isLogin" to="/auth" >Sign in</router-link>
-                <a href="" v-else @click.prevent="logout">Logout</a>
+                <router-link class="link" v-if="!this.$store.state.isLogin" to="/auth" >Sign in</router-link>
+                <a href="" class="link" v-else @click.prevent="logout">Logout</a>
             </div>
         </div>
     </div>
@@ -33,6 +33,14 @@ export default {
 </script>
 
 <style scoped>
+    .link {
+        color: black;
+        text-decoration: none;
+    }
+    .link:hover{
+        text-decoration-line: underline
+
+    }
     img{
         width: 6vw;
         object-fit: contain;
@@ -60,5 +68,8 @@ export default {
         align-items: center;
         background-color: #efefef;
         border-bottom: 1px solid silver;
+        -webkit-box-shadow: -5px 4px 13px 0px rgba(0,0,0,0.23);
+        -moz-box-shadow: -5px 4px 13px 0px rgba(0,0,0,0.23);
+        box-shadow: -5px 4px 13px 0px rgba(0,0,0,0.23);
     }
 </style>

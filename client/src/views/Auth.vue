@@ -11,7 +11,7 @@
                     <input v-model="password" type="password" placeholder="Password">
                     <button type="submit">Sign In</button>
                 </form>
-                <a href="" @click.prevent="switchForm">Don't have an account?</a>
+                <a class="link" href="" @click.prevent="switchForm">Don't have an account?</a>
 
             </div>
             <div style="width: 50%;" v-else>
@@ -22,7 +22,7 @@
                     <input v-model="password" type="password" placeholder="Password">
                     <button type="submit">Sign Up</button>
                 </form>
-                <a href="" @click.prevent="switchForm">Have an account?</a>
+                <a class="link" href="" @click.prevent="switchForm">Have an account?</a>
             </div>
         </div>
     </div>
@@ -61,6 +61,25 @@ export default {
 </script>
 
 <style scoped>
+    button{
+        padding: 0.6rem 1rem;
+        font-size: 1rem;
+        border-radius: 5px;
+        outline: none;
+        color: white;
+        background-color: #3c85e6;
+    }
+    button:hover{
+        background-color: #2c73d1;
+    }
+    .link {
+        color: black;
+        text-decoration: none;
+    }
+    .link:hover{
+        text-decoration-line: underline
+
+    }
     img{
         width: 70%;
         height: 50%;

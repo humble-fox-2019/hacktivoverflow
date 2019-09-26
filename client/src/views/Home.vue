@@ -27,11 +27,11 @@
                     </div>
                 </div>
                 <div class="right">
-                    <div class="title">
-                        <a href="" style="text-decoration: none;" @click.prevent="test(question)"><p class="limit" v-text="question.title" style="font-weight: 500; color: #288dd6;"></p></a>
+                    <div>
+                        <a href="" style="text-decoration: none;" @click.prevent="test(question)"><p class="limit title" v-text="question.title"></p></a>
                     </div>
                     <div class="description">
-                        <p class="limit" v-html="question.description" style="margin: 0px;"></p>
+                        <p class="limit desc" v-html="question.description" style="margin: 0px;"></p>
                     </div>
                 </div>
             </div>
@@ -103,7 +103,11 @@ export default {
 </script>
 
 <style scoped>
-
+    .title {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #288dd6;
+    }
     .limit{
         width: 60vw;
         height: 4vh;

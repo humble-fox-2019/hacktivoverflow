@@ -18,7 +18,7 @@ class AnswerController {
             questionData.answers.push(answer._id)
             return Question.findOneAndUpdate({
                 _id: req.params.questionId
-            },{ answers: questionData.answers}, { new: true }).populate('answers')
+            },{ answers: questionData.answers}, { new: true }).populate('answers').populate('user')
         })
         .then(answer =>{
             res.status(201).json(answer)

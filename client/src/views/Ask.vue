@@ -6,7 +6,8 @@
                     <p style="font-size: 1.6rem;">Ask a public question</p>
                 </div>
                 <div class="content" style="display:flex; flex-direction: column;">
-                    <div class="box" style="width:100%; margin-bottom: 4vh;">
+                    <div class="box" style="widt
+                    h:100%; margin-bottom: 4vh;">
                         <p class="title">Question Title</p>
                         <input v-model="title" type="text" placeholder="Title">
                     </div>
@@ -43,8 +44,6 @@ export default {
         publish(){
             this.$store.dispatch('publish', { title: this.title, description: this.description})
         }
-    },
-    components:{
     }
 }
 </script>

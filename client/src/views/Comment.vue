@@ -5,7 +5,7 @@
         <div class="root">
             <div class="top slot">
                 <div style="display: flex; align-items: center; justify-content: start; width: 80%;">
-                    <p style="font-size: 2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" v-text="question.title"></p>
+                    <p style="font-size: 1.7rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" v-text="question.title"></p>
                 </div>
                 <div style="display: flex; justify-content: center; align-items: center;">
                     <router-link to="/ask"><button>Ask Question</button></router-link>
@@ -22,11 +22,15 @@
                         <p style="width: 60vw; word-wrap: break-word;" v-html="question.description"></p>
                     </div>
                 </div>
-                <div v-if="belong(question.user._id)" style="display: flex;">
-                    <button class="not" @click="gotoUpdate(question._id)">update</button>
-                    <setting :id="question._id" :category="category('questions')"/>
+                <div style="display: flex; width: 100%; justify-content: space-between; align-items: center">
+                    <p style="font-weight: 500; font-size: 1.3rem; ">{{question.answers.length }} Answers</p>
+                    <div>
+                        <div v-if="belong(question.user._id)" style="display: flex;">
+                            <button class="not" @click="gotoUpdate(question._id)">update</button>
+                            <setting :id="question._id" :category="category('questions')"/>
+                        </div>
+                    </div>
                 </div>
-                <p style="font-weight: 500; font-size: 1.3rem; ">{{question.answers.length }} Answers</p>
             </div>
             <div style="width: 100%; display: flex; border-bottom: 1px solid silver;" v-for="(answer, index) in question.answers" :key="index">
                 <div style="width: 10%; height: 20vh; display: flex; flex-direction: column; justify-content: center; align-items: center; color: #69737C;">
@@ -37,10 +41,12 @@
                 <div >
                     <p style="width:50vw; word-wrap: break-word;" v-html="answer.description"></p>
                 </div>
-                <div v-if="belong(answer.user)">
-                    <button class="not" @click="updateForm(answer)">update</button>
+                <div style=" width: 100%; height: 100%;padding: 1em; display: flex; justify-content:flex-end; position:relative; bottom: 0px;">
+                    <div v-if="belong(answer.user)">
+                        <button class="not" @click="updateForm(answer)">update</button>
+                    </div>
+                    <setting v-if="belong(answer.user)" :id="answer._id" :category="category('answers')"/>
                 </div>
-                <setting v-if="belong(answer.user)" :id="answer._id" :category="category('answers')"/>
             </div>
             <div v-if="!update">
                 <div style="width: 80%;">
@@ -56,7 +62,7 @@
                     <wysiwyg class="formQuestion" v-model="description" />
                 </div>
                 <div style="margin-bottom: 10 vh;">
-                    <button v-if="this.$store.state.isLogin" @click.prevent="updateAnswer">Update</button>
+                    <button style="margin-right: 1vw;" v-if="this.$store.state.isLogin" @click.prevent="updateAnswer">Update</button>
                     <button v-if="update" @click.prevent="commentForm">Cancel</button>
                     <router-link v-else to="/auth"><button>Login</button></router-link>
                 </div>
@@ -162,6 +168,9 @@ export default {
 </script>
 
 <style scoped>
+    .not{
+        margin-right: 1vw;
+    }
     .vote{
         color: #69737C;
     }
