@@ -40,9 +40,9 @@ export default new Vuex.Store({
         url: '/questions/' + id
       })
     },
-    FETCH_QUESTIONS({ commit, state }) {
+    FETCH_QUESTIONS({ commit, state }, tags='') {
       axios({
-        url: '/questions',
+        url: '/questions?tags=' + tags,
         method: 'get'
       }).then(({data}) => {
         commit('SET_QUESTIONS', data);

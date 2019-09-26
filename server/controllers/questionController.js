@@ -3,7 +3,12 @@ const Answer = require('../models/answer');
 
 class QuestionController {
     static findAll(req, res, next) {
-        Question.find()
+        let where = {}
+        if (req.query.tags) {
+            where = { "tags": { $regex: '.*' + req.query.tags + '.*', $options: 'i' } }
+        }
+        
+        Question.find(where)
             .populate('userId', 'name email')
             .sort({ createdAt: -1 })
             .then(questions => {

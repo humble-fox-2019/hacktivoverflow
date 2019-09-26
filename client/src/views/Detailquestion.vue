@@ -61,7 +61,7 @@
                   <router-link
                     v-for="(tag, index) in question.tags"
                     :key="index"
-                    :to="`/tag/${tag}`"
+                    :to="`/?tags=${tag}`"
                   >
                     <span class="badge badge-primary ml-1">{{tag}}</span>
                   </router-link>
@@ -220,6 +220,12 @@ export default {
   },
   computed: {
     ...mapState(["question", "token", "user"])
+  },
+  watch:{
+    '$route' : function () {
+      // console.log(this.$route.query, '<<<')
+      this.$store.dispatch("FETCH_QUESTIONS", this.$route.query.tags);
+    }
   },
   methods: {
     ...mapActions(["FETCH_QUESTION"]),

@@ -28,7 +28,7 @@
               <td colspan="2">
                 <router-link class="font-w600" :to="`/question/${question._id}`">{{question.title}}</router-link>
                 <div class="font-size-sm text-muted mt-5">
-                  <router-link v-for="(tag, index) in question.tags" :key="index" :to="`/tag/${tag}`">
+                  <router-link v-for="(tag, index) in question.tags" :key="index" :to="`/?tags=${tag}`">
                     <span class="badge badge-primary ml-1">{{tag}}</span>
                   </router-link>
                 </div>
@@ -78,9 +78,15 @@ export default {
       return this.$store.state.questions;
     }
   },
+  watch:{
+    '$route' : function () {
+      // console.log(this.$route.query, '<<<')
+      this.$store.dispatch("FETCH_QUESTIONS", this.$route.query.tags);
+    }
+  },
   created() {
     this.token = this.$store.state.token;
-    this.$store.dispatch("FETCH_QUESTIONS");
+    this.$store.dispatch("FETCH_QUESTIONS", this.$route.query.tags);
   }
 };
 </script>
