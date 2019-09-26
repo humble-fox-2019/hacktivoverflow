@@ -1,7 +1,7 @@
 <template>
   <div class="mt-5 d-flex justify-content-center">
     <div class="main-post container pt-5">
-      <div class="container" style="position: fixed;background-color: whitesmoke; width: 61%;">
+      <div class="container sticky-top" style="top: 100px;;background-color: whitesmoke;" >
         <div>
           <h2 class>{{question.title}}</h2>
           <h6 class="mt-3">Posted by : {{question.userId.email}}</h6>
@@ -48,8 +48,8 @@
           </b-modal>
         </div>
       </div>
-      <div class="answers" style="margin-top: 505px;">
-        <div class="overflow-auto">
+      <div class="answers" style="">
+        <div class="overflow-auto pb-5">
           <Card v-for="answer in $store.state.answers" :key="answer._id" :answer="answer"></Card>
         </div>
       </div>

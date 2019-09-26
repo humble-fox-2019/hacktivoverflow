@@ -1,5 +1,5 @@
 <template>
-  <div class="main-card mt-4 rounded p-2">
+  <div class="main-card mt-4 ml-2 mr-2 rounded p-2">
     <div>
       <div>
         <div class="d-flex justify-content-between">
