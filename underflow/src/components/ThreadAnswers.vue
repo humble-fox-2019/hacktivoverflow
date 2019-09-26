@@ -66,15 +66,17 @@ export default {
       votes: 200
     };
   },
-  watch: {
-    voteStatus: function(val) {}
-  },
+  methods: {},
   computed: {
     creationTime() {
       return new Date(this.reply.createdAt).toString().substring(0, 15);
     },
     updateTime() {
       return new Date(this.reply.updatedAt).toString().substring(0, 15);
+    }
+  },
+  created() {
+    if (this.reply.owner._id == localStorage.getItem("id")) {
     }
   }
 };
