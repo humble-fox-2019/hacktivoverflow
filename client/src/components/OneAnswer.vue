@@ -10,8 +10,12 @@
       </div>
       <div class="one">
         <div class="authz" v-if="authz">
-          <button @click="editAnswer"> <i class="fas fa-pencil-alt fa-2x"></i></button>
-          <button><i class="fas fa-trash-alt fa-2x"></i></button>
+          <button @click="editAnswer">
+            <i class="fas fa-pencil-alt fa-2x"></i>
+          </button>
+          <button>
+            <i class="fas fa-trash-alt fa-2x"></i>
+          </button>
         </div>
         <p class="date mini">{{createdAt}}</p>
         <p class="date mini">{{timePass}}</p>
@@ -34,12 +38,14 @@ export default {
       timePass: 0,
       baseUrl: "http://localhost:3000",
       answer: false,
-      authz :  false
+      authz: false,
+      up: false,
+      down: false
     };
   },
   methods: {
     normalize() {
-      console.log("be here");
+      // console.log("be here");
       axios({
         method: "put",
         url: `${this.baseUrl}/answer/normalize/${this.answer._id}`,
@@ -48,7 +54,6 @@ export default {
         }
       })
         .then(data => {
-          console.log("normalize");
           this.updateVote();
         })
         .catch(err => {
@@ -59,66 +64,89 @@ export default {
       if (!localStorage.token) {
         this.$emit("toLogin");
       } else {
-        axios({
-          method: "put",
-          url: `${this.baseUrl}/answer/like/${this.answer._id}`,
-          headers: {
-            token: localStorage.token
-          }
-        })
-          .then(data => {
-            this.updateVote();
+        if (!this.up) {
+          axios({
+            method: "put",
+            url: `${this.baseUrl}/answer/like/${this.answer._id}`,
+            headers: {
+              token: localStorage.token
+            }
           })
-          .catch(err => {
-            this.normalize();
-          });
+            .then(data => {
+              this.updateVote();
+            })
+            .catch(err => {
+              this.normalize();
+            });
+        } else {
+          this.normalize();
+        }
       }
     },
     updateVote() {
-      console.log(this.answer.userId._id);
       axios({
         method: "get",
         url: `${this.baseUrl}/answer/${this.answer._id}`
       }).then(data => {
-          console.log(data);
         let likes = data.data.data.likes.length;
         let dislikes = data.data.data.dislikes.length;
         let total = likes - dislikes;
         this.totalVote = total;
+        this.checkMyVote(data.data.data);
       });
+    },
+    checkMyVote(answer) {
+      this.up = false;
+      this.down = false;
+      for (let k = 0; k < answer.likes.length; k++) {
+        if (
+          answer.likes[k].userId === localStorage._id &&
+          answer.likes[k].userId
+        ) {
+          this.up = true;
+        }
+      }
+      for (let k = 0; k < answer.dislikes.length; k++) {
+        if (
+          answer.dislikes[k].userId === localStorage._id &&
+          question.answer[k].userId
+        ) {
+          this.down = true;
+        }
+      }
     },
     downVote() {
       if (!localStorage.token) {
-        console.log("hello");
         this.$emit("toLogin");
       } else {
-        axios({
-          method: "put",
-          url: `${this.baseUrl}/answer/dislike/${this.answer._id}`,
-          headers: {
-            token: localStorage.token
-          }
-        })
-          .then(data => {
-            this.updateVote();
-            console.log(data);
+        if (!this.up) {
+          axios({
+            method: "put",
+            url: `${this.baseUrl}/answer/dislike/${this.answer._id}`,
+            headers: {
+              token: localStorage.token
+            }
           })
-          .catch(err => {
-            console.log(err.response);
-            this.normalize();
-          });
+            .then(data => {
+              this.updateVote();
+            })
+            .catch(err => {
+              this.normalize();
+            });
+        } else {
+          this.normalize();
+        }
       }
     },
     checkAuthz() {
       if (localStorage.token) {
-          console.log(this.answer.userId, '<<<<<<');
         if (this.answer.userId._id === localStorage._id) {
-          this.authz = true
+          this.authz = true;
         }
       }
     },
-    editAnswer(){
-     this.$router.push({path : `/changeAnswer/${this.answer._id}`})
+    editAnswer() {
+      this.$router.push({ path: `/changeAnswer/${this.answer._id}` });
     }
   },
   created() {
@@ -129,10 +157,10 @@ export default {
       this.answer = response.data.data;
       this.createdAt = new Date(this.answer.createdAt).toDateString();
       this.totalVote = this.answer.likes.length - this.answer.dislikes.length;
-      this.timePass = moment(new Date(this.answer.createdAt)).fromNow()
-      this.checkAuthz()
+      this.timePass = moment(new Date(this.answer.createdAt)).fromNow();
+      this.checkAuthz();
+      this.updateVote();
     });
-    //   console.log(this.answerId, '<<<<<<<<')
   }
 };
 </script>
@@ -180,7 +208,7 @@ export default {
   width: 30px;
   height: 30px;
   margin-right: 5px;
-  margin-bottom: 6px
+  margin-bottom: 6px;
 }
 h1 {
   font-size: 16pt;

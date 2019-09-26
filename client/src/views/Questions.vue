@@ -73,7 +73,9 @@ export default {
 }
 h1 {
   margin-bottom: 25px;
-
+  font-family: 'spinwerad Bold';
+  font-weight:1500;
+  font-size: 38pt
 }
 img {
   width: 60vw;

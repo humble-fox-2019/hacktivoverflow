@@ -70,30 +70,16 @@ export default new Vuex.Store({
           console.log(err)
           console.log('errrorrr')
           console.log(err.response)
-          // console.log(err.response.data.message)
-          // let errors = err
-          // console.log(errors);
-          // context.commit('setErrorMessage', err.response.data.message);
-          // context.dispatch('showError',null, errors)
-          // setInterval(function() {
-          // 	context.commit('setErrorMessage', '');
-          // }, 3000);
         })
-    },
-    showError ({ commit, dispatch }, data) {
-      console.log(data)
-      // if (this.state.errorMessage){
-      //   console.log(this.state.errorMessage, '<<<<<<');
-      // }
-      // else{
-      //   console.log('nooo');
-      // }
     },
     putToken (context) {
       if (localStorage.token) {
         let token = localStorage.token
         context.commit('setToken', token)
       }
-    }
+    },
+    removeToken (context) {
+      context.commit('setToken', false)
+    },
   }
 })

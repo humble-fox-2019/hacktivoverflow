@@ -38,13 +38,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['login', 'putToken']),
+    ...mapActions(['login', 'putToken', 'removeToken']),
     toLogin () {
-      console.log('here')
       this.show = 'flex'
       this.myheight = document.getElementById('app').clientHeight +'px'
-      console.log("masuuuuuuuul")
-      //this.myheight = window.getElementById('app').
     },
     loginUser () {
       let obj = {
@@ -56,7 +53,7 @@ export default {
       this.password = ''
     },
     falseLogin () {
-      console.log('here')
+      // console.log('here')
       this.show = 'none'
     },
     letMeAsk () {
@@ -69,6 +66,7 @@ export default {
     toLogout () {
       localStorage.clear()
       this.isLogin = false
+      this.removeToken()
     }
   },
   computed: {
@@ -84,7 +82,7 @@ export default {
   },
   created () {
     if (localStorage.token) {
-      console.log('aaaaa')
+      // console.log('aaaaa')
       this.putToken()
       this.isLogin = true
       // console.log();
