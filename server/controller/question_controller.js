@@ -70,14 +70,24 @@ class question_controller {
         }
     }
 
+    static createQuestion2 (req,res,next) {
+        let {title ,  description , tagResult } = req.body
+        question.create({
+            title , description ,  tags : tagResult , User : req.decode.data
+        })
+        .then(data=>{
+            res.json(data)  
+        })
+        .catch(next)
+    }
+        
     static detailQuestion (req,res,next){
         question.findById(req.params.id).populate('User').populate('Answer').populate('tags')
         .then(data=>{
-            console.log(data.Answer)
             res.json(data)
         })
         .catch(err=>{
-            console.log(err)
+            next(err)
         })
     }
 
@@ -97,6 +107,7 @@ class question_controller {
                         temp.push(el)
                     }
                     if(index == data.length -1 ){
+                        console.log(temp ,   ' <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<, RESULT')
                         res.json({arr : temp})
                     }
                 })
@@ -104,19 +115,23 @@ class question_controller {
             return Promise.all([p])
         })
         .then(hasil=>{
-            console.log(temp)
+            console.log(temp ,   ' <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<, RESULT')
             res.json({
                 arr: temp
             })
         })
     }
 
+    static filterByTag2 (req,res,next){
+
+    }
+
     static editQuestion (req,res,next){
-        let {title ,  description} = req.body
+        let {title ,  description , tagResult } = req.body
         question.updateOne({
             _id : req.params.id
         },{
-            title ,  description
+            title ,  description , tags : tagResult 
         })
         .then(hasil=>{
             res.json(hasil)
@@ -133,6 +148,7 @@ class question_controller {
         })
         .catch(next)
     }
+
 }
 
 module.exports = question_controller

@@ -13,7 +13,8 @@ var UserSchema = new Schema({
   email : {
       type : String,
       required : true
-  }
+  },
+  watchedTag : []
 });
 UserSchema.pre('save' , function(next){
     this.password = hashingPassword(this.password)

@@ -2,18 +2,17 @@ const { User } = require('../model');
 const {  compare ,  signToken } = require('../helper');
 class user_controller {
     static Register(req,res,next){
-        console.log('errro nya aa ')
         let {username, password , email} = req.body
         User.create({
             username,password, email
         })
         .then(user=>{
             res.status(201).json({
-                token : signToken(user)
+                token : signToken(user),
+                user
             })  
         })
         .catch(err=>{
-            console.log(err)
             next(err)
         })
     }
@@ -32,16 +31,15 @@ class user_controller {
                     })
                 }
                 else {
-                    res.status(400).json({
+                    next({
+                        status : 400 ,
                         message : 'Username or Password Not Found'
                     })
-                    console.log(password , user.password)
-                    console.log('password salah')
                 }
             }
             else {
-                console.log('username salah')
-                res.status(400).json({
+                next({
+                    status : 400 ,
                     message : 'Username or Password Not Found'
                 })
             }
@@ -49,6 +47,24 @@ class user_controller {
         .catch(err=>{
             next(err)
         })
+    }
+
+    static addWathcTag(req,res,next) {
+        let { newTag } = req.body
+        User.findById(req.decode.data._id)
+        .then(user=>{
+            user.watchedTag = newTag
+            user.save()
+        })
+        .catch(next)
+    }
+
+    static getWatchTag(req,res,next){
+        User.findById(req.decode.data._id)
+        .then(user=>{
+            res.json(user.watchedTag)
+        })
+        .catch(next)
     }
 }
 

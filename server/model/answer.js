@@ -10,10 +10,19 @@ const answerSchema = new Schema({
         type : String,
         required : true
     },
-    voter : [{
-        type : Schema.Types.ObjectId,
-        ref : 'User'
-    }],
+    voter : 
+        [
+            {
+                User : {
+                    type : Schema.Types.ObjectId,
+                    ref : 'User'
+                },
+                status : {
+                    type : String
+                }
+
+            }
+        ],
     votes : {
         type : Number,
         ref : 'User',

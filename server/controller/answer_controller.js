@@ -1,6 +1,7 @@
 const { answer ,  question } = require('../model')
 
 class answer_controller {
+    
     static createAnswer (req,res,next){
         let {  question2 , title , description } = req.body
         let answerTemp;

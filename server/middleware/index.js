@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { TokenVerify} = require('../helper')
 // const { article } = require('../model')
-const {  answer } = require('../model')
+const {  answer , question} = require('../model')
 module.exports = {
     VerifyToken : (token)=>{
         try {
@@ -45,6 +45,24 @@ module.exports = {
       .catch(err=>{
         next(err)
       })
+    }
+    ,
+    AuthorizedQuestion : (req,res,next) =>{
+      question.findOne({
+        _id : req.params.id,
+        User : req.decode.data._id
+      })
+      .then(user=>{
+        if(user){
+          next()
+        }else {
+          next({
+             status : 403,
+             message : "you don't have access! "
+          })
+        }
+      })
+      .catch(next)
     }
 }
 
