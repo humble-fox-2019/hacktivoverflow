@@ -20,11 +20,6 @@ const UserSchema = new Schema({
         type: String,
         required: [true, 'Password required'],
         minlength: [8, 'Password minimum length is 8 characters']
-    },
-    role: {
-        type: String,
-        default: 'Customer',
-        match: [/^Customer$|^Admin$|^Shop-Owner$/, 'Only one of three values allowed: Customer, Admin, and Shop-Owner (case sensitive)']
     }
 }, { timestamps: true })
 UserSchema.plugin(uniqueValidator, { message: "{PATH} must be unique" })

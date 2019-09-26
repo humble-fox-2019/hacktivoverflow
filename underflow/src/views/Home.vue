@@ -19,26 +19,56 @@
           </v-container>
         </v-card>
       </v-responsive>
+      <PostModal :dialog="dialog" @toggleDialog="dialog = !dialog" :mode="mode" :key="modalKey" />
     </v-col>
+
+    <v-tooltip top>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          fab
+          color="red"
+          bottom
+          right
+          fixed
+          dark
+          class="ma-4"
+          v-on="on"
+          @click="randomizeModalKey();dialog = !dialog"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </template>
+      <span>New Thread</span>
+    </v-tooltip>
   </v-row>
 </template>
 
 <script>
 import FilterBar from "../components/Filter";
 import ThreadCards from "../components/ThreadCards";
+import PostModal from "../components/PostModal";
 
 export default {
   data() {
-    return { drawer: null };
+    return {
+      dialog: false,
+      drawer: null,
+      mode: "create",
+      modalKey: 0
+    };
   },
   components: {
     FilterBar,
-    ThreadCards
+    ThreadCards,
+    PostModal
   },
   methods: {
-    // toggleDrawer() {
-    //   this.drawer = !this.drawer
-    // }
+    randomizeModalKey() {
+      this.modalKey = Math.floor(Math.random() * 100000);
+    }
   }
 };
 </script>
+
+<style>
+</style>

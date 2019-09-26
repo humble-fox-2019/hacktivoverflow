@@ -3,8 +3,19 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
+import wysiwyg from "vue-wysiwyg";
 
 Vue.config.productionTip = false
+
+Vue.use(wysiwyg, {
+  bold: true,
+  italic: true,
+  underline: true,
+  link: true,
+  code: true,
+  removeFormat: true,
+  // image: false
+})
 
 new Vue({
   router,

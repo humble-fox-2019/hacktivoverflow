@@ -11,10 +11,9 @@ class UserController {
             password: req.body.password
         })
             .then((User) => {
-                const token = createToken({ id: User._id, role: User.role })
+                const token = createToken({ id: User._id, })
                 res.status(201).json({
                     username: User.username,
-                    role: User.role,
                     email: User.email,
                     token
                 })
@@ -27,10 +26,9 @@ class UserController {
         User.findOne({ $or: [{ username: identity }, { email: identity }] })
             .then((User) => {
                 if (User && compare(password, User.password)) {
-                    const token = createToken({ id: User._id, role: User.role })
+                    const token = createToken({ id: User._id, })
                     res.status(200).json({
                         username: User.username,
-                        role: User.role,
                         email: User.email,
                         token
                     })
