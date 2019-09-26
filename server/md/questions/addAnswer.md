@@ -25,8 +25,8 @@ And an answer into question's `answers`.
 ```json
 {
   "_id": ObjectId("5d8b19beadeb0a283a38aa48"),
-  "upvotes": 0,
-  "downvotes": 0,
+  "upvotes": [ ],
+  "downvotes": [ ],
   "answers": [ ],
   "title": "How to use Vuex to cooking pasta?",
   "description": "<p>Random question bro.</p>",

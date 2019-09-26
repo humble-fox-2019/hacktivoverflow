@@ -18,17 +18,16 @@ Used to delete single Answer from server,  if current User has access permission
 
 ```json
 {
-    "_id": "",
-    "answer": "Try to use console.log('Hello World!')",
-    "questionId": "",
-    "userId": "",
-    "upvote": 1, // increased by 1
-    "downvote": 0,
-    "timestamps": {
-      createdAt: "",
-      updatedAt: ""
-    },
-  	"message": "Deleted succesfully"
+  "_id": ObjectId("5d8b0920adeb0a283a38aa46"),
+  "upvotes": 0,
+  "downvotes": 0,
+  "answers": [ ],
+  "title": "Wow",
+  "description": "<p>test</p>",
+  "userId": ObjectId("5d8a410136efcf1493996b23"),
+  "createdAt": ISODate("2019-09-25T06:28:48.140Z"),
+  "updatedAt": ISODate("2019-09-25T06:28:48.140Z"),
+  "__v": 0
 }
 ```
 

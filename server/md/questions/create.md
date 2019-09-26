@@ -26,8 +26,8 @@ Create a single question.
 ```json
 {
   "_id": ObjectId("5d8b0920adeb0a283a38aa46"),
-  "upvotes": 0,
-  "downvotes": 0,
+  "upvotes": [ ],
+  "downvotes": [ ],
   "answers": [ ],
   "title": "Wow",
   "description": "<p>test</p>",

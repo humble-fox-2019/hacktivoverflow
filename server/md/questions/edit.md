@@ -12,14 +12,8 @@ Used to update single Question's detail if current User has access permissions t
 
 ```json
 {
-    "_id": "",
-    "question": "How to do Hello World in python?",
-    "voteUp": 0,
-    "voteDown": 0,
-    "timestamps": {
-      createdAt: "",
-      updatedAt: ""
-    }
+  "title": "Wow",
+  "description": "<p>test</p>",
 }
 ```
 
@@ -33,14 +27,16 @@ Used to update single Question's detail if current User has access permissions t
 
 ```json
 {
-    "_id": "",
-    "question": "How to do Hello World in python?",
-    "voteUp": 0,
-    "voteDown": 0,
-    "timestamps": {
-      createdAt: "",
-      updatedAt: ""
-    }
+  "_id": ObjectId("5d8b0920adeb0a283a38aa46"),
+  "upvotes": [ ],
+  "downvotes": [ ],
+  "answers": [ ],
+  "title": "Wow",
+  "description": "<p>test</p>",
+  "userId": ObjectId("5d8a410136efcf1493996b23"),
+  "createdAt": ISODate("2019-09-25T06:28:48.140Z"),
+  "updatedAt": ISODate("2019-09-25T06:28:48.140Z"),
+  "__v": 0
 }
 ```
 
