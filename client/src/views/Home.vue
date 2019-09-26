@@ -18,6 +18,11 @@ export default {
   components: {
     navbarout
   },
+  created(){
+    if(localStorage.getItem('access_token')){
+      this.$router.go(-1)
+    }
+  }
 };
 </script>
 

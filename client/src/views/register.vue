@@ -85,7 +85,7 @@ export default {
           Swal.close();
           Swal.fire("Success!", "Your Account is Created!", "success");
           this.$router.push("/login").catch(err => {});
-          this.clear()
+          this.clear();
         })
         .catch(error => {
           let message =
@@ -93,12 +93,17 @@ export default {
             "Failed to Register";
           Swal.fire("Error!", message, "error");
         });
+    },
+    clear() {
+      this.name = ""
+      this.password = ""
+      this.email = ""
     }
   },
-  clear(){
-      this.name= "",
-      this.password= "",
-      this.email= ""
+  created() {
+    if (localStorage.getItem("access_token")) {
+      this.$router.go(-1);
+    }
   }
 };
 </script>

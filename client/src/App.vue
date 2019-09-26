@@ -17,8 +17,6 @@ export default {
   created(){
     if(!localStorage.getItem('access_token')){
       this.$router.push('/home').catch(()=>{})
-    } else{
-      this.$router.push('/overflow/all').catch(()=>{})
     }
   }
 };
