@@ -10,12 +10,7 @@ A collection of `/users/` endpoints.
 
 * [Register](md/users/register.md) : `POST /users/register/`
 * [Login](md/users/login.md) : `POST /users/login/`
-
-#### Endpoints that Require Authentication and Authorization
-
-* [Show user information](md/users/getOne.md) : `GET /users/:id/`
-* [Update user information](md/users/update.md) : `PUT /users/:id`
-
+* [Show user information](md/users/getOne.md) : `GET /users/`
 
 
 ## Question Endpoints
