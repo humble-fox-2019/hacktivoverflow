@@ -98,7 +98,10 @@ export default {
     ...mapState(["token", "user"])
   },
   created() {
-    this.getAnswer()
+    this.getAnswer();
+    if(!this.token) {
+      this.$router.push('/login')
+    }
   }
 };
 </script>

@@ -31,19 +31,14 @@
                   <quillEditor v-model="content"></quillEditor>
                 </div>
               </div>
-              
+
               <div class="form-group row" style="padding-top: 120px">
                 <label class="col-lg-3 col-form-label" for="example-hf-email">Tags</label>
                 <div class="col-lg-7">
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Enter tags.."
-                    v-model="tags"
-                  />
+                  <input type="text" class="form-control" placeholder="Enter tags.." v-model="tags" />
                 </div>
               </div>
-              
+
               <div class="form-group row">
                 <div class="col-lg-9 ml-auto">
                   <button type="submit" class="btn btn-alt-primary">Save</button>
@@ -94,13 +89,23 @@ export default {
         headers: {
           token: this.token
         }
-      }).then(({data}) => {
-        this.$router.push('/question/'+data._id)
-      }).catch(errorHandling);
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: "Create question successfully"
+          });
+          this.$router.push("/question/" + data._id);
+        })
+        .catch(errorHandling);
     }
   },
   created() {
-    this.token = this.$store.state.token; 
+    this.token = this.$store.state.token;
+
+    if (!this.token) {
+      this.$router.push("/login");
+    }
   }
 };
 </script>

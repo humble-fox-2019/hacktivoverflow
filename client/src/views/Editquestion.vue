@@ -115,7 +115,9 @@ export default {
       })
       .catch(({ response }) => console.log(response));
 
-    console.log(this.question.title);
+    if(!this.token) {
+      this.$router.push('/login')
+    }
   }
 };
 </script>
