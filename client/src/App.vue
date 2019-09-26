@@ -5,7 +5,7 @@
       <router-link to="/about">About</router-link>
     </div> -->
     <Navbar></Navbar>
-    <router-view/>
+    <router-view id="content"></router-view>
   </div>
 </template>
 
@@ -14,7 +14,10 @@ import Navbar from '@/components/Navbar'
 
 export default {
   name: 'App',
-  components: { Navbar }  
+  components: { Navbar },
+  created() {
+    this.$store.dispatch('checkLogin')
+  }
 }
 </script>
 
@@ -26,9 +29,10 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: black;
+  /* color: #2c3e50; */
 }
-#nav {
+#content {
   padding: 30px;
 }
 

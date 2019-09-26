@@ -18,6 +18,10 @@ const answerSchema = new Schema({
       ref: 'User'
     }
   ],
+  question: {
+    type: Schema.Types.ObjectId,
+    ref: 'Question'
+  },
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User'

@@ -19,13 +19,14 @@ class AnswerController {
   static create(req, res, next) {
     const { description } = req.body
     const questionId = req.params.questionId
+    const user = req.decoded._id
     let question
 
     Question.findById(questionId)
       .then(found => {
         if (found) {
           question = found
-          return Answer.create({ description })
+          return Answer.create({ description, user })
         } else {
           next({status: 404, message: 'Question ID not found'})
         }

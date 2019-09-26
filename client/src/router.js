@@ -9,33 +9,34 @@ export default new Router({
   base: process.env.BASE_URL,
   routes: [
     {
+      path: '/question/:id',
+      name: 'question',
+      component: () => import('./views/Question.vue')
+    },
+    {
+      path: '/question/edit/:id',
+      name: 'question-edit',
+      component: () => import('./views/EditQuestion.vue'),
+    },
+    {
       path: '/',
       name: 'home',
       component: Home
     },
     {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
-    },
-    {
       path: '/signup',
       name: 'signup',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Signup.vue')
+      component: () => import('./views/Signup.vue')
     },
     {
       path: '/signin',
       name: 'signin',
-      // route level code-splitting
-      // this generates a separate chunk (about.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import(/* webpackChunkName: "about" */ './views/Signin.vue')
+      component: () => import('./views/Signin.vue')
+    },
+    {
+      path: '/ask',
+      name: 'Ask',
+      component: () => import('./views/Ask.vue')
     }
   ]
 })

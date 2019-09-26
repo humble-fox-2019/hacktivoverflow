@@ -1,12 +1,16 @@
 const router = require('express').Router()
 const QuestionController = require('../controllers/question')
 const { authentication } = require('../middlewares/authentication')
+const { isQuestionOwner } = require('../middlewares/authorization')
+
+router.get('/', QuestionController.findAll)
+router.get('/:id', QuestionController.findOne)
 
 router.use(authentication)
 router.post('/', QuestionController.create)
-router.get('/', QuestionController.findAll)
-router.put('/:id', QuestionController.update)
-router.delete('/:id', QuestionController.delete)
+router.put('/:id', isQuestionOwner, QuestionController.update)
+router.delete('/:id', isQuestionOwner, QuestionController.delete)
+
 router.post('/:id/upvote', QuestionController.upvote)
 router.post('/:id/downvote', QuestionController.downvote)
 

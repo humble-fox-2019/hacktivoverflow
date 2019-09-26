@@ -3,11 +3,42 @@ const Question = require('../models/question')
 class QuestionController {
 
   static findAll(req, res, next) {
-    Question.find()
-      .then(questions => {
-        res.status(200).json(questions)
-      })
-      .catch(next)
+    // Question.find().populate('user')
+    //   .then(questions => {
+    //     res.status(200).json(questions)
+    //   })
+    //   .catch(next)
+
+    Question.find().sort([['createdAt', -1]]).populate('user')
+    .then(questions => {
+      res.status(200).json(questions)
+    })
+    .catch(next)
+    
+  }
+
+  static findOne(req, res, next) {
+    const _id = req.params.id
+
+    Question.findOne({ _id })
+    .populate({
+      path: 'answers',
+      model: 'Answer',
+      // options: {
+      //     sort: {
+      //         'createdAt': -1
+      //     }
+      // },
+      populate: {
+          path: 'user',
+          select: 'name email createdAt'
+      }
+    })
+    .populate('user')
+    .then(question => {
+      res.status(200).json(question)
+    })
+    .catch(next) 
   }
 
   static create(req, res, next) {
