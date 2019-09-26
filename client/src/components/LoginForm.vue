@@ -76,7 +76,9 @@ export default {
 
             })
             .catch( err => {
+              if( err.response.data )
                 Swal.fire('Login Failed' , err.response.data , 'error')
+              else console.log( err )
             })
         },
         register() {
