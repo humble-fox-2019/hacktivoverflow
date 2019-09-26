@@ -22,11 +22,14 @@
                     <span class="mx-2">asked</span>
                     <em>{{getTimeAgo(question.createdAt)}}</em>
                   </div>
-                  <div
-                    style="margin-left: auto"
-                    v-if="question.userId._id === user.id"
-                  >
-                    <button class="btn btn-sm btn-danger" @click="doDeleteQuestion()">
+                  <div style="margin-left: auto" v-if="question.userId._id === user.id">
+                    <router-link
+                      class="btn btn-sm btn-primary"
+                      :to="`/question/edit/${question._id}`"
+                    >
+                      <i class="fas fa-edit"></i>
+                    </router-link>
+                    <button class="btn btn-sm btn-danger ml-1" @click="doDeleteQuestion()">
                       <i class="fas fa-eraser"></i>
                     </button>
                   </div>
@@ -85,10 +88,20 @@
                     <div style="display: flex; align-items: center">
                       <a href="#">{{answer.userId.name}}</a>
                       <span class="mx-2">answered</span>
-                      <em>{{getTimeAgo(answer.userId.createdAt)}}</em>
+                      <em>{{getTimeAgo(answer.createdAt)}}</em>
                     </div>
-                    <div style="margin-left: auto" v-if="answer.userId._id === user.id" >
-                      <button class="btn btn-sm btn-danger" @click="doDeleteAnsware(answer._id)">
+                    <div style="margin-left: auto" v-if="answer.userId._id === user.id">
+                      <router-link
+                        class="btn btn-sm btn-primary"
+                        :to="`/answer/edit/${answer._id}`"
+                      >
+                        <i class="fas fa-edit"></i>
+                      </router-link>
+
+                      <button
+                        class="btn btn-sm btn-danger ml-1"
+                        @click="doDeleteAnswer(answer._id)"
+                      >
                         <i class="fas fa-eraser"></i>
                       </button>
                     </div>
@@ -195,7 +208,11 @@ export default {
     };
   },
   created() {
-    this.FETCH_QUESTION(this.$route.params.id);
+    this.FETCH_QUESTION(this.$route.params.id)
+      .then(({ data }) => {
+        this.$store.commit("SET_QUESTION", data);
+      })
+      .catch(err => {});
   },
   components: {
     quillEditor,
@@ -207,7 +224,6 @@ export default {
   methods: {
     ...mapActions(["FETCH_QUESTION"]),
     getTimeAgo: date => {
-      // moment().tz("Asia/Jakarta").format();
       return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
     },
     doUpVoteQuestion(questionId) {
@@ -224,7 +240,11 @@ export default {
             title: data.message
           });
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -242,7 +262,11 @@ export default {
             title: data.message
           });
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -260,7 +284,11 @@ export default {
             title: data.message
           });
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -278,7 +306,11 @@ export default {
             title: data.message
           });
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -296,7 +328,11 @@ export default {
             title: data.message
           });
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -314,7 +350,11 @@ export default {
             title: data.message
           });
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -338,7 +378,11 @@ export default {
 
           this.content = "";
 
-          this.FETCH_QUESTION(this.$route.params.id);
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
         })
         .catch(errorHandling);
     },
@@ -369,7 +413,7 @@ export default {
         }
       });
     },
-    doDeleteAnsware(answerId) {
+    doDeleteAnswer(answerId) {
       Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -390,7 +434,11 @@ export default {
             .then(result => {
               Swal.fire("Deleted!", "Your file has been deleted.", "success");
 
-              this.FETCH_QUESTION(this.$route.params.id);
+              this.FETCH_QUESTION(this.$route.params.id)
+                .then(({ data }) => {
+                  this.$store.commit("SET_QUESTION", data);
+                })
+                .catch(err => {});
             })
             .catch(errorHandling);
         }

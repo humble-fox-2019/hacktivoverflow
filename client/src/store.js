@@ -9,7 +9,9 @@ export default new Vuex.Store({
   state: {
     token: "",
     user: {},
-    question: {},    
+    question: {
+      userId: ""
+    },    
     questions: []
   },
   mutations: {
@@ -34,13 +36,9 @@ export default new Vuex.Store({
   },
   actions: {
     FETCH_QUESTION({ commit, state }, id) {
-      axios({
+      return axios({
         url: '/questions/' + id
       })
-        .then(({ data }) => {
-        commit('SET_QUESTION', data)
-      })
-      .catch(({ response }) => console.log(response))
     },
     FETCH_QUESTIONS({ commit, state }) {
       axios({
@@ -53,4 +51,7 @@ export default new Vuex.Store({
       .catch(({ response }) => console.log(response))
     }
   },
+  getters: {
+    question: (state) => state.question
+  }
 });

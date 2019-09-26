@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 export default {
   name: "home",
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     getTimeAgo: (date) => {
-      return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
+      return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).tz('Asia/Jakarta').fromNow();
     }
   },
   computed: {
@@ -80,7 +80,6 @@ export default {
   },
   created() {
     this.token = this.$store.state.token;
-
     this.$store.dispatch("FETCH_QUESTIONS");
   }
 };
