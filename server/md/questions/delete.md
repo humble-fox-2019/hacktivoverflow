@@ -46,6 +46,6 @@ Used to delete single Question from the server, if current User has access permi
 
 ```json
 {
-		"errors": "Unauthorized"
+  "errors": "Unauthorized"
 }
 ```

@@ -45,6 +45,6 @@ Used to update single Question's `downvotes`.
 
 ```json
 {
-		"message": "Unauthorized"
+  "message": "Unauthorized"
 }
 ```

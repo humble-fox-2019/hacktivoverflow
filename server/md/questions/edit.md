@@ -50,6 +50,6 @@ Used to update single Question's detail if current User has access permissions t
 
 ```json
 {
-		"message": "Unauthorized"
+  "message": "Unauthorized"
 }
 ```

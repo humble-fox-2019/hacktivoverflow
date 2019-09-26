@@ -42,6 +42,6 @@ Used to update single Answer `upvote`.
 
 ```json
 {
-		"message": "Unauthorized"
+  "message": "Unauthorized"
 }
 ```

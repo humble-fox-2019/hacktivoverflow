@@ -36,16 +36,16 @@ Used to update single Answer's detail  if current User has access permissions to
 
 ```json
 {
-    "_id": "",
-    "answer": "Try to use console.log('Hello World!')!!",
-    "questionId": "",
-    "userId": "",
-    "upvote": 1, // increased by 1
-    "downvote": 0,
-    "timestamps": {
-      createdAt: "",
-      updatedAt: ""
-    }
+  "_id": "",
+  "answer": "Try to use console.log('Hello World!')!!",
+  "questionId": "",
+  "userId": "",
+  "upvote": 1, // increased by 1
+  "downvote": 0,
+  "timestamps": {
+    createdAt: "",
+    updatedAt: ""
+  }
 }
 ```
 
@@ -59,6 +59,6 @@ Used to update single Answer's detail  if current User has access permissions to
 
 ```json
 {
-		"message": "Unauthorized"
+  "message": "Unauthorized"
 }
 ```
