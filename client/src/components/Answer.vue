@@ -28,7 +28,7 @@
             class="text-blue-600 hover:text-blue-400 focus:outline-none mr-12"
             >Edit</router-link
           >
-          <button @click="deleteAnswer(answer._id)" class="text-red-600 hover:text-red-500">
+          <button @click="deleteAnswer(answer._id)" class="text-red-600 hover:text-red-500 focus:outline-none">
             Delete
           </button>
         </div>

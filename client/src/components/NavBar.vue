@@ -15,7 +15,7 @@
       </div>
 
       <div v-else class="w-2/12 ml-auto flex items-center justify-around text-sm">
-        <button @click="userSignOut" class="px-3 py-1 bg-red-500 text-white rounded text-sm">
+        <button @click="userSignOut" class="px-3 py-1 bg-red-500 text-white rounded text-sm focus:outline-none">
           Logout
         </button>
       </div>

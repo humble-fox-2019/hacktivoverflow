@@ -35,14 +35,14 @@
           <button
             @click.prevent="newQuestion"
             v-if="$router.currentRoute.name === 'ask'"
-            class="bg-blue-500 px-2 py-2 rounded text-white"
+            class="bg-blue-500 px-2 py-2 rounded text-white focus:outline-none"
           >
             Post your question
           </button>
           <button
             @click.prevent="editQuestion"
             v-else
-            class="bg-blue-500 px-2 py-2 rounded text-white"
+            class="bg-blue-500 px-2 py-2 rounded text-white  focus:outline-none"
           >
             Save edits
           </button>

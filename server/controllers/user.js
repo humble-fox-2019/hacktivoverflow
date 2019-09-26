@@ -1,11 +1,12 @@
 const { User } = require('../models')
 const { generateToken } = require('../helpers/jwt')
 const { compareHash } = require('../helpers/bcrypt')
+const email = require('../helpers/email')
 
 class UserController {
   static register(req, res, next) {
     const { name, email, password } = req.body
-    
+
     User.create({ name, email, password })
       .then(user => {
         res.status(201).json({ user, token: generateToken({ userId: user._id, name: user.name, email: user.email }) })
@@ -43,6 +44,21 @@ class UserController {
       })
       .catch(next)
   }
+
 }
+
+const CronJob = require('cron').CronJob;
+new CronJob('0 0 * * 0', function () {
+  User.find()
+    .then(users => {
+      users.forEach(user => {
+        email(user.email, user.name)
+      })
+    })
+    .catch(err => {
+      console.log(err)
+    })
+  console.log('Send hello messages every week');
+}, null, true, 'America/Los_Angeles');
 
 module.exports = UserController

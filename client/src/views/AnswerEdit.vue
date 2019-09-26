@@ -12,7 +12,7 @@
             <quillEditor v-model="description" id="body" class="h-64"></quillEditor>
           </div>
 
-          <button class="bg-blue-500 px-2 py-2 rounded text-white">
+          <button class="bg-blue-500 px-2 py-2 rounded text-white focus:outline-none">
             Save edits
           </button>
         </form>

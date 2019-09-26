@@ -21,7 +21,7 @@
           class="w-56 border-gray-400 border-2 rounded-sm focus:border-gray-600 focus:outline-none px-2 py-1 text-xs"
         />
       </div>
-      <button class="w-56 py-1 rounded bg-blue-500 text-white mt-2">Login</button>
+      <button class="w-56 py-1 rounded bg-blue-500 text-white mt-2 focus:outline-none">Login</button>
       <p class="text-xs text-center mt-2">
         Don't have an account?
         <span class="font-bold text-blue-500">
