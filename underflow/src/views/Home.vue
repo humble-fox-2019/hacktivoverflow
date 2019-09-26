@@ -11,7 +11,10 @@
               <v-col cols="12">
                 <FilterBar />
               </v-col>
-              <ThreadCards />
+
+              <!-- Loop Cards -->
+              <ThreadCards v-for="(n, i) in 12" :key="n" :metaThread="i" />
+              <!-- Loop End -->
             </v-row>
           </v-container>
         </v-card>

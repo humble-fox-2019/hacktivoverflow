@@ -69,9 +69,24 @@
 
       <!-- End Loop -->
     </v-row>
-    <v-btn fab color="cyan" bottom right fixed dark class="ma-4" @click="dialog = !dialog">
-      <v-icon>mdi-plus</v-icon>
-    </v-btn>
+    <v-tooltip top>
+      <template v-slot:activator="{ on }">
+        <v-btn
+          fab
+          color="cyan"
+          bottom
+          right
+          fixed
+          dark
+          class="ma-4"
+          v-on="on"
+          @click="dialog = !dialog"
+        >
+          <v-icon>mdi-plus</v-icon>
+        </v-btn>
+      </template>
+      <span>Reply</span>
+    </v-tooltip>
   </v-container>
 </template>
 

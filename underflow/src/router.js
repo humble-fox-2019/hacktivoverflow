@@ -14,7 +14,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/thread/:post_id',
+      path: '/thread/:postId',
       name: 'thread',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route

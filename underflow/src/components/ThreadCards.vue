@@ -21,14 +21,17 @@
         class="text-truncate"
       >Text Text Text Text Text Text Text TextText Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text Text</v-card-text>
       <v-card-actions>
-        <v-btn block @click="$router.push({name: 'thread', data: {id: 123}} )">View</v-btn>
+        <v-btn block @click="$router.push({name: 'thread', params: {postId: metaThread}} )">View</v-btn>
       </v-card-actions>
     </v-card>
   </v-col>
 </template>
 
 <script>
-export default {};
+export default {
+  props: ["metaThread"],
+  created() {}
+};
 </script>
 
 <style>
