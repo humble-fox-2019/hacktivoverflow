@@ -48,15 +48,15 @@ const actions = {
 
         localStorage.setItem('token', token)
         myaxios.defaults.headers.token = token
+        Vue.$toast.info(`Nice to meet you, ${user.name}!`)
         commit('auth_success', { user, token })
       })
       .catch(err => {
-        console.log(err)
+        Vue.$toast.error(`${err.response.data.errors[0]}`)
       })
       .finally(() => {
         commit('loadingFinished')
         router.push('/dashboard')
-        Vue.$toast.info(`Nice to meet you, ${state.user.name}!`)
       })
   },
 
@@ -69,15 +69,16 @@ const actions = {
 
         localStorage.setItem('token', token)
         myaxios.defaults.headers.token = token
+        Vue.$toast.info(`Welcome, ${user.name}!`)
         commit('auth_success', { user, token })
       })
       .catch(err => {
         console.log(err)
+        Vue.$toast.error(`${err.response.data.errors[0]}`)
       })
       .finally(() => {
         commit('loadingFinished')
         router.push('/dashboard')
-        Vue.$toast.info(`Welcome ${state.user.name}!`)
       })
   },
 
@@ -91,7 +92,7 @@ const actions = {
       return myaxios.get('/users')
         .then(({ data }) => {
           commit('auth_success', { user: data, token })
-          // router.push('/dashboard')
+          router.push('/dashboard')
         })
         .catch(err => {
           console.log(err)
@@ -103,7 +104,7 @@ const actions = {
         })
 
     } else {
-      router.push('/login')
+      if (router.currentRoute.name !== 'login') router.push('/login')
     }
   }
 }

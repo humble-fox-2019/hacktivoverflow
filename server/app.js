@@ -9,7 +9,8 @@ const errorHandler = require('./middlewares/errorHandler')
 const app = express()
 const PORT = process.env.PORT || 3000
 
-mongoose.connect('mongodb://localhost:27017/hacktiv-overflow-test', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
+// mongoose.connect('mongodb://localhost:27017/hacktiv-overflow-test', { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
+mongoose.connect(process.env.ATLAS_CONNECT, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex: true, useFindAndModify: false })
   .then(_ => {
     console.log('Database: connected')
   })

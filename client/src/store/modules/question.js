@@ -26,13 +26,14 @@ const actions = {
     return myaxios.post('questions', payload)
       .then(({ data }) => {
         console.log(data)
+        Vue.$toast.info('Question succesfully created')
       })
       .catch(err => {
         console.log(err.response.data)
+        Vue.$toast.error('Failed to create a question')
       })
       .finally(() => {
         commit('loadingFinished')
-        Vue.$toast.info('Question succesfully created')
         router.push('/questions')
       })
   },
@@ -77,24 +78,30 @@ const actions = {
       .then(({ data }) => {
         console.log(data)
         dispatch('fetchSingleQuestion')
+        Vue.$toast.info('Answer added succesfully')
         // commit('addToQuestion', data.question)
       })
       .catch(err => {
         console.log(err.response.data)
+        Vue.$toast.error('Failed to add an answer')
       })
       .finally(() => {
         commit('loadingFinished')
       })
   },
 
-  questionUp({ commit, dispatch }) {
+  questionUp({ commit, dispatch, state }) {
     const questionId = router.currentRoute.params.id
     commit('loadingStart')
 
     return myaxios.patch(`questions/${questionId}/upvote`)
       .then(({ data }) => {
-        console.log(data)
+
+        // console.log(state.user)
+        // console.log(data.question.upvotes)
+
         dispatch('fetchSingleQuestion')
+        Vue.$toast.info('Upvote success')
         // commit('addToQuestion', data.question)
       })
       .catch(err => {
@@ -113,6 +120,7 @@ const actions = {
       .then(({ data }) => {
         console.log(data)
         dispatch('fetchSingleQuestion')
+        Vue.$toast.info('Downvote success')
         // commit('addToQuestion', data.question)
       })
       .catch(err => {
@@ -130,15 +138,16 @@ const actions = {
     return myaxios.put(`questions/${questionId}`, payload)
       .then(({ data }) => {
         console.log(data)
+        Vue.$toast.info('Question succesfully edited')
         dispatch('fetchQuestions')
         // commit('addToQuestion', data.question)
       })
       .catch(err => {
         console.log(err)
+        Vue.$toast.error('Failed to edit question')
       })
       .finally(() => {
         commit('loadingFinished')
-        Vue.$toast.info('Question succesfully created')
         router.push('/questions')
       })
   },
@@ -150,15 +159,17 @@ const actions = {
     return myaxios.delete(`questions/${questionId}`)
       .then(({ data }) => {
         console.log(data)
+        Vue.$toast.info('Question succesfully deleted')
         dispatch('fetchQuestions')
         // commit('addToQuestion', data.question)
       })
       .catch(err => {
-        console.log(err)
+        Vue.$toast.error('Failed to delete question')
+        console.log(err.response.data)
       })
       .finally(() => {
         commit('loadingFinished')
-        Vue.$toast.info('Question succesfully deleted')
+        Vue.$toast.info('Answer succesfully deleted')
         router.push('/questions')
       })
   }

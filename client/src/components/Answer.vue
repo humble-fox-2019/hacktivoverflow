@@ -21,28 +21,29 @@
 
       <div class="flex">
         <div class="text-sm ml-5">Posted by: {{ answer.userId.name }}</div>
-      </div>
 
-      <!-- <div v-if="question.userId._id === user._id" class="flex text-sm ml-auto">
-        <router-link
-          :to="'/questions/edit/' + question._id"
-          class="text-blue-600 hover:text-blue-400 focus:outline-none mr-12"
-          >Edit</router-link
-        >
-        <button @click="deleteQuestion" class="text-red-600 hover:text-red-500">
-          Delete
-        </button>
-      </div> -->
+        <div v-if="answer.userId._id == user._id" class="flex text-sm ml-auto">
+          <router-link
+            :to="'/answers/edit/' + answer._id"
+            class="text-blue-600 hover:text-blue-400 focus:outline-none mr-12"
+            >Edit</router-link
+          >
+          <button @click="deleteAnswer(answer._id)" class="text-red-600 hover:text-red-500">
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   props: ['answer'],
-  methods: mapActions(['answerUp', 'answerDown'])
+  methods: mapActions(['answerUp', 'answerDown', 'editAnswer', 'deleteAnswer']),
+  computed: mapGetters(['user'])
 }
 </script>
 

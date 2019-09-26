@@ -55,12 +55,11 @@ export default {
 
       this.userSignIn(payload).finally(() => {
         this.loadingFinished()
-        this.$router.push('dashboard')
       })
     }
   },
   computed: {
-    ...mapGetters(['user'])
+    ...mapGetters(['user', 'isLogin'])
   }
 }
 </script>

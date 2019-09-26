@@ -2,7 +2,7 @@
   <div id="app" class="flex">
     <loading :active.sync="isLoading" :is-full-page="true"></loading>
     <NavBar></NavBar>
-    <div v-if="$router.currentRoute.name !== 'ask' && $router.currentRoute.name !== 'question-edit'">
+    <div v-if="$router.currentRoute.name !== 'ask' && $router.currentRoute.name !== 'question-edit' && $router.currentRoute.name !== 'answer-edit'">
       <SideBar v-if="isLogin"></SideBar>
     </div>
     <router-view />

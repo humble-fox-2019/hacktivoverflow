@@ -2,7 +2,14 @@
   <div class="w-screen flex pt-12 bg-gray-200">
     <div class="h-auto container mx-auto">
       <div class="m-12">
-        <h1 class="text-3xl mb-4">Ask a public question</h1>
+        <h1 v-if="$router.currentRoute.name === 'ask'" class="text-3xl mb-4">
+          Ask a public question
+        </h1>
+
+        <h1 v-else class="text-3xl mb-4">
+          Edit question
+        </h1>
+
         <form class="p-5 bg-white rounded">
           <div class="mb-4">
             <label for="title" class="font-bold">Question title</label>

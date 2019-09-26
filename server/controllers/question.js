@@ -33,7 +33,7 @@ class QuestionController {
   static upvote(req, res, next) {
     const { id } = req.params
     const { userId } = req.decode
-    
+
     console.log(userId)
 
     Question.findById(id)
@@ -47,7 +47,9 @@ class QuestionController {
           question.upvotes.push(userId)
           return question.save()
         } else {
-          throw next({ status: 400, message: 'Bad request' })
+          const index = question.upvotes.indexOf(userId)
+          question.upvotes.splice(index, 1)
+          return question.save()
         }
       })
       .then(question => {
@@ -71,7 +73,9 @@ class QuestionController {
           question.downvotes.push(userId)
           return question.save()
         } else {
-          throw next({ status: 400, message: 'Bad request' })
+          const index = question.downvotes.indexOf(userId)
+          question.downvotes.splice(index, 1)
+          return question.save()
         }
       })
       .then(question => {
@@ -86,7 +90,7 @@ class QuestionController {
     const { description } = req.body
 
     console.log(id, description)
-    Answer.create({ description, userId })
+    Answer.create({ description, userId, questionId: id })
       .then(answer => {
         return Question.findByIdAndUpdate(id, { $push: { answers: answer._id } }, { new: true })
       })
@@ -113,16 +117,11 @@ class QuestionController {
 
     Question.findByIdAndDelete(id)
       .then(question => {
-        // const promises = []
-        // question.answers.forEach(el => {
-        //   promises.push(Answer.findByIdAndDelete(el._id))
-        // })
-        // return Promise.all(promises)
-        res.status(200).json({ question })
+        return Answer.deleteMany({ questionId: question._id })
       })
-      // .then(() => {
-      //   res.status(200).json({ message: 'Succesfully deleted' })
-      // })
+      .then(() => {
+        res.status(200).json({ message: 'Question succesfully deleted' })
+      })
       .catch(next)
   }
 }

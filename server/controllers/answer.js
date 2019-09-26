@@ -1,13 +1,22 @@
-const { Answer } = require('../models')
+const { Question, Answer } = require('../models')
 
 class AnswerController {
-  static create(req, res, next) {
-    const { description } = req.body
-    const { userId } = req.decode
+  // static create(req, res, next) {
+  //   const { description } = req.body
+  //   const { userId } = req.decode
 
-    Answer.create({ description, userId })
+  //   Answer.create({ description, userId })
+  //     .then(answer => {
+  //       res.status(201).json({ answer })
+  //     })
+  //     .catch(next)
+  // }
+
+  static getOne(req, res, next) {
+    const { id } = req.params
+    Answer.findById(id)
       .then(answer => {
-        res.status(201).json({ answer })
+        res.status(200).json({ answer })
       })
       .catch(next)
   }
@@ -37,7 +46,9 @@ class AnswerController {
           answer.upvotes.push(userId)
           return answer.save()
         } else {
-          throw next({ status: 400, message: 'Bad request' })
+          const index = answer.upvotes.indexOf(userId)
+          answer.upvotes.splice(index, 1)
+          return answer.save()
         }
       })
       .then(answer => {
@@ -61,7 +72,9 @@ class AnswerController {
           answer.downvotes.push(userId)
           return answer.save()
         } else {
-          throw next({ status: 400, message: 'Bad request' })
+          const index = answer.downvotes.indexOf(userId)
+          answer.downvotes.splice(index, 1)
+          return answer.save()
         }
       })
       .then(answer => {
@@ -72,7 +85,16 @@ class AnswerController {
 
   static delete(req, res, next) {
     const { id } = req.params
-    
+
+    Answer.findByIdAndDelete(id)
+      .then(answer => {
+
+        return Question.findByIdAndUpdate(answer.questionId, { $pull: { answers: answer._id } })
+      })
+      .then(question => {
+        res.status(200).json({ question })
+      })
+      .catch(next)
   }
 }
 
