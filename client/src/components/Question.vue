@@ -19,7 +19,7 @@
       </div>
       <div id="content-question" class="d-flex flex-column align-items-start mr-auto">
         <h4>{{ question.title }}</h4>
-        <span style="text-align: start">{{ question.description }}</span>
+        <div v-html="question.description" style="text-align: start" ></div>
         <div id="tags" class="mt-2">
           <b-button v-for="tag in question.tags" :key="tag" variant="outline-secondary" size="sm" pill style="font-size: 0.8em; margin-left: 5px">{{ tag }}</b-button>
         </div>

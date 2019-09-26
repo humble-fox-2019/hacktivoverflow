@@ -1,9 +1,5 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div> -->
     <Navbar></Navbar>
     <router-view id="content"></router-view>
   </div>
@@ -43,5 +39,9 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+
+.quill-editor {
+  border-radius: 10px !important;
 }
 </style>

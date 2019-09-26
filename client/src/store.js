@@ -198,6 +198,57 @@ export default new Vuex.Store({
       })
     },
 
+    editAnswer ({dispatch, commit, state}, payload) {
+      // console.log(data.payload)
+      console.log('masuk edit answer >>>>>>>>>>>>>>>>>>.')
+      return new Promise ((res, rej) => {
+        axios({
+          url: `/answers/${payload.answerId}`,
+          method: 'PATCH',
+          headers: {
+            token: state.auth.token
+          },
+          data: payload.data
+        })
+        .then(({ data }) => {
+          console.log(data)
+          dispatch('getQuestion', payload.questionId)
+          res('Answer updated successfully!')
+        })
+        .catch(err => {
+          console.log(err)
+          if (err.response) {
+            console.log(err.response)
+            rej(err.response.data.errors)
+          }      
+        })
+      })
+    },
+
+    deleteAnswer ({dispatch, commit, state}, payload) {
+      return new Promise ((res, rej) => {
+        axios({
+          url: `/answers/${payload.answerId}`,
+          method: 'DELETE',
+          headers: {
+            token: state.auth.token
+          }
+        })
+        .then(({ data }) => {
+          console.log(data)
+          dispatch('getQuestion', payload.questionId)
+          res('Answer deleted successfully!')
+        })
+        .catch(err => {
+          console.log(err)
+          if (err.response) {
+            console.log(err.response)
+            rej(err.response.data.errors)
+          }      
+        })
+      })
+    },
+
     upvoteQuestion ({dispatch, commit, state}, questionId) {
       return new Promise ((res, rej) => {
         axios({
@@ -341,26 +392,5 @@ export default new Vuex.Store({
         })
       })
     }
-
-    // fetchAnswers ({dispatch, commit, state}, id) {
-    //   return new Promise ((res, rej) => {
-    //     axios({
-    //       url: `/answers/${id}`,
-    //       method: 'GET'
-    //     })
-    //     .then(({ data }) => {
-    //       console.log(data, '<<<< fetch answers')
-    //       commit('FETCH_ANSWERS', data)
-    //       res()
-    //     })
-    //     .catch(err => {
-    //       if (err.response) {
-    //         console.log(err.response)
-    //         rej(err.response.data.errors)
-    //       }    
-    //     })
-    //   })
-    // }
-
   }
 })

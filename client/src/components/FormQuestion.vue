@@ -3,11 +3,14 @@
     <b-form class="d-flex flex-column align-items-start" @submit="onSubmit" @reset="onReset" v-if="show">
       <h2 v-if="action === 'add'">Add Question</h2>
       <h2 v-else>Edit Question</h2>
-      <b-form-input id="title" class="my-2" v-model="form.title" type="text" placeholder="Title" required></b-form-input>
-      <b-form-input id="description" class="my-2" v-model="form.description" type="text" placeholder="Description" required></b-form-input>
+      <b-form-input id="title" class="mt-3 my-2" v-model="form.title" type="text" placeholder="Title" required></b-form-input>
+      <!-- <b-form-input id="description" class="my-2" v-model="form.description" type="text" placeholder="Description" required></b-form-input> -->
+      <quill-editor class="my-2" v-model="form.description"
+              ref="myQuillEditor">
+      </quill-editor>
       <b-form-input id="tag" class="my-2" v-model="form.tags" type="text" placeholder="Input multiple tags, separate with ' , ' " required></b-form-input>
 
-      <b-form-group class="d-flex flex-row mt-2 mb-0">
+      <b-form-group class="d-flex flex-row mt-4 mb-0">
         <b-button class="mr-1" type="submit" size="sm" variant="outline-warning">
           <b-spinner v-if="loading" small type="grow"></b-spinner>
           Submit
@@ -149,3 +152,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  quill-editor {
+    margin-bottom: 10px;
+  }
+</style>

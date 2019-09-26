@@ -23,9 +23,7 @@
           </div>
       </div>
       <div class="d-flex flex-column align-items-start justify-content-between mr-auto">
-          <div>
-              {{ question.description }}
-          </div>
+          <div v-html="question.description" style="text-align: start" ></div>
           <div id="tags" class="mt-2">
             <b-button v-for="tag in question.tags" :key="tag" variant="outline-secondary" size="sm" pill style="font-size: 0.8em; margin-left: 5px">{{ tag }}</b-button>
           </div>
