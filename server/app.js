@@ -5,6 +5,7 @@ const PORT = 3000
 const cors = require('cors')
 const mongoose = require('mongoose')
 const index = require('./routes')
+const cron = require('./helpers/cronjob')
 // const databse = 'mongodb://localhost:27017/coderfairy'
 const dbatlas = 'mongodb+srv://ayusudi:ayusudi@cluster0-acddn.mongodb.net/coderfairy?retryWrites=true&w=majority'
 
@@ -26,6 +27,8 @@ mongoose.connect(dbatlas, {
 })
 
 app.use('/', index)
+
+cron()
 
 app.listen(PORT, function(){
   console.log(`Hello from port ${PORT}`);
