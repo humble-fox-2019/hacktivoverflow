@@ -27,6 +27,11 @@ export default new Router({
       path: '/question/:id',
       name: 'question',
       component: () => import('./views/Comment.vue')
+    },
+    {
+      path: '/update/:id',
+      name: 'update',
+      component: () => import('./views/UpdateQuestion.vue')
     }
   ]
 })

@@ -21,6 +21,25 @@ export default new Vuex.Store({
     }
   },
   actions: {
+    updateQuestion(context, payload){
+      Swal.showLoading()
+      axios({
+        url: `${baseUrl}/questions/edit/${payload.id}`,
+        method: 'patch',
+        headers: {
+          token: localStorage.getItem('token')
+        },
+        data:{
+          title: payload.title,
+          description: payload.description
+        }
+      })
+      .then(({data})=>{
+        Swal.close()
+        router.push('/')
+      })
+      .catch(errorHandler)
+    },
     updateAnswer(context, payload){
       Swal.showLoading()
       return new Promise((resolve, reject)=>{

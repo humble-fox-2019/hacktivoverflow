@@ -22,7 +22,10 @@
                         <p style="width: 60vw; word-wrap: break-word;" v-html="question.description"></p>
                     </div>
                 </div>
-                <setting v-if="belong(question.user._id)" :id="question._id" :category="category('questions')"/>
+                <div v-if="belong(question.user._id)" style="display: flex;">
+                    <button class="not" @click="gotoUpdate(question._id)">update</button>
+                    <setting :id="question._id" :category="category('questions')"/>
+                </div>
                 <p style="font-weight: 500; font-size: 1.3rem; ">{{question.answers.length }} Answers</p>
             </div>
             <div style="width: 100%; display: flex; border-bottom: 1px solid silver;" v-for="(answer, index) in question.answers" :key="index">
@@ -86,6 +89,9 @@ export default {
         setting
     },
     methods:{
+        gotoUpdate(id){
+            this.$router.push(`/update/${id}`)
+        },
         updateAnswer(){
             this.$store.dispatch('updateAnswer',{ id: this.update, description: this.description })
             .then(data=>{
@@ -150,8 +156,7 @@ export default {
         this.$store.dispatch('fetchAQuestion', this.$route.params.id)
         .then(data =>{
             this.question = data
-        })
-        
+        })   
     }
 }
 </script>

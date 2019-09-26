@@ -106,7 +106,7 @@ export default {
 
     .limit{
         width: 60vw;
-        height: 5vh;
+        height: 4vh;
         overflow: hidden;
         text-overflow: ellipsis;
     }

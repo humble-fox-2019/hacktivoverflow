@@ -11,7 +11,18 @@ class QuestionController {
         })
         .catch(next)
     }
-
+    static update(req, res, next){
+        const { title, description } = req.body
+        Question.updateOne({
+            _id: req.params.id
+        },{ title, description })
+        .then(_ =>{
+            res.status(200).json({
+                message: "successfully updated"
+            })
+        })
+        .catch(next)
+    }
     static getAllQuestions(req, res, next){
         Question.find().sort({ updatedAt: 'desc'}).populate('answers').then(questions => {
             if(questions){
