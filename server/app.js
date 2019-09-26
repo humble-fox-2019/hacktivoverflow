@@ -17,8 +17,6 @@ const email = require('./helper/email')
 
 
 app.use(express.json())
-mongoose.connect('mongodb://localhost:27017/tes-overflow', {useNewUrlParser: true},()=>{
-})
 mongoose.connect(`mongodb://${process.env.USERNAME123}:${process.env.PASSWORD}@cluster0-shard-00-00-s62ed.mongodb.net:27017,cluster0-shard-00-01-s62ed.mongodb.net:27017,cluster0-shard-00-02-s62ed.mongodb.net:27017/hacktiv-overflow-2?ssl=true&replicaSet=Cluster0-shard-0&authSource=admin&retryWrites=true&w=majority`, {useNewUrlParser: true},()=>{
 })
 .then(data=>{

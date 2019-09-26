@@ -121,7 +121,7 @@ export default {
     fetchData (){
       axios({
       method: "GET",
-      url: `http://localhost:3000/question/${this.$route.params.id}`,
+      url: `http://34.87.7.44/question/${this.$route.params.id}`,
       headers: {
         token: localStorage.getItem("token")
       }
@@ -131,7 +131,7 @@ export default {
         console.log(data);
         return axios({
           method: "GET",
-          url: `http://localhost:3000/answer/${this.$route.params.id}`,
+          url: `http://34.87.7.44/answer/${this.$route.params.id}`,
           headers: {
             token: localStorage.getItem("token")
           }
@@ -153,7 +153,7 @@ export default {
         .then(data2 => {
           return axios({
             method: "GET",
-            url: `http://localhost:3000/answer/${this.$route.params.id}`,
+            url: `http://34.87.7.44/answer/${this.$route.params.id}`,
             headers: {
               token: localStorage.getItem("token")
             }
@@ -181,7 +181,7 @@ export default {
     upVote(id){
       axios({
        method : 'PUT',
-       url : `http://localhost:3000/vote/${id}/question/upvote`,
+       url : `http://34.87.7.44/vote/${id}/question/upvote`,
        headers : {
            token : localStorage.getItem('token')
        },
@@ -200,7 +200,7 @@ export default {
     downVote(id){
        axios({
        method : 'PUT',
-       url : `http://localhost:3000/vote/${id}/question/downvote`,
+       url : `http://34.87.7.44/vote/${id}/question/downvote`,
        headers : {
            token : localStorage.getItem('token')
        },
@@ -219,7 +219,7 @@ export default {
     upVoteAnswer (id){
       axios({
        method : 'PUT',
-       url : `http://localhost:3000/vote/${id}/answer/upvote`,
+       url : `http://34.87.7.44/vote/${id}/answer/upvote`,
        headers : {
            token : localStorage.getItem('token')
        },
@@ -238,7 +238,7 @@ export default {
     downVoteAnswer (id){
       axios({
        method : 'PUT',
-       url : `http://localhost:3000/vote/${id}/answer/downvote`,
+       url : `http://34.87.7.44/vote/${id}/answer/downvote`,
        headers : {
            token : localStorage.getItem('token')
        },
