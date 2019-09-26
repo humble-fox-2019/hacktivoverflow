@@ -40,7 +40,7 @@ class QuestionController {
         if (tags) {
             tags = tags.split(',')
         }
-        
+
         Question
             .create({
                 title,
@@ -98,7 +98,7 @@ class QuestionController {
 
     static upVote(req, res, next) {
         Question
-            .findByIdAndUpdate({ _id: req.params.id}, {
+            .findByIdAndUpdate({ _id: req.params.id }, {
                 $pull: { downvotes: req.decode.id }
             })
             .then(data => {
@@ -112,10 +112,10 @@ class QuestionController {
             .then(data => {
                 console.log(data, req.decode.id);
                 if (data) {
-                    throw next({ statusCode: 400, msg: "You has vote this question" })
+                    throw next({ statusCode: 400, msg: "You has upvote this question" })
                 } else {
                     return Question
-                        .findByIdAndUpdate({ _id: req.params.id}, {
+                        .findByIdAndUpdate({ _id: req.params.id }, {
                             $push: { upvotes: req.decode.id }
                         })
                 }
@@ -138,15 +138,19 @@ class QuestionController {
             .then(data => {
                 return Question
                     .findOne({
+                        _id: req.params.id,
                         downvotes: req.decode.id
                     })
             })
             .then(data => {
-                if (data) return data
-                return Question
-                    .findByIdAndUpdate(req.params.id, {
-                        $push: { downvotes: req.decode.id }
-                    })
+                if (data) {
+                    throw next({ statusCode: 400, msg: "You has downvote this question" })
+                } else {
+                    return Question
+                        .findByIdAndUpdate(req.params.id, {
+                            $push: { downvotes: req.decode.id }
+                        })
+                }
             })
             .then(data => {
                 if (!data) {

@@ -16,9 +16,20 @@
             <tbody>
               <tr class="table-active">
                 <td class="d-none d-sm-table-cell"></td>
-                <td class="font-size-sm text-muted">
-                  <a href="#">{{question.userId.name}}</a> asked
-                  <em>{{getTimeAgo(question.createdAt)}}</em>
+                <td class="font-size-sm text-muted" style=" display:flex;">
+                  <div style="display: flex; align-items: center">
+                    <a href="#">{{question.userId.name}}</a>
+                    <span class="mx-2">asked</span>
+                    <em>{{getTimeAgo(question.createdAt)}}</em>
+                  </div>
+                  <div
+                    style="margin-left: auto"
+                    v-if="question.userId._id === this.$store.state.user.id"
+                  >
+                    <button class="btn btn-sm btn-danger" @click="doDeleteQuestion()">
+                      <i class="fas fa-eraser"></i>
+                    </button>
+                  </div>
                 </td>
               </tr>
               <tr>
@@ -42,7 +53,7 @@
                   <h2>{{question.title}}</h2>
 
                   <p v-html="question.content"></p>
-                  
+
                   <hr />
                   <router-link
                     v-for="(tag, index) in question.tags"
@@ -70,9 +81,17 @@
               <template v-for="answer in question.answers">
                 <tr class="table-active" id="forum-reply-form" :key="`headAnsware${answer._id}`">
                   <td class="d-none d-sm-table-cell"></td>
-                  <td class="font-size-sm text-muted">
-                    <a href="#">{{answer.userId.name}}</a> answared
-                    <em>{{getTimeAgo(answer.userId.createdAt)}}</em>
+                  <td class="font-size-sm text-muted" style="display: flex">
+                    <div style="display: flex; align-items: center">
+                      <a href="#">{{answer.userId.name}}</a>
+                      <span class="mx-2">answered</span>
+                      <em>{{getTimeAgo(answer.userId.createdAt)}}</em>
+                    </div>
+                    <div style="margin-left: auto">
+                      <button class="btn btn-sm btn-danger" @click="doDeleteAnsware(answer._id)">
+                        <i class="fas fa-eraser"></i>
+                      </button>
+                    </div>
                   </td>
                 </tr>
                 <tr :key="`bodyAnsware${answer._id}`">
@@ -93,7 +112,7 @@
                     </small>
                   </td>
                   <td>
-                    <p>{{answer.content}}</p>
+                    <p v-html="answer.content"></p>
                     <hr />
                   </td>
                 </tr>
@@ -114,20 +133,13 @@
                       />
                     </a>
                   </div>
-                  <small>
-                    240 Reputation
-                    <br />Level 9
-                  </small>
+                  <small>240 Reputation</small>
                 </td>
                 <td>
-                  <form
-                    action="be_pages_forum_discussion.html"
-                    method="post"
-                    onsubmit="return false;"
-                  >
+                  <form v-on:submit.prevent="doAddAnsware">
                     <div class="form-group row">
                       <div class="col-12">
-                        <quillEditor></quillEditor>
+                        <quillEditor v-model="content"></quillEditor>
                       </div>
                     </div>
                     <br />
@@ -173,9 +185,15 @@ import Vote from "@/components/Vote.vue";
 import axios from "@/apis/axios";
 import errorHandling from "@/helpers/errorHandling";
 import Toast from "@/helpers/toast";
+import Swal from "sweetalert2";
 
 export default {
   name: "detailquestion",
+  data() {
+    return {
+      content: ""
+    };
+  },
   created() {
     this.FETCH_QUESTION(this.$route.params.id);
   },
@@ -189,6 +207,7 @@ export default {
   methods: {
     ...mapActions(["FETCH_QUESTION"]),
     getTimeAgo: date => {
+      // moment().tz("Asia/Jakarta").format();
       return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
     },
     doUpVoteQuestion(questionId) {
@@ -298,6 +317,84 @@ export default {
           this.FETCH_QUESTION(this.$route.params.id);
         })
         .catch(errorHandling);
+    },
+    doAddAnsware() {
+      axios({
+        url: "/answers",
+        method: "post",
+        data: {
+          content: this.content,
+          questionId: this.$route.params.id
+        },
+        headers: {
+          token: this.token
+        }
+      })
+        .then(({ data }) => {
+          Toast.fire({
+            type: "success",
+            title: data.message
+          });
+
+          this.content = "";
+
+          this.FETCH_QUESTION(this.$route.params.id);
+        })
+        .catch(errorHandling);
+    },
+    doDeleteQuestion() {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          axios({
+            url: "/questions/" + this.$route.params.id,
+            method: "delete",
+            headers: {
+              token: this.token
+            }
+          })
+            .then(result => {
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+              this.$router.push("/");
+            })
+            .catch(errorHandling);
+        }
+      });
+    },
+    doDeleteAnsware(answerId) {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!"
+      }).then(result => {
+        if (result.value) {
+          axios({
+            url: "/answers/" + answerId,
+            method: "delete",
+            headers: {
+              token: this.token
+            }
+          })
+            .then(result => {
+              Swal.fire("Deleted!", "Your file has been deleted.", "success");
+
+              this.FETCH_QUESTION(this.$route.params.id);
+            })
+            .catch(errorHandling);
+        }
+      });
     }
   }
 };

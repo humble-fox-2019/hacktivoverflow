@@ -11,7 +11,7 @@ const express = require('express'),
       MONGO_CONNECTION = process.env.MONGO_CONNECTION,
       app = express()
 
-mongoose.connect(MONGO_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true }, function(err) {
+mongoose.connect(MONGO_CONNECTION, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false }, function(err) {
   if(err) console.log('Database connection failed')
   else console.log('Database connection success')
 });
