@@ -29,8 +29,3 @@
   user: UserId  
   ```
 
-
-
-YANG BELUM
-
-- authorization
