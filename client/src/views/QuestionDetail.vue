@@ -10,7 +10,7 @@
         </div>
 
         <div class="flex w-3/5">
-          <div class="flex flex-col justify-center text-gray-500">
+          <div class="flex flex-col justify-start text-gray-500">
             <button @click="questionUp" class="text-5xl focus:outline-none hover:text-gray-600">
               <i class="fas fa-caret-up"></i>
             </button>

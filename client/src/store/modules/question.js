@@ -169,7 +169,7 @@ const actions = {
       })
       .finally(() => {
         commit('loadingFinished')
-        Vue.$toast.info('Answer succesfully deleted')
+        Vue.$toast.info('Question succesfully deleted')
         router.push('/questions')
       })
   }

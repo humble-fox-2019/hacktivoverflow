@@ -9,6 +9,9 @@ const state = {
 const mutations = {
   addToAnswer(state, payload) {
     state.answer = payload
+  },
+  resetAnswer(state) {
+    state.answer = ''
   }
 }
 

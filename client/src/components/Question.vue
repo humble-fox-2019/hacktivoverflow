@@ -19,7 +19,7 @@
         {{ question.title }}
       </router-link>
 
-      <div v-html="question.description" class="text-sm">
+      <div v-html="question.description" class="text-sm overflow-hidden h-20">
         <!-- {{ question.description.substring(0, 100) + '...' }} -->
       </div>
     </div>
