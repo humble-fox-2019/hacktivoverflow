@@ -5,31 +5,47 @@ const { generateToken } = require('../helpers/jwt');
 class UserController {
 
 
-    static info(req, res, next){
+    static info(req, res, next) {
         const _id = req.decode._id;
         User.findOne({
             _id
         })
-        .then(user => {
-            res.status(200).json(user);
-        })
-        .catch(next);
+            .then(user => {
+                res.status(200).json(user);
+            })
+            .catch(next);
     }
 
-    static addWatcher(req, res, next){
+    static addWatcher(req, res, next) {
         const _id = req.decode._id;
         const { tag } = req.body;
         User.findOneAndUpdate({
             _id
-        },{
-            $push:{ watchers: tag}
-        },{
+        }, {
+            $push: { watchers: tag }
+        }, {
             new: true
         })
-        .then(user => {
-            res.status(200).json(user);
+            .then(user => {
+                res.status(200).json(user);
+            })
+            .catch(next)
+    }
+
+    static removeWatcher(req, res, next) {
+        const _id = req.decode._id;
+        const { tag } = req.body;
+        User.findOneAndUpdate({
+            _id
+        }, {
+            $pull: { watchers: tag }
+        }, {
+            new: true
         })
-        .catch(next)
+            .then(user => {
+                res.status(200).json(user);
+            })
+            .catch(next)
     }
 
     static create(req, res, next) {

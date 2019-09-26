@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import axios from "axios";
 import Swal from "sweetalert2";
-const url = "http://localhost:3000";
+const url = "http://35.240.133.37";
 
 Vue.use(Vuex);
 

@@ -43,12 +43,12 @@
                 v-model="content"
                 placeholder="Input answer"
               />
-              <button class="reg-btn btn mt-4">Post Answer</button>
+              <button class="reg-btn btn mt-4" style="background-color: whitesmoke;">Post Answer</button>
             </form>
           </b-modal>
         </div>
       </div>
-      <div class="answers" style="margin-top: 410px;">
+      <div class="answers" style="margin-top: 505px;">
         <div class="overflow-auto">
           <Card v-for="answer in $store.state.answers" :key="answer._id" :answer="answer"></Card>
         </div>
@@ -61,7 +61,7 @@
 import Card from "../components/AnswerCard.vue";
 import axios from "axios";
 import Swal from "sweetalert2";
-const url = "http://localhost:3000";
+const url = "http://35.240.133.37";
 export default {
   data() {
     return {
@@ -196,6 +196,7 @@ button:hover {
 }
 .reg-btn {
   width: 100% !important;
+  background-color: whitesmoke !important;
   border: 3px solid hsl(201, 97%, 63%) !important;
   font-family: "Roboto", sans-serif !important;
   font-weight: bolder !important;

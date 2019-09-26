@@ -14,8 +14,8 @@
             />
           </form>
         </div>
-        <div class="mt-2">
-          <Tag v-for="(tag, index) in watcher" :key="index" :tag="tag"></Tag>
+        <div class="mt-2 d-flex flex-warp">
+          <Tag v-for="(tag, index) in watcher" :key="index" :tag="tag" @getTag="getWatcher"></Tag>
         </div>
       </div>
       <div>
@@ -31,9 +31,9 @@
 <script>
 import axios from "axios";
 import Swal from "sweetalert2";
-import Tag from "../components/Tag";
+import Tag from "../components/Watcher";
 import Card from "../components/Card";
-const url = "http://localhost:3000";
+const url = "http://35.240.133.37";
 export default {
   data() {
     return {

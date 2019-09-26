@@ -6,6 +6,6 @@ router.post('/login', user.login);
 router.use(Authentication);
 router.get('/', user.info);
 router.patch('/add', user.addWatcher);
-// router.patch('/remove', user.removeWatcher);
+router.patch('/remove', user.removeWatcher);
 
 module.exports = router;
