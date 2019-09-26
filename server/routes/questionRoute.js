@@ -17,6 +17,7 @@ router.post('/', QuestionController.store);
 router.use("/:id", questionCheck);
 router.patch('/:id', QuestionController.update);
 router.delete('/:id', QuestionController.delete);
+router.put('/:id', QuestionController.solution);
 
 
 module.exports = router;

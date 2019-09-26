@@ -86,6 +86,29 @@ class QuestionController {
             })
             .catch(next);
     }
+    
+    static solution(req, res, next) {
+        
+        Question
+            .findOneAndUpdate({
+                _id: req.params.id,
+                answers: req.body.answerId
+            }, {
+                solution: req.body.answerId
+            }, { new: true, omitUndefined: true })
+            .populate('userId', 'name email')
+            .populate('solution')
+            .populate('answers')
+            .then(data => {
+                if (!data) {
+                    next({ statusCode: 404, msg: 'Question / answer not found' })
+                }
+                else {
+                    res.json({message: 'select solution success', data});
+                }
+            })
+            .catch(next);
+    }
 
     static delete(req, res, next) {
         Question

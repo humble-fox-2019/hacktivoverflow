@@ -46,11 +46,6 @@
                     :downAction="doDownVoteQuestion"
                     :removeAction="doRemoveVoteQuestion"
                   />
-
-                  <small>
-                    446 Reputation
-                    <br />
-                  </small>
                 </td>
                 <td>
                   <h2>{{question.title}}</h2>
@@ -90,10 +85,19 @@
                       <span class="mx-2">answered</span>
                       <em>{{getTimeAgo(new Date(answer.createdAt))}}</em>
                     </div>
-                    <div style="margin-left: auto" v-if="answer.userId._id === user.id">
+                    <div style="margin-left: auto">
+                      <button
+                        class="btn btn-sm btn-success ml-1"
+                        v-if="answer._id != question.solution&&question.userId._id === user.id"
+                        @click="beSolution(answer._id)"
+                      >
+                        <i class="fas fa-check"></i> Make be solution
+                      </button>
+
                       <router-link
-                        class="btn btn-sm btn-primary"
+                        class="btn btn-sm btn-primary ml-1"
                         :to="`/answer/edit/${answer._id}`"
+                        v-if="answer.userId._id === user.id"
                       >
                         <i class="fas fa-edit"></i>
                       </router-link>
@@ -101,6 +105,7 @@
                       <button
                         class="btn btn-sm btn-danger ml-1"
                         @click="doDeleteAnswer(answer._id)"
+                        v-if="answer.userId._id === user.id"
                       >
                         <i class="fas fa-eraser"></i>
                       </button>
@@ -119,8 +124,8 @@
                       :removeAction="doRemoveVoteAnswer"
                     />
 
-                    <small>
-                      446 Reputation
+                    <small class="text-success" v-if="answer._id === question.solution">
+                      <i class="fas fa-check"></i> solution
                       <br />
                     </small>
                   </td>
@@ -146,7 +151,6 @@
                       />
                     </a>
                   </div>
-                  <small>240 Reputation</small>
                 </td>
                 <td>
                   <form v-on:submit.prevent="doAddAnsware">
@@ -221,8 +225,8 @@ export default {
   computed: {
     ...mapState(["question", "token", "user"])
   },
-  watch:{
-    '$route' : function () {
+  watch: {
+    $route: function() {
       // console.log(this.$route.query, '<<<')
       this.$store.dispatch("FETCH_QUESTIONS", this.$route.query.tags);
     }
@@ -449,6 +453,31 @@ export default {
             .catch(errorHandling);
         }
       });
+    },
+    beSolution(answerId) {
+      axios({
+        url: "/questions/" + this.$route.params.id,
+        method: "put",
+        data: {
+          answerId
+        },
+        headers: {
+          token: this.token
+        }
+      })
+        .then(result => {
+          Toast.fire({
+            type: "success",
+            title: result.data.message
+          });
+          
+          this.FETCH_QUESTION(this.$route.params.id)
+            .then(({ data }) => {
+              this.$store.commit("SET_QUESTION", data);
+            })
+            .catch(err => {});
+        })
+        .catch(errorHandling);
     }
   }
 };
