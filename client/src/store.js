@@ -4,7 +4,8 @@ import axios from 'axios'
 import Swal from 'sweetalert2'
 import router from './router';
 
-const base_url = "http://localhost:3000"
+//const base_url = "http://localhost:3000"
+const base_url = "http://3.15.232.156"
 
 Vue.use(Vuex)
 function swal(text) {
