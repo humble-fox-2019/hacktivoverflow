@@ -9,7 +9,16 @@ class userController {
             name, email, password
         })
             .then(user => {
-                res.status(201).json(user)
+                let payload = {
+                    id: user._id,
+                    email: user.email
+                }
+                let token = tokenGenerate(payload)
+                res.status(201).json({
+                    id: user._id,
+                    token: token
+                })
+
             })
             .catch(next)
     }
@@ -26,7 +35,7 @@ class userController {
 
                     let token = tokenGenerate(payload)
                     res.status(200).json({
-                        message: `Logged In Success`,
+                        id: user._id,
                         token: token
                     })
                 } else {

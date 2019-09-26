@@ -3,6 +3,7 @@ const questController = require('../controllers/question')
 const authentication = require('../middlewares/authentication')
 const router = express.Router()
 
+router.get('/', questController.realAll)
 router.use(authentication)
 router.post('/', questController.create)
 router.patch('/:id/upvote', questController.upvote)

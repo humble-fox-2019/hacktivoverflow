@@ -26,7 +26,9 @@ const questionSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "Answer"
     }]
-})
+}, {
+        timestamps: true
+    })
 
 questionSchema.pre('save', function (next) {
     this.upvote = this.upvote

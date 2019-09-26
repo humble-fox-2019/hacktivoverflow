@@ -6,4 +6,5 @@ const router = express.Router()
 
 router.use('/users', userRouter)
 router.use('/questions', questionRouter)
+router.use('/answers', answerRouter)
 module.exports = router
