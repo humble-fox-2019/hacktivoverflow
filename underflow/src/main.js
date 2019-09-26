@@ -14,7 +14,6 @@ Vue.use(wysiwyg, {
   link: true,
   code: true,
   removeFormat: true,
-  // image: false
 })
 
 new Vue({

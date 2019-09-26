@@ -75,7 +75,7 @@
       </v-col>
 
       <!-- Start Loop Answers -->
-      <v-col cols="12" v-for="n in 12" :key="n">
+      <v-col cols="12" v-for="n in 10" :key="n">
         <ThreadAnswer :index="n" />
       </v-col>
 

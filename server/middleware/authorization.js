@@ -1,12 +1,13 @@
 const Thread = require('../models/Thread')
 
 module.exports = (req, res, next) => {
-    const ThreadId = req.params.ThreadId
-    const Id = req.decode.Id
-    Thread.findById(ThreadId)
+    let id = req.params.id
+    if (req.params.replyId) id = req.params.replyId
+    const userId = req.decode.id
+    Thread.findById(id)
         .then((Thread) => {
             if (Thread) {
-                if (Thread.owner == Id) {
+                if (Thread.owner == userId) {
                     next()
                 } else {
                     let err = new Error('You have no authorization on this Thread')

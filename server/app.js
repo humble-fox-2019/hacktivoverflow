@@ -1,6 +1,8 @@
 
 const NODE_ENV = process.env.NODE_ENV
 
+console.log(NODE_ENV);
+
 if (NODE_ENV === 'development' || NODE_ENV === 'test') {
     require('dotenv').config()
 }
@@ -9,7 +11,7 @@ const express = require('express'),
     app = express(),
     mongoose = require('mongoose'),
     environment = NODE_ENV ? "-" + NODE_ENV : "",
-    db = "HacktivOverflow",
+    db = "Underflow",
     url = process.env.URL || "mongodb://localhost:27017/",
     port = process.env.PORT || 3000,
     route = require('./routes'),
@@ -35,4 +37,3 @@ app.use('/', route)
 app.use(errorHandler)
 
 app.listen(port, () => console.log('Listening on port: ' + port))
-    

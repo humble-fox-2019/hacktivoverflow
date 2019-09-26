@@ -2,26 +2,69 @@
 const Thread = require('../models/Thread');
 
 class ThreadController {
-    static create(req, res, next) {
-        const { title, body, replies } = req.body
-        Thread.create({ title, body, replies })
+    static createThread(req, res, next) {
+        const userId = req.decode.id
+        const { title, body } = req.body
+        Thread.create({ title, body, owner: userId, thread: true })
             .then((Thread) => {
                 res.status(201).json(Thread)
             })
             .catch(next);
     };
     static read(req, res, next) {
-        Thread.find({})
+        Thread.find({ thread: true })
             .then((Threads) => {
                 res.status(200).json(Threads)
             })
             .catch(next);
     };
 
+    static readMine(req, res, next) {
+        const id = req.decode.id
+        Thread.find({ owner: id, thread: true })
+            .then((Threads) => {
+                res.status(200).json(Threads)
+            }).catch(next);
+    }
+
+    static readThread(req, res, next) {
+        const id = req.params.id
+        Thread.findById({ _id: id })
+            .populate('replies')
+            .then((result) => {
+                res.status(200).json(result)
+            }).catch(next);
+    }
+
+    static replyThread(req, res, next) {
+        const id = req.params.id
+        const { title, body } = req.body
+        const userId = req.decode.id
+        Thread.create({ title, body, owner: userId })
+            .then(reply => {
+                return Thread.findByIdAndUpdate(id, { $push: { replies: reply._id } }, { new: true }).populate('replies')
+            })
+            .then(Thread => {
+                res.status(201).json(Thread)
+            })
+            .catch(next)
+    }
+
+
+
     static update(req, res, next) {
         const id = req.params.id
-        const { title, body, replies } = req.body
-        Thread.update({ _id: id }, { $set: { title, body, replies } }, { runValidators: true })
+        const { title, body } = req.body
+        Thread.findByIdAndUpdate(id, { $set: { title, body } }, { runValidators: true, new: true })
+            .then((Thread) => {
+                res.status(200).json(Thread)
+            }).catch(next);
+    }
+
+    static updateReply(req, res, next) {
+        const replyId = req.params.replyId
+        const { title, body } = req.body
+        Thread.findByIdAndUpdate(replyId, { $set: { title, body } }, { runValidators: true, new: true })
             .then((Thread) => {
                 res.status(200).json(Thread)
             }).catch(next);
@@ -29,12 +72,22 @@ class ThreadController {
 
     static delete(req, res, next) {
         const id = req.params.id
-        Thread.delete({ _id: id })
+        Thread.findByIdAndDelete(id)
             .then((Thread) => {
                 res.status(200).json(Thread)
             })
             .catch(next);
     };
+
+    static deleteReply(req, res, next) {
+        const threadId = req.params.id
+        const replyId = req.params.replyid
+        Thread.findByIdAndUpdate(threadId, { $pull: { replies: replyId } }, { new: true })
+            .then((Thread) => {
+                res.status(200).json(Thread)
+            })
+            .catch(next)
+    }
 };
 
 module.exports = ThreadController

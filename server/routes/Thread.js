@@ -1,10 +1,22 @@
 
 const Router = require('express').Router(),
-    ThreadController = require('../controllers/Thread')
+    ThreadController = require('../controllers/Thread'),
+    authentication = require('../middleware/authentication'),
+    authorization = require('../middleware/authorization')
 
-Router.post('/', ThreadController.create)
+Router.get('/:id', ThreadController.readThread)
 Router.get('/', ThreadController.read)
-Router.put('/:id', ThreadController.update)
-Router.delete('/:id', ThreadController.delete)
+
+Router.use(authentication)
+Router.post('/', ThreadController.createThread)
+Router.post('/reply/:id', ThreadController.replyThread)
+
+// * Original Poster
+Router.put('/update/:id', authorization, ThreadController.update)
+Router.delete('/delete/:id', authorization, ThreadController.delete)
+
+// * Replies
+Router.put('/reply/:replyId', authorization, ThreadController.updateReply)
+Router.delete('/reply/:id/:replyId', authorization, ThreadController.deleteReply)
 
 module.exports = Router;
