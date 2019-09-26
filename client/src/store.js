@@ -214,9 +214,7 @@ export default new Vuex.Store({
             .then(({ data }) => {
                 Swal.close()
                 swal('Successfully create answer')
-                setTimeout(() => {
-                    dispatch('findOneQuestion', data._id)
-                }, 1700)
+                dispatch('findOneQuestion', data._id)
             })
             .catch(err => {
                 swalerr('Created Answer failed', err.response.data.message)
@@ -235,6 +233,7 @@ export default new Vuex.Store({
                 }
             })
             .then(({ data }) => {
+              console.log(data)
                 Swal.close()
                 commit('SETQUESTION', data)
             })
@@ -257,9 +256,10 @@ export default new Vuex.Store({
             .then(({ data }) => {
                 Swal.close()
                 swal('Succes delete question')
-                setTimeout(() => {
-                  dispatch('userQuestion')
-                }, 2000)
+                dispatch('userQuestion')
+                // setTimeout(() => {
+                  
+                // }, 2000)
             })
             .catch(err => {
               swalerr('Fail delete question', err.response.data.message)
@@ -286,9 +286,7 @@ export default new Vuex.Store({
 
                 Swal.close()
                 swal('Sucess update question')
-                setTimeout(() => {
                     dispatch('userQuestion')
-                }, 2000)
             })
             .catch(err => {
                 swalerr('Fail update question', err.response.data.message)

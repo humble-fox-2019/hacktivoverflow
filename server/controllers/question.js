@@ -62,21 +62,22 @@ class questionController {
         Question.find({
             author: req.decode.id
         })
-            .populate({
-                path: 'author',
-                select: ['name', 'updatedAt']
-            })
-            .populate({
-                path: 'answer',
-                populate: [
-                    {
-                        path: 'author',
-                        select: ['name', 'updatedAt']
-                    }
-                ]
-            })
-            .sort([['updatedAt', -1]])
+            // .populate({
+            //     path: 'author',
+            //     select: ['name', 'updatedAt']
+            // })
+            // .populate({
+            //     path: 'answer',
+            //     populate: [
+            //         {
+            //             path: 'author',
+            //             select: ['name', 'updatedAt']
+            //         }
+            //     ]
+            // })
+            // .sort([['updatedAt', -1]])
             .then((found) => {
+                console.log(found)
                 res.status(200).json(found)
             })
             .catch(next)
