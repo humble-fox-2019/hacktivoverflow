@@ -1,24 +1,26 @@
 const CronJob = require('cron').CronJob;
-const User = require('../models/User')
-const sendEmail = require('../helpers/nodeEmailer')
+const Answer = require('./models/Answer')
+const sendEmail = require('./helpers/nodeEmailer')
 
-new CronJob(' 0 8 * * 1', function() {
+new CronJob('0 8 * * 1', function() {
 
-    User.find()
-    .then(users=>{
-        let promises = []
-        for (let user of users){
+    Answer.find().populate("UserId")
+    .then(allanswers=>{
+        
+        let max = Number.MIN_SAFE_INTEGER
+        let userEmail = ""
+        if (allanswers.length>0){
 
-            let email = user.email
-            // promises.push(email)
-            promises.push(sendEmail(email))
+            for (let answer of allanswers){
+                let votes = answer.upvotes.length - answer.downvotes.length
+                if(votes>max){
+                    userEmail = answer.UserId.email
+                    max = votes
+                }
+            }
+            sendEmail(userEmail)
         }
-        return Promise.all(promises)
     })
-    .then(()=>{
-    })
-    .catch(err=>{
-    })  
-//   console.log('You will see this message every second');
+
 }, null, true, 'Asia/Jakarta');
 

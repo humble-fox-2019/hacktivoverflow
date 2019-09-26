@@ -43,7 +43,7 @@
         <br />
         <p class="card-text text-justify">{{question.description}}</p>
         <p style="font-size:13px">by : {{question.UserId.username}}</p>
-        <p style="font-size:13px">Date</p>
+        <p style="font-size:13px">{{getDate(question.createdAt)}}</p>
         <!-- <p>on  -->
         <v-chip
           color="#FFB300"
@@ -173,12 +173,10 @@ export default {
         });
     },
     upvote(id) {
-      
-      this.$store.dispatch("upvote", {id, routes : "questions"});
+      this.$store.dispatch("upvote", { id, routes: "questions" });
     },
     downvote(id) {
-      
-      this.$store.dispatch("downvote", {id, routes : "questions"});
+      this.$store.dispatch("downvote", { id, routes: "questions" });
     },
     removeQuestion(id) {
       this.$swal
@@ -199,6 +197,14 @@ export default {
     },
     gotoQuestionDetail(id) {
       this.$router.push(`/question/${id}`);
+    },
+    getDate(date) {
+      return new Date(date).toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
     }
   },
   computed: {

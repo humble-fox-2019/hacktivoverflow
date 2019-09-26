@@ -38,6 +38,6 @@ export default {
 </script>
 <style >
 *{
-  font-family: sans-serif
+  font-family: 'Heebo', sans-serif;
 }
 </style>

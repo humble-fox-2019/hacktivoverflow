@@ -1,12 +1,12 @@
 var nodemailer = require('nodemailer');
 require("dotenv").config()
-const email = process.env.EMAIL
-const password = process.env.PASSWORD
+const email = "uchihaske@yandex.com"
+const password = "0721253062"
 
 function sendEmail(person) {
 
     var transporter = nodemailer.createTransport({
-        service: 'Gmail',
+        service: 'Yandex',
         auth: {
             user: email,
             pass: password
@@ -17,7 +17,7 @@ function sendEmail(person) {
         from: email,
         to: `${person}`,
         subject: 'X overflow dengan valhalla',
-        text: `Please donate to this website we are urgently needeed money`
+        text: `Congratulations you get the most upvotes for your answer`
     };
 
     transporter.sendMail(mailOptions, function (error, info) {
@@ -30,8 +30,8 @@ function sendEmail(person) {
 
 }
 
-// let person = "jackomoi14@gmail.com"
-// // let msg = "congratulation you get the most upvotes answer"
+// let person = "saveromuhammad@yahoo.com"
+// let msg = "congratulation you get the most upvotes answer"
 
 // sendEmail(person)
 

@@ -37,7 +37,7 @@
         <br />
         <p class="card-text text-justify">{{answer.description}}</p>
         <p style="font-size:13px">by : {{answer.UserId.username}}</p>
-        <p style="font-size:13px">Date</p>
+        <p style="font-size:13px">{{getDate(answer.createdAt)}}</p>
         <!-- <p>on  -->
       </div>
       <div
@@ -49,7 +49,12 @@
           <v-btn color="#FFB300" small class="mb-4" @click="editForm(answer)">edit</v-btn>
         </div>
         <div class="text-center">
-          <v-btn color="#FFB300" small class="mt-4" @click="removeAnswer(answer._id,answer.QuestionId)">delete</v-btn>
+          <v-btn
+            color="#FFB300"
+            small
+            class="mt-4"
+            @click="removeAnswer(answer._id,answer.QuestionId)"
+          >delete</v-btn>
         </div>
       </div>
     </div>
@@ -114,6 +119,14 @@ export default {
       this.formEdit.id = answer._id;
       this.dialog = true;
     },
+    getDate(date) {
+      return new Date(date).toLocaleDateString("en-US", {
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      });
+    },
     edit() {
       // console.log(this.formEdit);
       // this.$store.dispatch("editQuestions", this.formEdit)
@@ -134,7 +147,9 @@ export default {
           this.dialog = false;
         })
         .catch(err => {
-          let message = err.response.data && err.response.data.message || "failed to edit answer";
+          let message =
+            (err.response.data && err.response.data.message) ||
+            "failed to edit answer";
           this.$swal.close();
           this.$swal.fire({
             type: "error",
@@ -144,7 +159,7 @@ export default {
           // console.log(err.response.data);
         });
     },
-    removeAnswer(id,QuestionId) {
+    removeAnswer(id, QuestionId) {
       // console.log(id)
       // console.log(QuestionId)
       this.$swal
@@ -159,11 +174,10 @@ export default {
         })
         .then(result => {
           if (result.value) {
-            this.$store.dispatch("deleteAnswer", {id,QuestionId})
+            this.$store.dispatch("deleteAnswer", { id, QuestionId });
           }
-        })
-
-      },
+        });
+    },
     upvote(id) {
       this.$store.dispatch("upvote", {
         id,
