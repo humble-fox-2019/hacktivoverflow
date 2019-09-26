@@ -13,7 +13,7 @@ Response :
 
 ```
 {
-		"message" : "app is running"
+    "message" : "app is running"
 }
 ```
 
@@ -47,12 +47,12 @@ Response :
 ```
 {
     "errors": [
-    		"Name is required!"
+        "Name is required!"
         "Email is required!",
         "Email is not a valid email!",
         "Email has been registered!",
-        "Password is required!",
-        "Password must be more or equal than 8 character!"
+       "Password is required!",
+       "Password must be more or equal than 8 character!"
     ]
 }
 ```
@@ -281,14 +281,14 @@ Response :
     "title" : ""
     "description" : ""
     "upvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "downvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "answer" : [
-				{ answerId }
-		]
+        { answerId }
+    ]
     "userId" : ""
     "createdAt" : ""
     "updatedAt" : ""
@@ -320,14 +320,14 @@ Response :
     "title" : ""
     "description" : ""
     "upvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "downvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "answer" : [
-				{ answerId }
-		]
+        { answerId }
+    ]
     "userId" : ""
     "createdAt" : ""
     "updatedAt" : ""
@@ -359,14 +359,14 @@ Response :
     "title" : ""
     "description" : ""
     "upvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "downvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "answer" : [
-				{ answerId }
-		]
+        { answerId }
+    ]
     "userId" : ""
     "createdAt" : ""
     "updatedAt" : ""
@@ -409,14 +409,14 @@ Response :
     "title" : ""
     "description" : ""
     "upvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "downvote" : [
-				{ userId }
-		]
+        { userId }
+    ]
     "answer" : [
-				{ answerId }
-		]
+        { answerId }
+    ]
     "userId" : ""
     "createdAt" : ""
     "updatedAt" : ""
@@ -458,16 +458,16 @@ Response :
 
 ```
 {
-		"title" : ""
-		"description" : ""
-		"upvote" : [
-				{ userId }
-		]
-		"downvote" : [
-				{ userId }
-		]
-		"createdAt" : ""
-		"updatedAt" : ""
+    "title" : ""
+    "description" : ""
+    "upvote" : [
+        { userId }
+    ]
+    "downvote" : [
+        { userId }
+    ]
+    "createdAt" : ""
+    "updatedAt" : ""
 }
 ```
 
@@ -493,16 +493,16 @@ Response :
 
 ```
 {
-		"title" : ""
-		"description" : ""
-		"upvote" : [
-				{ userId }
-		]
-		"downvote" : [
-				{ userId }
-		]
-		"createdAt" : ""
-		"updatedAt" : ""
+    "title" : ""
+    "description" : ""
+    "upvote" : [
+        { userId }
+    ]
+    "downvote" : [
+        { userId }
+    ]
+    "createdAt" : ""
+    "updatedAt" : ""
 }
 ```
 
@@ -528,16 +528,16 @@ Response :
 
 ```
 {
-		"title" : ""
-		"description" : ""
-		"upvote" : [
-				{ userId }
-		]
-		"downvote" : [
-				{ userId }
-		]
-		"createdAt" : ""
-		"updatedAt" : ""
+    "title" : ""
+    "description" : ""
+    "upvote" : [
+        { userId }
+    ]
+    "downvote" : [
+        { userId }
+    ]
+    "createdAt" : ""
+    "updatedAt" : ""
 }
 ```
 
@@ -563,16 +563,16 @@ Response :
 
 ```
 {
-		"title" : ""
-		"description" : ""
-		"upvote" : [
-				{ userId }
-		]
-		"downvote" : [
-				{ userId }
-		]
-		"createdAt" : ""
-		"updatedAt" : ""
+    "title" : ""
+    "description" : ""
+    "upvote" : [
+        { userId }
+    ]
+    "downvote" : [
+        { userId }
+    ]
+    "createdAt" : ""
+    "updatedAt" : ""
 }
 ```
 
@@ -598,16 +598,16 @@ Response :
 
 ```
 {
-		"title" : ""
-		"description" : ""
-		"upvote" : [
-				{ userId }
-		]
-		"downvote" : [
-				{ userId }
-		]
-		"createdAt" : ""
-		"updatedAt" : ""
+    "title" : ""
+    "description" : ""
+    "upvote" : [
+        { userId }
+    ]
+    "downvote" : [
+        { userId }
+    ]
+    "createdAt" : ""
+    "updatedAt" : ""
 }
 ```
 
@@ -644,16 +644,16 @@ Response :
 
 ```
 {
-		"title" : ""
-		"description" : ""
-		"upvote" : [
-				{ userId }
-		]
-		"downvote" : [
-				{ userId }
-		]
-		"createdAt" : ""
-		"updatedAt" : ""
+    "title" : ""
+    "description" : ""
+    "upvote" : [
+        { userId }
+    ]
+    "downvote" : [
+        { userId }
+    ]
+    "createdAt" : ""
+    "updatedAt" : ""
 }
 ```
 
