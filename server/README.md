@@ -10,7 +10,7 @@ A collection of `/users/` endpoints.
 
 * [Register](md/users/register.md) : `POST /users/register/`
 * [Login](md/users/login.md) : `POST /users/login/`
-* [Get One User](md/users/getOne.md) : `GET /users/`
+* [Get single userr](md/users/getOne.md) : `GET /users/`
 
 ## Question Endpoints
 
@@ -44,5 +44,5 @@ A collection of `/answers/` endpoints.
 #### Endpoints that Require Authentication and Authorization
 
 * [Get single answer](md/answers/getOne.md) : `GET /answers/:id`
-* [Update single answer](md/answers/update.md) : `PUT /answers/:id`
+* [Update single answer](md/answers/edit.md) : `PATCH /answers/:id`
 * [Delete single answer](md/answers/delete.md) : `DELETE /answers/:id`
