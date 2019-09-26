@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import Axios from 'axios'
+import router from './router'
 
 Vue.use(Vuex)
 
@@ -66,7 +67,7 @@ export default new Vuex.Store({
           localStorage.setItem('token', data.token)
           localStorage.setItem('id', data.id)
           context.commit('registerSuccess', true)
-          this.$route.push('/')
+          router.push('/')
 
         })
         .catch(error => {
@@ -97,6 +98,7 @@ export default new Vuex.Store({
           localStorage.setItem("id", data.id)
           Swal.close();
           Swal.fire("Success!", data.message, "success");
+          router.push('/')
         })
         .catch(error => {
           console.log(error)
@@ -108,7 +110,7 @@ export default new Vuex.Store({
       localStorage.removeItem('token')
       localStorage.removeItem('id')
       context.commit('LogoutSuccess', false)
-      Swal.fire("Success!", "Logged Out Success!", "success");
+      Swal.fire("Success!", "Logged Out Success!", "success")
     },
     getAllQuestion(context) {
       Axios({
@@ -117,15 +119,14 @@ export default new Vuex.Store({
       })
         .then(({ data }) => {
           context.commit('setAllQuestions', data)
-          context.commit('setDetail', data[0])
         })
         .catch(error => {
           console.log(error)
         })
     },
     postQuest(context) {
-      let title = state.title
-      let description = state.content
+      let title = this.state.title
+      let description = this.state.content
       Swal.fire({
         title: `Creating Your Question...`,
         allowOutsideClick: () => !Swal.isLoading()
@@ -145,12 +146,77 @@ export default new Vuex.Store({
         .then(({ data }) => {
           Swal.close();
           Swal.fire("Success!", 'Create Question Success', "success");
-
+          router.push('/')
         })
         .catch(error => {
           console.log(error)
           let msg = error.response.data.message
           Swal.fire("Error!", msg, "error");
+        })
+    },
+    questionUpvote(context, id) {
+      Axios({
+        method: `patch`,
+        url: `${baseUrlServer}/questions/${id}/upvote`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          console.log(response)
+          console.log(`upvote question success`)
+        })
+        .catch(err => {
+          console.log(err)
+          console.log(`upvote question error`)
+        })
+    },
+    questionDownvote(context, id) {
+      Axios({
+        method: `patch`,
+        url: `${baseUrlServer}/questions/${id}/downvote`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          console.log(response)
+          console.log(`downvote question success`)
+
+        })
+        .catch(err => {
+          console.log(err)
+          console.log(`downvote question error`)
+        })
+    },
+    answerUpvote(context, id) {
+      Axios({
+        method: `patch`,
+        url: `${baseUrlServer}/answers/${id}/upvote`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+    answerDownvote(context, id) {
+      Axios({
+        method: `patch`,
+        url: `${baseUrlServer}/answers/${id}/downvote`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(response => {
+          console.log(response)
+        })
+        .catch(err => {
+          console.log(err)
         })
     }
 

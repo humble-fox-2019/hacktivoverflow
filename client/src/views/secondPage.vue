@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     postQuest() {
-      this.store.dispatch("postQuest");
+      this.$store.dispatch("postQuest");
     }
   }
 };

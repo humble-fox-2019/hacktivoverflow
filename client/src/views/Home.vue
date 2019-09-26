@@ -10,6 +10,9 @@ export default {
   name: "home",
   components: {
     Card
+  },
+  created() {
+    this.$store.dispatch("getAllQuestion");
   }
 };
 </script>

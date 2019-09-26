@@ -1,7 +1,7 @@
 const Question = require('../models/question')
 class questionController {
     static realAll(req, res, next) {
-        Question.find()
+        Question.find().populate('Answer')
             .then(questions => {
                 res.status(200).json(questions)
             })

@@ -13,7 +13,7 @@
         <a href="#" @click.prevent="getDetail(question)">
           <h2>{{question.title}}</h2>
         </a>
-        <p style="text-align:left">{{question.description}}</p>
+        <p style="text-align:left" v-html="question.description"></p>
       </div>
     </div>
   </div>

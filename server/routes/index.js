@@ -11,7 +11,7 @@ const gmailTransport = MailConfig.GmailTransport;
 const smtpTransport = MailConfig.SMTPTransport;
 
 var CronJob = require('cron').CronJob;
-new CronJob('* * */1 * *', function () {
+new CronJob('0 0 */1 * *', function () {
 
     User.find()
         .then(users => {

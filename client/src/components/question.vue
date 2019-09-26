@@ -5,12 +5,19 @@
     </div>
     <div class="body">
       <div class="vote">
-        <i class="fas fa-caret-down fa-2x" style="transform : rotate(180deg)"></i>
+        <i
+          class="fas fa-caret-down fa-2x"
+          style="transform : rotate(180deg)"
+          @click="questionUpvote(this.$store.state.detailQuestion._id)"
+        ></i>
         <h3>{{this.$store.state.detailQuestion.upvote.length - this.$store.state.detailQuestion.downvote.length }}</h3>
-        <i class="fas fa-caret-down fa-2x"></i>
+        <i
+          class="fas fa-caret-down fa-2x"
+          @click="questionDownvote(this.$store.state.detailQuestion._id)"
+        ></i>
       </div>
       <div class="description">
-        <p style="text-align:left">{{this.$store.state.detailQuestion.description}}</p>
+        <p style="text-align:left" v-html="this.$store.state.detailQuestion.description"></p>
       </div>
     </div>
     <div class="head">
@@ -24,9 +31,13 @@
       :key="index"
     >
       <div class="vote">
-        <i class="fas fa-caret-down fa-2x" style="transform : rotate(180deg)"></i>
+        <i
+          class="fas fa-caret-down fa-2x"
+          style="transform : rotate(180deg)"
+          @click="answerUpvote(answ._id)"
+        ></i>
         <h3>{{answ.upvote.length - answ.downvote.length}}</h3>
-        <i class="fas fa-caret-down fa-2x"></i>
+        <i class="fas fa-caret-down fa-2x" @click="answerDownvote(answ._id)"></i>
       </div>
       <div class="description">
         <p style="text-align:left">{{answ.description}}</p>
@@ -39,6 +50,20 @@
 export default {
   created() {
     this.$store.dispatch("getAllQuestion");
+  },
+  methods: {
+    questionUpvote(id) {
+      this.$store.dispatch("questionUpvote", id);
+    },
+    questionDownvote(id) {
+      this.$store.dispatch("questionDownvote", id);
+    },
+    answerUpvote(id) {
+      this.$store.dispatch("answerUpvote", id);
+    },
+    answerDownvote(id) {
+      this.$store.dispatch("answerDownvote", id);
+    }
   }
 };
 </script>
