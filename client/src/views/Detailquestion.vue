@@ -24,7 +24,7 @@
                   </div>
                   <div
                     style="margin-left: auto"
-                    v-if="question.userId._id === this.$store.state.user.id"
+                    v-if="question.userId._id === user.id"
                   >
                     <button class="btn btn-sm btn-danger" @click="doDeleteQuestion()">
                       <i class="fas fa-eraser"></i>
@@ -87,7 +87,7 @@
                       <span class="mx-2">answered</span>
                       <em>{{getTimeAgo(answer.userId.createdAt)}}</em>
                     </div>
-                    <div style="margin-left: auto">
+                    <div style="margin-left: auto" v-if="answer.userId._id === user.id" >
                       <button class="btn btn-sm btn-danger" @click="doDeleteAnsware(answer._id)">
                         <i class="fas fa-eraser"></i>
                       </button>
@@ -202,7 +202,7 @@ export default {
     Vote
   },
   computed: {
-    ...mapState(["question", "token"])
+    ...mapState(["question", "token", "user"])
   },
   methods: {
     ...mapActions(["FETCH_QUESTION"]),
