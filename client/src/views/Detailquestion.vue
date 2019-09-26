@@ -20,7 +20,7 @@
                   <div style="display: flex; align-items: center">
                     <a href="#">{{question.userId.name}}</a>
                     <span class="mx-2">asked</span>
-                    <em>{{getTimeAgo(question.createdAt)}}</em>
+                    <em>{{getTimeAgo(new Date(question.createdAt))}}</em>
                   </div>
                   <div style="margin-left: auto" v-if="question.userId._id === user.id">
                     <router-link
@@ -88,7 +88,7 @@
                     <div style="display: flex; align-items: center">
                       <a href="#">{{answer.userId.name}}</a>
                       <span class="mx-2">answered</span>
-                      <em>{{getTimeAgo(answer.createdAt)}}</em>
+                      <em>{{getTimeAgo(new Date(answer.createdAt))}}</em>
                     </div>
                     <div style="margin-left: auto" v-if="answer.userId._id === user.id">
                       <router-link

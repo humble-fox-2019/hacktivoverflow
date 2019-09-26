@@ -47,7 +47,7 @@
                   by
                   <a href="#">{{question.userId.name}}</a>
                   <br /> asked
-                  <em>{{getTimeAgo(question.createdAt)}}</em>
+                  <em>{{getTimeAgo(new Date(question.createdAt))}}</em>
                 </span>
               </td>
             </tr>
@@ -59,7 +59,7 @@
 </template>
 
 <script>
-import moment from 'moment-timezone';
+import moment from 'moment';
 
 export default {
   name: "home",
@@ -70,7 +70,7 @@ export default {
   },
   methods: {
     getTimeAgo: (date) => {
-      return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).tz('Asia/Jakarta').fromNow();
+      return moment(date, moment.HTML5_FMT.DATETIME_LOCAL_SECONDS).fromNow();
     }
   },
   computed: {
