@@ -93,18 +93,22 @@ export default {
     };
   },
   computed: {
-    ...mapState(["allQuestions"]),
+    ...mapState(["allQuestions","selectedTag"]),
     filteredQuestion() {
-      let tags = this.$store.state.userTags;
+      let tag = this.selectedTag;
       let result = [];
-      if (tags.length !== 0) {
+      if (tag) {
         for (let question of this.allQuestions) {
-          for (let tag of tags) {
-            if (question.tags.includes(tag)) {
+           if (question.tags.includes(tag)) {
               result.push(question);
-              break;
+              // break;
             }
-          }
+          // for (let tag of tags) {
+          //   if (question.tags.includes(tag)) {
+          //     result.push(question);
+          //     break;
+          //   }
+          // }
         }
         return result;
       } else {

@@ -1,10 +1,11 @@
 <template>
   <div class="col-3 mt-3">
     <h4 class="mb-4">Watched Tags</h4>
+    <v-btn color="#FFB300" class="mr-3" small @click="changeTag('')">All</v-btn>
     <v-btn color="#FFB300" small @click="showForm">Edit Tags</v-btn>
 
     <div class="mt-3 mb-3">
-      <v-chip color="#FFB300" class="mb-2 mr-2" v-for="(tag,index) in userTags" :key="index">{{tag}}</v-chip>
+      <v-chip color="#FFB300" class="mb-2 mr-2" v-for="(tag,index) in userTags" :key="index" @click="changeTag(tag)">{{tag}}</v-chip>
     </div>
 
     <!-- dialog edit tags -->
@@ -54,15 +55,24 @@ export default {
     };
   },
   computed: {
-    ...mapState(["userTags"])
+    ...mapState(["userTags","selectedTag"])
   },
   methods: {
+    changeTag(tag){
+      // console.log(tag)
+      this.$store.commit("SELECTED_TAG", tag)
+
+    },
     addTags() {
       this.$swal.showLoading();
       this.$store
         .dispatch("addTags", { tags: this.tags })
         .then(success => {
           this.$swal.close();
+          if (!this.tags.includes(this.selectedTag)){
+            // console.log("mamamia")
+            this.$store.commit("SELECTED_TAG", "")
+          }
           this.$swal.fire({
             type: "success",
             title: "success adding tags"

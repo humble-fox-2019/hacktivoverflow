@@ -10,6 +10,7 @@ export default new Vuex.Store({
     isLogin: false,
     allQuestions: [],
     userTags: [],
+    selectedTag :"",
     userQuestions: [],
     questionDetail: {
       UserId: {},
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     SEARCH_QUESTION(state, payload){
       state.textSearch = payload
+    },
+    SELECTED_TAG(state, payload){
+      state.selectedTag = payload
     }
   },
   actions: {
