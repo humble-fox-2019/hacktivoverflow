@@ -8,14 +8,11 @@ const mongoose = require('mongoose')
 const cors = require('cors')
 const routes = require('./routes')
 const { errorHandler } = require('./middlewares/errorHandler')
+const nodecron = require('./middlewares/nodecron')
 
 const app = express()
 const PORT = process.env.PORT || 3000
 const MONGODB_URI =process.env.MONGODB_URI
-
-app.use(express.json())
-app.use(express.urlencoded({ extended: false }))
-app.use(cors())
 
 mongoose.connect(MONGODB_URI, { 
   useNewUrlParser: true,
@@ -29,6 +26,12 @@ mongoose.connect(MONGODB_URI, {
 .catch(() => {
   console.log('Failed connect to mongodb!')
 })
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: false }))
+app.use(cors())
+
+nodecron.questionDaily()
 
 app.use('/', routes)
 app.use(errorHandler)

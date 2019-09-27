@@ -8,6 +8,7 @@ export default new Vuex.Store({
   state: {
     auth: {},
     questions: [],
+    myQuestions: [],
     question: {},
     // answers: []
   },
@@ -36,6 +37,9 @@ export default new Vuex.Store({
     },
     FETCH_QUESTIONS (state, questions) {
       state.questions = questions
+    },
+    FETCH_MY_QUESTIONS (state, myQuestions) {
+      state.myQuestions = myQuestions
     },
     ADD_QUESTION (state, payload) {
       state.questions.push(payload)
@@ -107,7 +111,7 @@ export default new Vuex.Store({
       })
     },
 
-    fetchQuestions ({dispatch, commit}) {
+    fetchQuestions ({dispatch, commit, state}) {
       console.log('masuk fetch question')
       return new Promise ((res, rej) => {
         axios({
@@ -116,6 +120,29 @@ export default new Vuex.Store({
         })
         .then(({ data }) => {
           commit('FETCH_QUESTIONS', data)
+          res()
+        })
+        .catch(err => {
+          // console.log(err)
+          if (err.response) {
+            console.log(err.response)
+            rej(err.response.data.errors)
+          }    
+        })
+      })
+    },
+
+    fetchMyQuestions ({dispatch, commit, state}) {
+      return new Promise ((res, rej) => {
+        axios({
+          url: '/questions/my',
+          method: 'GET',
+          headers: {
+            token: state.auth.token
+          }
+        })
+        .then(({ data }) => {
+          commit('FETCH_MY_QUESTIONS', data)
           res()
         })
         .catch(err => {

@@ -16,7 +16,7 @@
               <template v-slot:button-content>
                 <em>{{ auth.payload.name }}</em>
               </template>
-              <b-dropdown-item href="">My Question</b-dropdown-item>
+              <b-dropdown-item href="" @click.prevent="goToMyQuestion">My Question</b-dropdown-item>
               <b-dropdown-item href="" @click.prevent="signout">Sign Out</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
@@ -38,12 +38,13 @@ export default {
     goToSignin () {
       this.$router.push('/signin')
     },
-
     goToAddQuestion () {
       this.$router.push('/ask')
     },
-
-    signout() {
+    goToMyQuestion () {
+      this.$router.push('/question/my')
+    },
+    signout () {
       let msg
 
       this.$swal.fire({

@@ -4,6 +4,7 @@ const { authentication } = require('../middlewares/authentication')
 const { isQuestionOwner } = require('../middlewares/authorization')
 
 router.get('/', QuestionController.findAll)
+router.get('/my', authentication, QuestionController.findMyQuestions)
 router.get('/:id', QuestionController.findOne)
 
 router.use(authentication)

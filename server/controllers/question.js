@@ -3,18 +3,20 @@ const Question = require('../models/question')
 class QuestionController {
 
   static findAll(req, res, next) {
-    // Question.find().populate('user')
-    //   .then(questions => {
-    //     res.status(200).json(questions)
-    //   })
-    //   .catch(next)
-
     Question.find().sort([['createdAt', -1]]).populate('user')
     .then(questions => {
       res.status(200).json(questions)
     })
     .catch(next)
-    
+  }
+
+  static findMyQuestions(req, res, next) {
+    const user = req.decoded._id
+    Question.find({ user }).sort([['createdAt', -1]]).populate('user')
+    .then(questions => {
+      res.status(200).json(questions)
+    })
+    .catch(next)
   }
 
   static findOne(req, res, next) {
