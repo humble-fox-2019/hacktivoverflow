@@ -1,7 +1,7 @@
 <template>
   <section id="home-page">
     <div class="row">
-      <div class="col-md-12 my-2" v-for="question in allQuestions" :key="question.id">
+      <div class="col-md-12 mb-2" v-for="question in allQuestions" :key="question.id">
         <div class="card">
           <div class="card-header">Question</div>
           <div class="card-body">

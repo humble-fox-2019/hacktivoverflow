@@ -21,7 +21,7 @@ Vue.prototype.axios = axios;
 Vue.prototype.baseURL = "http://localhost:3000"
 
 // production
-// Vue.prototype.baseURL = "http://34.87.112.227";
+// Vue.prototype.baseURL = "http://35.247.133.81";
 
 Vue.config.productionTip = false;
 

@@ -4,6 +4,7 @@ import router from "./router";
 import axios from "axios";
 import Swal from "sweetalert2";
 
+// const SERVER = "http://35.247.133.81/";
 const SERVER = "http://localhost:3000";
 
 Vue.use(Vuex);
@@ -25,7 +26,10 @@ export default new Vuex.Store({
     },
     allQuestions: [],
     myQuestions: [],
-    questionDetail: {},
+    questionDetail: {
+      upvotes: [],
+      downvotes: []
+    },
     top: []
   },
   mutations: {

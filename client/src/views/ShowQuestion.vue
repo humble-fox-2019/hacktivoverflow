@@ -3,9 +3,7 @@
     <div class="row">
       <div class="col-md-12">
         <div class="card">
-          <div class="card-header">
-            Question
-          </div>
+          <div class="card-header">Question</div>
           <div class="card-body">
             <div class="container">
               <div class="row">
@@ -31,14 +29,12 @@
     <div class="row">
       <div v-for="answer in questionDetail.answers" :key="answer.id" class="col-md-12 my-2">
         <div class="card">
-          <div class="card-header">
-            Answer
-          </div>
+          <div class="card-header">Answer</div>
           <div class="card-body">
             <div class="container">
-              <div class="row">                
+              <div class="row">
                 <div class="col-10">
-                  <p> {{ answer.description }}</p>
+                  <p>{{ answer.description }}</p>
                 </div>
               </div>
             </div>
@@ -68,6 +64,11 @@
 <script>
 export default {
   name: "ShowQuestion",
+  watch: {
+    $route(to, from) {
+      this.getQuestionDetail(to.params.id)
+    }
+  },
   computed: {
     formAnswer: {
       get() {
@@ -91,11 +92,11 @@ export default {
     addAnswer(payload) {
       this.$store.dispatch("addAnswer", payload);
     },
-    upvote(_id){
-      return this.$store.dispatch('upvoteQ', _id)
+    upvote(_id) {
+      return this.$store.dispatch("upvoteQ", _id);
     },
-    downvote(_id){
-      return this.$store.dispatch('downvoteQ', _id)
+    downvote(_id) {
+      return this.$store.dispatch("downvoteQ", _id);
     }
   }
 };

@@ -12,7 +12,11 @@
         <div class="col-md-3 my-3">
           <div class="card">
             <div class="card-header">Most Voted</div>
-            <div class="card-body"></div>
+            <div class="card-body">
+              <p v-for="question in top.top" :key="question.id">
+                <a @click.prevent="$router.push(`/question/${question._id}`)" href>{{ question.title }}</a>
+              </p>
+            </div>
           </div>
         </div>
       </div>
@@ -25,12 +29,12 @@ import Navbar from "@/components/Navbar";
 import Menubar from "@/components/Menubar";
 
 export default {
-  created () {
+  created() {
     this.getTop();
   },
   computed: {
     top() {
-      return this.$store.state.top 
+      return this.$store.state.top;
     }
   },
   components: {
@@ -39,9 +43,9 @@ export default {
   },
   methods: {
     getTop() {
-      this.$store.dispatch('getTop')
+      this.$store.dispatch("getTop");
     }
-  },
+  }
 };
 </script>
 
