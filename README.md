@@ -98,7 +98,7 @@
 	Requierment	: 
 		1. title	: String
 		2. content	: String
-		3. tags 	: Array
+		3. tags 	: String
 		4. headers	: token (admin)
 	Responses	:
 		Success	: 
