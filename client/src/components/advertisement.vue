@@ -33,10 +33,15 @@ export default {
     addNewTag() {
       if(this.newTag == ''){
         this.$swal.fire('tidak boleh kosong' , 'gagal' , 'warning')
-      }else {
+      }
+      else if(this.$store.state.WatchedTag.includes(this.newTag)){
+        this.$swal.fire('warning' , 'Tidak bisa memasukkan tag yang sama' , 'warning')
+      }
+      else {
         this.$store.commit('NEWTAG' , this.newTag)
         this.$store.dispatch('addWatchedTag' , this.$store.state.WatchedTag)
         .then(data=>{
+          this.newTag = ''
           console.log(data)
           this.$store.dispatch('getWatchedTag')
         })

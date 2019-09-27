@@ -57,10 +57,17 @@ export default {
   },
   watch: {
     hastag(val) {
+      
       if (val[val.length - 1] == " ") {
-        this.newTag.push(val)
-        this.hastagList.push( val);
-        this.hastag = "";
+        if(this.hastagList.includes(this.hastag)){
+          this.$swal.fire('warning' , 'Tidak bisa memasukkan tag yang sama' , 'warning')
+          this.hastag = "";
+        }
+        else {
+          this.newTag.push(val)
+          this.hastagList.push( val);
+          this.hastag = "";
+        }
       }
     }
   },

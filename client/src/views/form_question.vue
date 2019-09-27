@@ -41,6 +41,7 @@ export default {
     hastag(val) {
       if (val[val.length - 1] == " ") {
         if(this.hastagList.includes(this.hastag)){
+          this.hastag = "";
           this.$swal.fire('warning' , 'Tidak bisa memasukkan tag yang sama' , 'warning')
         }else {
           this.hastagList.push( val);
