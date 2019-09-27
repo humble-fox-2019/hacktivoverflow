@@ -51,12 +51,21 @@ class user_controller {
 
     static addWathcTag(req,res,next) {
         let { newTag } = req.body
-        User.findById(req.decode.data._id)
-        .then(user=>{
-            user.watchedTag = newTag
-            user.save()
+        User.updateOne({ _id : req.decode.data._id},{
+            watchedTag : newTag
+        })
+        .then(data=>{
+            res.json({
+                message : 'sukses cuy'
+            })
         })
         .catch(next)
+        // User.findById(req.decode.data._id)
+        // .then(user=>{
+        //     user.watchedTag = newTag
+        //     user.save({ validateBeforeSave: false })
+        // })
+        // .catch(next)
     }
 
     static getWatchTag(req,res,next){

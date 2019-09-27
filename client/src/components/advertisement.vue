@@ -50,6 +50,30 @@ export default {
       }
     },
     searchTag (name) {
+      let timerInterval
+      this.$swal.fire({
+        title: 'Loading......',
+        html: 'Sabar Yaa!!!',
+        timer: 3000,
+        onBeforeOpen: () => {
+          this.$swal.showLoading()
+          timerInterval = setInterval(() => {
+            // this.$swal.getContent().querySelector('strong')
+            //   .textContent = this.$swal.getTimerLeft()
+          }, 100)
+        },
+        onClose: () => {
+          clearInterval(timerInterval)
+        }
+      }).then((result) => {
+        if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.timer
+        ) {
+          // this.$router.push(`/searchTag?tag=${name}`)
+          console.log('I was closed by the timer')
+        }
+      })
       this.$router.push(`/searchTag?tag=${name}`)
     }
   }

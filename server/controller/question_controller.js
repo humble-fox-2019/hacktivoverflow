@@ -132,7 +132,7 @@ class question_controller {
             _id : req.params.id
         },{
             title ,  description , tags : tagResult 
-        })
+        },{runValidators : true})
         .then(hasil=>{
             res.json(hasil)
         })

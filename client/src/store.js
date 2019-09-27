@@ -23,6 +23,10 @@ export default new Vuex.Store({
             state.listQuestionTag = payload.data
             state.TagsCurrent = payload.tag
         },
+        EMPTYTAG (state , payload){
+            state.listQuestionTag = []
+            state.TagsCurrent = ''
+        },
         MOSTVOTES (state , payload){
             state.MostVotes = payload
         },
@@ -53,6 +57,7 @@ export default new Vuex.Store({
                     // console.log(data)
                 })
                 .catch(err=>{
+                    reject(err)
                     console.log(err)
                 })
             })
@@ -73,8 +78,8 @@ export default new Vuex.Store({
         },
         loginUser ({state} , payload){
             return new Promise((resolve, reject)=>{
+                console.log(payload , ' ini payload before login yaaaaaaaaaaaaaaaaaaaaaaaaa!!!!!!!!!!!!!!!!!!!!!!')
                 let {email , password} = payload
-                // console.log(payload)
                 axios.post('http://34.87.7.44/user/login',{
                     email , password
                 })
@@ -89,8 +94,8 @@ export default new Vuex.Store({
         },
         registerUser ({state} , payload){
             return new Promise((resolve, reject)=>{
+                console.log(payload , ' ini payload yaaaaa')
                 let {email , password , username} = payload
-                // console.log(payload)
                 axios.post('http://34.87.7.44/user/register',{
                     email , password , username
                 })
@@ -208,6 +213,7 @@ export default new Vuex.Store({
                     commit('RENDERQUESTION' , data)
                 })
                 .catch(err=>{
+                    reject(err)
                     console.log(err)
                 })
             })
@@ -295,6 +301,7 @@ export default new Vuex.Store({
 
         searchTag2 ({commit ,  dispatch , state} , payload){
             return new Promise((resolve,reject)=>{
+                // commit('EMPTYTAG')
                 axios({
                     method : 'GET',
                     url : `http://34.87.7.44/question`,
@@ -318,6 +325,7 @@ export default new Vuex.Store({
                             }
                         })
                     })
+                    commit('EMPTYTAG')
                     commit('RENDERTAG' , {data : result ,  tag : payload})
                     // console.log(result , ' llllllLLLL<<<<L<L<L<L<L<L<L<L<')
                     resolve(result)
@@ -340,7 +348,7 @@ export default new Vuex.Store({
                 })
                 .then(({data})=>{
                     resolve(data)
-                    console.log(data)
+                    console.log(data , ' <<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<>>>>>>>>>>>>>>>>>>><<<<<<<<<>>>>>>>>>>')
                 })
                 .catch(reject)
             })

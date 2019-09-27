@@ -63,7 +63,7 @@ export default {
             this.$router.push('/')
           })
           .catch(err=>{
-            console.log(err)
+            this.$swal.fire(err.response.data.errors[0] , 'gagal membikin' , 'warning')
           })
       }
   }

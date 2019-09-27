@@ -60,7 +60,7 @@
           <div class="col-md-12 mb-4"></div>
           <div class="form-group">
             <p class="text-center">
-              Don't have account?
+             Have Account ? <a href="#" @click="pindahPage()">Login Here</a>
               <!-- <a href="#" id="signup" @click="pindahPage">Sign up here</a> -->
             </p>
           </div>
@@ -95,6 +95,9 @@ export default {
               // console.log(err.response.data.errors.join(''))
               this.$swal.fire(err.response.data.errors[0] , 'gagal' , 'warning')
             })
+        },
+        pindahPage (){
+          this.$router.push('/login')
         }
     }
 };
