@@ -29,7 +29,8 @@ class UserController {
             }
             const token = generateToken(payload)
             res.status(200).json({
-                token
+                token,
+                username : user.username
             })
         })
         .catch(next)

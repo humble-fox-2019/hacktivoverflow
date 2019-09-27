@@ -4,7 +4,7 @@ class AnswerController {
     static create (req,res,next){
         Answer.create({
             description : req.body.description,
-            qId : req.params.qId,
+            qId : req.body.qId,
             owner : req.decode.id
         })
         .then((answer)=>{
@@ -18,6 +18,15 @@ class AnswerController {
 
     static read (req,res,next){
         Answer.find().then((answers)=>{
+            res.status(200).json({
+                answers
+            })
+        }).catch(next)
+    }
+
+    static findByQId (req,res,next){
+        Answer.find( { qId : req.query.qid } ).populate('owner')
+        .then((answers)=>{
             res.status(200).json({
                 answers
             })

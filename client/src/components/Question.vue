@@ -1,6 +1,8 @@
 <template>
     <div class="question">
         <h1>{{question.title}}</h1>
+        <p>{{question.description}}</p>
+        <p>Posted by: {{question.owner.username}}</p>
     </div>
 </template>
 

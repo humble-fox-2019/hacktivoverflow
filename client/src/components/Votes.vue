@@ -42,12 +42,11 @@ export default {
             }
             const packet = {
                 voteOf : this.type,
+                voteOfSingular : this.type.substring(0, this.type.length - 1),
                 id : this.id,
                 voteType : voteType,
                 value : updateThis
             }
-            /* console.log(this.type)
-            console.log(this.id) */
             this.$store.dispatch('updateVote', packet)
             .then(()=>{
                 console.log('added vote')

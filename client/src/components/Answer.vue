@@ -3,28 +3,29 @@
         <div class="row border-bottom">
             <div class="col-2">
                 <p>Rate this answer</p>
-                <Votes :upvotes="ans.upvotes" :downvotes="ans.downvotes" :type="'answers'" :id="parseInt(this.answer.id)"/>
+                <Votes :upvotes="ans.upvotes" :downvotes="ans.downvotes" :type="'answers'" :id="answer._id"/>
             </div>
             <div class="col-10">
                 <p>{{answer.description}}</p>
-                <Improvement v-for="(improvement,i) in improvements" :key="i" :improvement="improvement"/>
+                <p>Posted by: {{answer.owner.username}}</p>
+                <!--<Improvement v-for="(improvement,i) in improvements" :key="i" :improvement="improvement"/>-->
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Improvement from '@/components/Improvement.vue'
+//import Improvement from '@/components/Improvement.vue'
 import Votes from '@/components/Votes.vue'
 
 export default {
     components : {
-        Improvement,
+        //Improvement,
         Votes
     },
     data : function () {
         return {
-            improvements : [],
+            //improvements : [],
             ans : this.answer
         }
     },
@@ -35,8 +36,8 @@ export default {
         answer(newVal) {
             this.ans = newVal
         }
-    },
-    created : function () {
+    }
+    /* created : function () {
         this.$store.dispatch('getImprovements', this.answer.id)
         .then (({ data })=>{
             this.improvements = data
@@ -44,7 +45,7 @@ export default {
         .catch((err)=>{
             console.log(err)
         })
-    }
+    } */
 }
 </script>
 

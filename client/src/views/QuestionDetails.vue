@@ -3,7 +3,7 @@
         <div class="row">
             <div class="col-2 border-right border-dark" >
                 <h2>Rate question</h2>
-                <Votes :upvotes="question.upvotes" :downvotes="question.downvotes" :type="'questions'" :id="parseInt(this.$route.params.id)"/>
+                <Votes :upvotes="question.upvotes" :downvotes="question.downvotes" :type="'questions'" :id="this.$route.params.id"/>
             </div>
             <div class="col-10" >
                 <Question :question="question" />
@@ -38,7 +38,7 @@ export default {
         updateAnswer : function () {
             this.$store.dispatch('getAnswers',this.$route.params.id)
                 .then(({ data })=>{
-                    this.answers = data
+                    this.answers = data.answers
                 })
                 .catch((err)=>{
                     console.log(err)
@@ -48,10 +48,10 @@ export default {
     created : function () {
         this.$store.dispatch('getQuestion',this.$route.params.id)
         .then(({ data })=>{
-            this.question = data
+            this.question = data.question
             this.$store.dispatch('getAnswers',this.$route.params.id)
             .then(({ data })=>{
-                this.answers = data
+                this.answers = data.answers
             })
         })
         .catch((err)=>{

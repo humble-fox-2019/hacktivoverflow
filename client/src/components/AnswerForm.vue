@@ -37,9 +37,8 @@ export default {
     methods : {
         submitAnswer : function () {
             const packet = {
-                qId : this.question.id,
+                qId : this.question._id,
                 description : this.quill.getText(),
-                owner : this.$store.state.user
             }
             this.$store.dispatch('submitAnswer', packet)
             .then(()=>{

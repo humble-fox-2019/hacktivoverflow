@@ -7,10 +7,10 @@
                 Answers : {{question.answers}}
             </div>
             <div class="col-10">
-                <h2 @click="goToQuestionPage(question.id)" class="q-title">{{question.title}}</h2><br>
+                <h2 @click="goToQuestionPage(question._id)" class="q-title">{{question.title}}</h2><br>
                 <p>{{question.description}}</p> <br>
                 <p>{{question.tags}}</p> <br>
-                <p>Posted by: {{question.owner}}</p> <br>
+                <p>Posted by: {{question.owner.username}}</p> <br>
             </div>
         </div>
         <p>Do not find the question you're looking for?</p>
@@ -29,17 +29,7 @@ export default {
     methods : {
         goToQuestionPage : function (id) {
             this.$router.push({name: 'detail', params : {id} })
-        },
-        getQs : function () {
-            //this.$store.dispatch('displayQuestions')
-            //console.log('woy')
-            //console.log(this.$store.state.query)
         }
-    },
-    mounted : function () {
-        
-        //console.log('oo')
-        
     }
 }
 </script>

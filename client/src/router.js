@@ -21,7 +21,7 @@ export default new Router({
       component: SearchResults
     },
     {
-      path: '/questions/:id',
+      path: '/questions/question/:id',
       name: 'detail',
       component: QuestionDetails
     },

@@ -6,42 +6,8 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    user : 9,
-    isLoggedIn : true,
-    questions : [
-      {
-        title : 'Why birds can fly?',
-        description : "Whyyy??",
-        upvotes : 0,
-        downvotes : 1,
-        answers : 5,
-        tags : ['birds','error','nature','self-reading']
-      },
-      {
-        title : 'Why this query returns error 404?',
-        description : "I want to know",
-        upvotes : 5,
-        downvotes : 0,
-        answers : 7,
-        tags : ['computer','error','query','sql','stress']
-      },
-      {
-        title : 'INVALID_PROCESS_DETACH_ATTEMPT???',
-        description : "What is this?",
-        upvotes : 1001,
-        downvotes : 102,
-        answers : 23,
-        tags : ['error','bsod','computer']
-      },
-      {
-        title : 'Language pack for Netbeans',
-        description : "Any Indonesian language pack available for this program",
-        upvotes : 9,
-        downvotes : 0,
-        answers : 3,
-        tags : ['Netbeans','Java','language','Indonesian','language pack']
-      }
-    ],
+    user : 'Anonymous',
+    isLoggedIn : false,
     query : "",
     searchResults : []
   },
@@ -60,14 +26,36 @@ export default new Vuex.Store({
     },
     logout : function (state){
       state.isLoggedIn = false
+      state.searchResults = []
+      localStorage.clear('token')
       state.user = 'Anonymous'
     },
-    login : function (state){
+    login : function (state,username){
       state.isLoggedIn = true
-      state.user = 9
+      state.user = username
     }
   },
   actions: {
+    getIn : function (context,packet) {
+      console.log(packet)
+      axios({
+        method : 'POST',
+        url : 'http://localhost:3000/user/log',
+        data : {
+          username : packet.username,
+          email : packet.email,
+          password : packet.password
+        }
+      })
+      .then(({ data })=>{
+          localStorage.setItem('token',data.token)
+          context.commit('login',data.username)
+          console.log('logged-in')
+      })
+      .catch((err)=>{
+        console.log(err)
+      })
+    },
     displayQuestions : function (context) {
       let match = []
       for (let i = 0; i < context.state.questions.length; i++) {
@@ -80,11 +68,13 @@ export default new Vuex.Store({
     getQuestions : function (context) {
       axios({
         method : 'GET',
-        url : `http://localhost:3000/questions?title_like=${context.state.query}`
+        url : `http://localhost:3000/questions/search?q=${context.state.query}`,
+        headers : {
+          token : localStorage.getItem('token')
+        }
       })
       .then(({ data })=>{
-        console.log(data)
-        context.commit('setSearchResults', data)
+        context.commit('setSearchResults', data.questions)
       })
       .catch((err)=>{
         console.log(err)
@@ -93,32 +83,37 @@ export default new Vuex.Store({
     getQuestion : function (context, id) {
       return axios({
         method : 'GET',
-        url : `http://localhost:3000/questions/${id}`
+        url : `http://localhost:3000/questions/question/${id}`,
+        headers : {
+          token : localStorage.getItem('token')
+        }
       })
     },
     getAnswers : function (context, id) {
       return axios({
         method : 'GET',
-        url : `http://localhost:3000/answers?qId=${id}`
+        url : `http://localhost:3000/answers/search?qid=${id}`,
+        headers : {
+          token : localStorage.getItem('token')
+        }
       })
     },
-    getImprovements : function (context, id) {
+    /* getImprovements : function (context, id) {
       return axios({
         method : 'GET',
         url : `http://localhost:3000/improvements?aId=${id}`
       })
-    },
+    }, */
     submitAnswer : function (context, packet) {
       return axios({
         method : 'POST',
         url : `http://localhost:3000/answers`,
+        headers : {
+          token : localStorage.getItem('token')
+        },
         data : {
-            id : packet.id,
             qId : packet.qId,
-            description : packet.description,
-            upvotes : 0,
-            downvotes : 0,
-            owner : packet.owner
+            description : packet.description
         }
       })
     },
@@ -126,22 +121,22 @@ export default new Vuex.Store({
       return axios({
         method : 'POST',
         url : `http://localhost:3000/questions`,
+        headers : {
+          token : localStorage.getItem('token')
+        },
         data : {
-            id : packet.id,
             title : packet.title,
             description : packet.description,
-            upvotes : 0,
-            downvotes : 0,
-            answers : 0,
-            owner : packet.owner,
-            tags : []
         }
       })
     },
     updateVote : function (context, packet) {
       return axios({
         method : 'PATCH',
-        url : `http://localhost:3000/${packet.voteOf}/${packet.id}`,
+        url : `http://localhost:3000/${packet.voteOf}/${packet.voteOfSingular}/${packet.id}/vote`,
+        headers : {
+          token : localStorage.getItem('token')
+        },
         data : {
             [packet.voteType] : packet.value
         }

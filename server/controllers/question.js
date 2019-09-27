@@ -1,21 +1,5 @@
 const Question = require('../models/question')
 
-/* {
-    "id": 1,
-    "title": "Why birds can fly?",
-    "description": "Whyyy??",
-    "upvotes": 11,
-    "downvotes": 8,
-    "answers": 5,
-    "owner": 5,
-    "tags": [
-      "birds",
-      "error",
-      "nature",
-      "self-reading"
-    ]
-  }, */
-
 class QuestionController {
     static create (req,res,next){
         Question.create({
@@ -36,6 +20,24 @@ class QuestionController {
         Question.find().then((questions)=>{
             res.status(200).json({
                 questions
+            })
+        }).catch(next)
+    }
+
+    static findByTitle (req,res,next){
+        Question.find( { title : { "$regex": req.query.q, "$options": "i" }}).populate('owner')
+        .then((questions)=>{
+            res.status(200).json({
+                questions
+            })
+        }).catch(next)
+    }
+
+    static findById (req,res,next){
+        Question.findById( { _id : req.params.id } ).populate('owner')
+        .then((question)=>{
+            res.status(200).json({
+                question
             })
         }).catch(next)
     }

@@ -12,6 +12,44 @@
         <b-nav-item link to="/about">About</b-nav-item>
       </b-navbar-nav>
     
+    <b-dropdown id="dropdown-form" text="User" ref="dropdown" class="m-2">
+      <b-dropdown-item href="#" v-show="this.$store.state.isLoggedIn">{{this.$store.state.user}}</b-dropdown-item>
+      <b-dropdown-form v-show="!this.$store.state.isLoggedIn">
+          <b-form-group label="Username" label-for="dropdown-form-username" @submit.stop.prevent>
+            <b-form-input
+              id="dropdown-form-username"
+              size="sm"
+              placeholder="ank_ganteng123"
+              v-model="form.username"
+            ></b-form-input>
+
+          </b-form-group>
+          <b-form-group label="Email" label-for="dropdown-form-email" @submit.stop.prevent v-show="showRegisterForm">
+            <b-form-input
+              id="dropdown-form-email"
+              size="sm"
+              placeholder="email@example.com"
+              v-model="form.email"
+            ></b-form-input>
+          </b-form-group>
+
+          <b-form-group label="Password" label-for="dropdown-form-password">
+            <b-form-input
+              id="dropdown-form-password"
+              type="password"
+              size="sm"
+              placeholder="Password"
+              v-model="form.password"
+            ></b-form-input>
+          </b-form-group>
+          <b-button variant="primary" size="sm" v-show="!showRegisterForm" @click="loginAndLogup">Sign In</b-button>
+          <b-button variant="primary" size="sm" v-show="showRegisterForm" @click="loginAndLogup">Sign Up</b-button>
+        </b-dropdown-form>
+        <b-dropdown-divider></b-dropdown-divider>
+        <b-button style="margin-left:auto;margin-right:auto;display:block" v-show="!showRegisterForm && !this.$store.state.isLoggedIn" @click="showRegisterForm = true">New around here? Sign up</b-button>
+        <b-button style="margin-left:auto;margin-right:auto;display:block"  v-show="showRegisterForm && !this.$store.state.isLoggedIn" @click="showRegisterForm = false">Actuually, I am a member</b-button>
+        <b-button style="margin-left:auto;margin-right:auto;display:block"  v-show="this.$store.state.isLoggedIn" @click="logout">I want to Log out</b-button>
+      </b-dropdown>
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto">
         <b-nav-form>
@@ -19,12 +57,6 @@
           <div>{{query}}</div>
           <b-button size="sm" class="my-2 my-sm-0" type="submit" @click.prevent="displayResults">Search</b-button>
         </b-nav-form>
-        <b-nav-item-dropdown text="Lang" right>
-          <b-dropdown-item href="#">EN</b-dropdown-item>
-          <b-dropdown-item href="#">INA</b-dropdown-item>
-          <b-dropdown-item href="#">RU</b-dropdown-item>
-          <b-dropdown-item href="#">FA</b-dropdown-item>
-        </b-nav-item-dropdown>
 
         <b-nav-item-dropdown right>
           <!-- Using 'button-content' slot -->
@@ -32,7 +64,7 @@
             <em>User</em>
           </template>
           <b-dropdown-item href="#">{{this.$store.state.user}}</b-dropdown-item>
-          <b-dropdown-item @click="login" v-show="!this.$store.state.isLoggedIn">Sign In</b-dropdown-item>
+          <b-dropdown-item @click="loginAndLogup" v-show="!this.$store.state.isLoggedIn">Sign In</b-dropdown-item>
           <b-dropdown-item @click="logout" v-show="this.$store.state.isLoggedIn">Sign Out</b-dropdown-item>
         </b-nav-item-dropdown>
       </b-navbar-nav>
@@ -45,7 +77,13 @@
 export default {
   data : function(){
     return {
-      query : ""
+      form : {
+        username : "",
+        email : "",
+        password : ""
+      },
+      query : "",
+      showRegisterForm : false
     }
   },
   methods : {
@@ -57,8 +95,13 @@ export default {
       logout : function (){
         this.$store.commit('logout')
       },
-      login : function (){
-        this.$store.commit('login')
+      loginAndLogup : function (){
+        const packet = {
+          username : this.form.username,
+          email : this.form.email,
+          password : this.form.password
+        }
+        this.$store.dispatch('getIn',packet)
       }
   }
 }
@@ -67,5 +110,14 @@ export default {
 <style>
   #badge:hover {
     color: blue
+  }
+
+  #dropdown-form {
+    width: 15%
+  }
+
+  .form-btn {
+    background-color: black;
+    padding: 10%
   }
 </style>
