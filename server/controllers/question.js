@@ -1,9 +1,17 @@
 const Question = require('../models/question')
 class questionController {
     static realAll(req, res, next) {
-        Question.find().populate('Answer')
+        Question.find().populate('answer')
             .then(questions => {
                 res.status(200).json(questions)
+            })
+            .catch(next)
+    }
+
+    static findById(req, res, next) {
+        Question.findById(req.params.id).populate('answer')
+            .then(question => {
+                res.status(200).json(question)
             })
             .catch(next)
     }

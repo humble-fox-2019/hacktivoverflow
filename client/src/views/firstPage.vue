@@ -15,6 +15,10 @@ export default {
   components: {
     Question,
     Wysiwyg
+  },
+  created() {
+    let id = this.$store.state.detailQuestion._id;
+    this.$store.dispatch("questionById", id);
   }
 };
 </script>

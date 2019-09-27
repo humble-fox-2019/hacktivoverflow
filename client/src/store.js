@@ -169,8 +169,8 @@ export default new Vuex.Store({
           token: localStorage.getItem('token')
         }
       })
-        .then(response => {
-          console.log(response)
+        .then(({ data }) => {
+          console.log(data)
           console.log(`upvote question success`)
           router.push('/')
         })
@@ -187,8 +187,8 @@ export default new Vuex.Store({
           token: localStorage.getItem('token')
         }
       })
-        .then(response => {
-          console.log(response)
+        .then(({ data }) => {
+          console.log(data)
           console.log(`downvote question success`)
           router.push('/')
 
@@ -227,6 +227,21 @@ export default new Vuex.Store({
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+    questionById(content, payload) {
+      Axios({
+        method: `get`,
+        url: `${baseUrlServer}/questions/${payload._id}`,
+        headers: {
+          token: localStorage.getItem('token')
+        }
+      })
+        .then(({ data }) => {
+          this.state.detailQuestion = data
+        })
+        .catch(error => {
+          console.log(error)
         })
     }
 

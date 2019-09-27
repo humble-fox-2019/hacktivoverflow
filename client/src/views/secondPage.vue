@@ -29,7 +29,8 @@ export default {
     postQuest() {
       this.$store.dispatch("postQuest");
     }
-  }
+  },
+  created() {}
 };
 </script>
 

@@ -28,7 +28,7 @@ export default {
   methods: {
     getDetail(question) {
       this.$router.push(`/questions/${question._id}`);
-      this.$store.commit("setDetail", question);
+      this.$store.dispatch("questionById", question);
     }
   }
 };
