@@ -1,0 +1,199 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "title": "Why birds can fly?",
+      "description": "Whyyy??",
+      "upvotes": 11,
+      "downvotes": 8,
+      "answers": 5,
+      "owner": 5,
+      "tags": [
+        "birds",
+        "error",
+        "nature",
+        "self-reading"
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Why this query returns error 404?",
+      "description": "I want to know",
+      "upvotes": 5,
+      "downvotes": 0,
+      "answers": 7,
+      "owner": 4,
+      "tags": [
+        "computer",
+        "error",
+        "query",
+        "sql",
+        "stress"
+      ]
+    },
+    {
+      "id": 3,
+      "title": "INVALID_PROCESS_DETACH_ATTEMPT???",
+      "description": "What is this?",
+      "upvotes": 1014,
+      "downvotes": 103,
+      "answers": 23,
+      "owner": 7,
+      "tags": [
+        "error",
+        "bsod",
+        "computer"
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Language pack for Netbeans",
+      "description": "Any Indonesian language pack available for this program",
+      "upvotes": 9,
+      "downvotes": 0,
+      "answers": 3,
+      "owner": 10,
+      "tags": [
+        "Netbeans",
+        "Java",
+        "language",
+        "Indonesian",
+        "language pack"
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Yang terjadi terjadilah",
+      "description": "Hadapi dengan tenang jiwa\n\n",
+      "upvotes": 1,
+      "downvotes": 0,
+      "answers": 0,
+      "owner": 9,
+      "tags": []
+    }
+  ],
+  "answers": [
+    {
+      "id": 1,
+      "qId": 1,
+      "description": "Dunno",
+      "upvotes": 0,
+      "downvotes": 10,
+      "owner": 9
+    },
+    {
+      "id": 2,
+      "qId": 1,
+      "description": "Becausw they have wings dude",
+      "upvotes": 9,
+      "downvotes": 2,
+      "owner": 8
+    },
+    {
+      "id": 3,
+      "qId": 3,
+      "description": "It means you need to buy a new PC",
+      "upvotes": 15,
+      "downvotes": 16,
+      "owner": 2
+    },
+    {
+      "id": 4,
+      "qId": 1,
+      "description": "Seriously go back to skool dude...\n\n",
+      "upvotes": 1,
+      "downvotes": 0,
+      "owner": 9
+    },
+    {
+      "id": 5,
+      "qId": 5,
+      "description": "Hadapi dengan senyuman bang\n\n",
+      "upvotes": 0,
+      "downvotes": 0,
+      "owner": 9
+    },
+    {
+      "qId": 5,
+      "description": "Ketika umur ku 20 tahun dan masing 2adik ku  berumur 14 dan 10 tahun keluarga ku hancur bapak dan ibu cerai sungguh peristiwa yang membuat ku ingin cepat2 ingin mengakhirin hidup di dunia aku org yg sangat sayang ibu dan aku ikut ibu beserta 2 adik ku.. bapak bekerja (tanpa mengurangi komunikasi krn ku juga sayang bapak) 1tahun terasa amat berat menanggung beban yg di kasi tuhan ke aku.. aku bekerja di slah satu hotel sebagai bell boy gaji satu bulan abis untuk makan dan pendidkan adik2 ku.. suatu hari aku mendengar lgu ini dan pas di hadapan ku ada seorang pengepul barang bekas lewat ku melihat dgn tubuh renta tetap semangat menjalani hidup yg fanah ini .. selang 3 bulan ada pembukaan cpns.. alhamdulillah aku lulus.. hidup sedikit demi sedikit mulai brubah.. krn aku juga buka toko kelontong dan  berkembang..  tepat bulan maret kemaren adik ku yg kedua dilantik menjadi seorang bripda polisi.. alhamdulillah.. BILA KETETAPAN TUHAN SUDAH DI TETAPKAN.. TETAP LA SUDAH..\n\n",
+      "upvotes": 0,
+      "downvotes": 0,
+      "owner": 9,
+      "id": 6
+    },
+    {
+      "qId": 5,
+      "description": "mantap gan\n",
+      "upvotes": 0,
+      "downvotes": 0,
+      "owner": 9,
+      "id": 7
+    },
+    {
+      "qId": 1,
+      "description": "Is this guy serious?\n\n",
+      "upvotes": 0,
+      "downvotes": 0,
+      "owner": 9,
+      "id": 8
+    }
+  ],
+  "improvements": [
+    {
+      "id": 1,
+      "qId": 1,
+      "aId": 1,
+      "description": "come on dude...",
+      "owner": 6
+    },
+    {
+      "id": 2,
+      "qId": 1,
+      "aId": 1,
+      "description": "Seriously?",
+      "owner": 1
+    }
+  ],
+  "users": [
+    {
+      "id": 1,
+      "name": "Jovi"
+    },
+    {
+      "id": 2,
+      "name": "NoobMaster"
+    },
+    {
+      "id": 3,
+      "name": "Jovi"
+    },
+    {
+      "id": 4,
+      "name": "Overlook Hotel Caretaker"
+    },
+    {
+      "id": 5,
+      "name": "Buffalo Bill"
+    },
+    {
+      "id": 6,
+      "name": "Alecia1997"
+    },
+    {
+      "id": 7,
+      "name": "Micheal1986"
+    },
+    {
+      "id": 8,
+      "name": "Anonymous"
+    },
+    {
+      "id": 9,
+      "name": "Voldy"
+    },
+    {
+      "id": 10,
+      "name": "Spartacus"
+    }
+  ]
+}
