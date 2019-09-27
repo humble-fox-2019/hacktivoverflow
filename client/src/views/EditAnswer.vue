@@ -37,7 +37,6 @@ export default {
         })
           .then(data => {
             this.$router.push({ path: '/' })
-            console.log(data)
           })
           .catch(err => {
             console.log(err.response)
@@ -54,7 +53,6 @@ export default {
       let result = data.data
       this.question = result.data.questionId.title
       this.answer = result.data.answer
-    //   this.description = result.description
     })
   }
 }

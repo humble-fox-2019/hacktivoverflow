@@ -38,7 +38,6 @@ export default {
         })
           .then(data => {
             this.$router.push({ path: '/' })
-            console.log(data)
           })
           .catch(err => {
             console.log(err.response)
@@ -47,7 +46,6 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.params.id)
     axios({
       method: 'get',
       url: `${this.baseUrl}/question/${this.$route.params.id}`

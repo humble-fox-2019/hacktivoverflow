@@ -28,84 +28,93 @@
 </template>
 
 <script>
-import axios from "axios";
+import axios from 'axios'
+import Swal from 'sweetalert2'
 export default {
-  props: ["answerId"],
-  name: "Answer",
-  data() {
+  props: ['answerId'],
+  name: 'Answer',
+  data () {
     return {
       createdAt: 0,
       totalVote: 0,
       timePass: 0,
-      baseUrl: "http://localhost:3000",
+      baseUrl: 'http://localhost:3000',
       answer: false,
       authz: false,
       up: false,
       down: false,
-      name : ''
-    };
+      name: ''
+    }
   },
   methods: {
-    normalize() {
+    normalize () {
       // console.log("be here");
       axios({
-        method: "put",
+        method: 'put',
         url: `${this.baseUrl}/answer/normalize/${this.answer._id}`,
         headers: {
           token: localStorage.token
         }
       })
         .then(data => {
-          this.updateVote();
+          this.updateVote()
         })
         .catch(err => {
-          console.log(err.response);
-        });
+          console.log(err.response)
+        })
     },
-    upVote() {
+    upVote () {
       if (!localStorage.token) {
-        this.$emit("toLogin");
+        this.$emit('toLogin')
       } else {
         if (!this.up) {
           axios({
-            method: "put",
+            method: 'put',
             url: `${this.baseUrl}/answer/like/${this.answer._id}`,
             headers: {
               token: localStorage.token
             }
           })
             .then(data => {
-              this.updateVote();
+              this.updateVote()
             })
-            .catch(() => {
-              this.normalize();
-            });
+            .catch(err => {
+             if ( err.response.data.message ===  "you cannot like your own answer!") {
+                Swal.fire({
+                  title: "Error",
+                  text: "you cannot like your own answer!",
+                  type: "error",
+                  confirmButtonText: "Error"
+                });
+              }
+              this.normalize()
+            })
         } else {
-          this.normalize();
+          this.normalize()
         }
       }
     },
-    updateVote() {
+    updateVote () {
       axios({
-        method: "get",
+        method: 'get',
         url: `${this.baseUrl}/answer/${this.answer._id}`
       }).then(data => {
-        let likes = data.data.data.likes.length;
-        let dislikes = data.data.data.dislikes.length;
-        let total = likes - dislikes;
-        this.totalVote = total;
-        this.checkMyVote(data.data.data);
-      });
+        let likes = data.data.data.likes.length
+        let dislikes = data.data.data.dislikes.length
+        let total = likes - dislikes
+        this.totalVote = total
+        this.checkMyVote(data.data.data)
+      })
     },
-    checkMyVote(answer) {
-      this.up = false;
-      this.down = false;
+    checkMyVote (answer) {
+      this.up = false
+      this.down = false
       for (let k = 0; k < answer.likes.length; k++) {
         if (
           answer.likes[k].userId === localStorage._id &&
           answer.likes[k].userId
         ) {
-          this.up = true;
+          this.up = true
         }
       }
       for (let k = 0; k < answer.dislikes.length; k++) {
@@ -113,76 +122,87 @@ export default {
           answer.dislikes[k].userId === localStorage._id &&
           answer.dislikes[k].userId
         ) {
-          this.down = true;
+          this.down = true
         }
       }
     },
-    downVote() {
+    downVote () {
       if (!localStorage.token) {
-        this.$emit("toLogin");
+        this.$emit('toLogin')
       } else {
         if (!this.up) {
           axios({
-            method: "put",
+            method: 'put',
             url: `${this.baseUrl}/answer/dislike/${this.answer._id}`,
             headers: {
               token: localStorage.token
             }
           })
             .then(data => {
-              this.updateVote();
+              this.updateVote()
             })
             .catch(err => {
-              this.normalize();
-            });
+              if ( err.response.data.message ===  "you cannot dislike your own question!") {
+                Swal.fire({
+                  title: "Error",
+                  text: "you cannot like your own answer!",
+                  type: "error",
+                  confirmButtonText: "Error"
+                });
+              }
+              this.normalize()
+            })
         } else {
-          this.normalize();
+          this.normalize()
         }
       }
     },
-    checkAuthz() {
+    checkAuthz () {
       if (localStorage.token) {
         if (this.answer.userId._id === localStorage._id) {
-          this.authz = true;
+          this.authz = true
         }
       }
     },
-    editAnswer() {
-      this.$router.push({ path: `/changeAnswer/${this.answer._id}` });
+    editAnswer () {
+      this.$router.push({ path: `/changeAnswer/${this.answer._id}` })
     },
-    deleteMe() {
+    deleteMe () {
       axios({
-        method: "delete",
+        method: 'delete',
         url: `${this.baseUrl}/answer/${this.answer._id}`,
         headers: {
           token: localStorage.token
         }
       })
-        .then(daga => {
-          console.log("done delete");
-          this.$router.push({ path: `/question/${this.$route.params.id}` });
+        .then(data => {
+          Swal.fire({ 
+          title: 'Success Delete',
+          text: '',
+          type: 'Success',
+          confirmButtonText: 'Cool'})
+          this.$router.push({ path: `/question/${this.$route.params.id}` })
         })
         .catch(err => {
-          console.log(err.data);
-        });
+          console.log(err.data)
+        })
     }
   },
-  created() {
+  created () {
     axios({
-      method: "get",
+      method: 'get',
       url: `${this.baseUrl}/answer/${this.answerId}`
     }).then(response => {
-      this.answer = response.data.data;
-      this.createdAt = new Date(this.answer.createdAt).toDateString();
-      this.totalVote = this.answer.likes.length - this.answer.dislikes.length;
-      this.timePass = moment(new Date(this.answer.createdAt)).fromNow();
+      this.answer = response.data.data
+      this.createdAt = new Date(this.answer.createdAt).toDateString()
+      this.totalVote = this.answer.likes.length - this.answer.dislikes.length
+      this.timePass = moment(new Date(this.answer.createdAt)).fromNow()
       this.name = response.data.data.userId.name
-      console.log(this.name);
-      this.checkAuthz();
-      this.updateVote();
-    });
+      this.checkAuthz()
+      this.updateVote()
+    })
   }
-};
+}
 </script>
 
 <style scoped>

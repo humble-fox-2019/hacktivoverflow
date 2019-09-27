@@ -155,7 +155,6 @@ class QuestionController {
     })
       .then(data_question => {
         if (data_question) {
-          // console.log(d);
           if (data_question.userId == loggedInUser) {
             res.status(400).json({
               message: `you cannot dislike your own question!`
@@ -217,7 +216,6 @@ class QuestionController {
         })
       })
       .catch(err => {
-        console.log(err);
         res.status(400).json({
           message: `Internal Server Error!`
         });
@@ -244,7 +242,6 @@ class QuestionController {
 
   static normalizeOpinion(req, res){{
       let loggedInUser = req.decoded._id
-      console.log(loggedInUser);
       Question.updateOne(
         {
           _id: req.params.id
@@ -255,7 +252,6 @@ class QuestionController {
         
       )
         .then(result => {
-          console.log(result);
           res.status(201).json({
             message: `Your opinion is updated to netral `
           })

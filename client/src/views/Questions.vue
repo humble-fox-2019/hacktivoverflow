@@ -32,7 +32,6 @@ export default {
   methods: {
     ...mapActions(['getAllQuestion']),
     toLogin () {
-      console.log('heee')
       this.$emit('toLogin')
     }
   },

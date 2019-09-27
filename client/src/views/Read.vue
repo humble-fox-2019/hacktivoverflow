@@ -43,7 +43,6 @@ export default {
   },
   methods: {
     toLogin () {
-      console.log('heee')
       this.$emit('toLogin')
     },
     getData () {
@@ -79,7 +78,6 @@ export default {
     }
   },
   created () {
-    console.log(this.$route.params.id)
     this.getData()
   }
 }

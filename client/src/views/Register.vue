@@ -9,8 +9,10 @@
             <input type="text" class="register" v-model="name" />
             <label class="register">Email</label>
             <input type="email" class="register" v-model="email" />
+            <p>Email should have . and @</p>
             <label class="register">Password</label>
             <input type="password" class="register" v-model="password" />
+            <p>Password minimal 8 length</p>
             <button type="submit" class="btn btn-dark btn-lg register">Submit</button>
           </form>
         </div>
@@ -60,7 +62,6 @@ export default {
         })
         .catch(error => {
           let msg = error.response.data.message || 'Fail to Register'
-          console.log(error.response.data);
           Swal.fire('Error!', msg, 'error')
           this.name = ''
           this.email = ''
@@ -77,6 +78,13 @@ export default {
 *{
   margin: 0;
   padding: 0;
+}
+
+p{
+  font-size: 10px;
+  align-self: flex-start;
+  margin-left: 120px;
+  margin-bottom: 5px
 }
 
 .fade-enter-active,
@@ -148,7 +156,7 @@ input.register {
   width: 44%;
 }
 button.register {
-  margin-top: 10px;
+  margin-top: 18px;
   background: linear-gradient(
     90deg,
     rgb(60, 0, 128),

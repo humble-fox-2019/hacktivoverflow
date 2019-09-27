@@ -3,7 +3,6 @@ const Answer = require("../models/answer");
 class AnswerController {
   static create(req, res) {
     let loggedInUser = req.decoded._id
-    // console.log(req.decoded);
     Answer.create({
       answer: req.body.answer,
       questionId: req.params.id,
@@ -213,31 +212,6 @@ static normalizeOpinion(req, res){{
     })
 }
 }
-
-// static getAllAnswerInQuestion(req, res) {
-//   console.log(req.params);
-
-//   Answer.find({
-//     questionId: req.params.id
-//   })
-//     .populate("userId")
-//     .populate("questionId")
-//     .sort({ createdAt: "asc" })
-//     .then(result => {
-//       res.status(200).json({
-//         message: `Success get All Answer with questionId ${
-//           req.params.question
-//           }`,
-//         data: result
-//       });
-//     })
-//     .catch(err => {
-//       res.status(400).json({
-//         message: err.message
-//       });
-//     });
-// };
-
 }
 
 module.exports = AnswerController

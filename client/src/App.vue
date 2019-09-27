@@ -31,78 +31,70 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
+import { mapActions, mapState } from 'vuex'
 export default {
-  name: "App",
-  data() {
+  name: 'App',
+  data () {
     return {
-      inputEmail: "",
-      inputPassword: "",
+      inputEmail: '',
+      inputPassword: '',
       isLogin: false,
-      show: "none",
+      show: 'none',
       myheight: 0
-    };
+    }
   },
   methods: {
-    ...mapActions(["login", "putToken", "removeToken"]),
-    toLogin() {
-      this.show = "flex";
-      this.myheight = document.getElementById("app").clientHeight + "px";
+    ...mapActions(['login', 'putToken', 'removeToken']),
+    toLogin () {
+      this.show = 'flex'
+      this.myheight = document.getElementById('app').clientHeight + 'px'
     },
-    loginUser() {
+    loginUser () {
       let obj = {
         email: this.inputEmail,
         password: this.inputPassword
-      };
-      this.login(obj);
-      this.email = "";
-      this.password = "";
+      }
+      this.login(obj)
+      this.email = ''
+      this.password = ''
     },
-    falseLogin() {
+    falseLogin () {
       // console.log('here')
-      this.show = "none";
+      this.show = 'none'
     },
-    letMeAsk() {
+    letMeAsk () {
       if (!localStorage.token) {
-        this.toLogin();
+        this.toLogin()
       } else {
-        this.$router.push("/create");
+        this.$router.push('/create')
       }
     },
-    toLogout() {
-      localStorage.clear();
-      this.isLogin = false;
-      this.removeToken();
+    toLogout () {
+      localStorage.clear()
+      this.isLogin = false
+      this.removeToken()
     }
   },
   computed: {
-    ...mapState(["token"])
+    ...mapState(['token'])
   },
   watch: {
-    token() {
+    token () {
       if (this.token) {
-        this.falseLogin();
-        this.isLogin = true;
+        this.falseLogin()
+        this.isLogin = true
       }
     }
   },
-  created() {
+  created () {
     if (localStorage.token) {
       // console.log('aaaaa')
-      this.putToken();
-      this.isLogin = true;
+      this.putToken()
+      this.isLogin = true
       // console.log();
     }
   }
-  // mounted() {
-  //   console.log(localStorage.token, '<<<<');
-  //   if (localStorage.token){
-  //     this.show = 'none'
-  //     console.log(localStorage.token);
-  //     console.log('here');
-  // }
-  // },
-};
+}
 </script>
 
 <style scoped>

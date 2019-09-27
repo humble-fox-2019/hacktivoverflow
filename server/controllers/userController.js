@@ -17,16 +17,15 @@ class UserController {
         });
       })
       .catch(err => {
-        console.log(err);
+        // console.log(err._message);
         res.status(400).json({
-          message: "Please input all fields correctly"
+          message: err._message
         });
       });
   }
 
   static login(req, res) {
     const { email, password } = req.body;
-    console.log(req.body);
     User.findOne({
       email: email
     })
@@ -49,12 +48,12 @@ class UserController {
             });
           } else {
             res.status(400).json({
-              message: `Password is invalid`
+              message: `Email/Password is invalid`
             });
           }
         } else {
           res.status(400).json({
-            message: `Email not found`
+            message: `Email/Password is invalid`
           });
         }
       })
