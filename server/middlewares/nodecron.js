@@ -23,13 +23,14 @@ function questionDailyContent(data){
     ${ questions }
   </div>
   <footer>
-    <p>&copy; HacktivOverflow</p>
+    <p>&copy; TooOverflow</p>
   </footer>`
   return content;
 }
 
 module.exports = {
   questionDaily () { 
+  console.log('cron...')  
    new CronJob('0 25 10 * * *', function() {
       console.log('Cron job is doing its job ...')
 
