@@ -1,20 +1,17 @@
 <template>
   <div class="question">
     <div class="head">
-      <h1 style="text-align:left">{{this.$store.state.detailQuestion.title}}</h1>
+      <h1 style="text-align:left" v-text="this.$store.state.detailQuestion.title"></h1>
     </div>
     <div class="body">
       <div class="vote">
         <i
           class="fas fa-caret-down fa-2x"
           style="transform : rotate(180deg)"
-          @click="questionUpvote(this.$store.state.detailQuestion._id)"
+          @click="questionUpvote()"
         ></i>
         <h3>{{this.$store.state.detailQuestion.upvote.length - this.$store.state.detailQuestion.downvote.length }}</h3>
-        <i
-          class="fas fa-caret-down fa-2x"
-          @click="questionDownvote(this.$store.state.detailQuestion._id)"
-        ></i>
+        <i class="fas fa-caret-down fa-2x" @click="questionDownvote()"></i>
       </div>
       <div class="description">
         <p style="text-align:left" v-html="this.$store.state.detailQuestion.description"></p>
@@ -52,10 +49,12 @@ export default {
     this.$store.dispatch("getAllQuestion");
   },
   methods: {
-    questionUpvote(id) {
+    questionUpvote() {
+      let id = this.$store.state.detailQuestion._id;
       this.$store.dispatch("questionUpvote", id);
     },
-    questionDownvote(id) {
+    questionDownvote() {
+      let id = this.$store.state.detailQuestion._id;
       this.$store.dispatch("questionDownvote", id);
     },
     answerUpvote(id) {

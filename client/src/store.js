@@ -12,7 +12,14 @@ export default new Vuex.Store({
     isLogin: false,
     menuShow: false,
     allQuestions: [],
-    detailQuestion: {},
+    detailQuestion: {
+      _id: "",
+      title: "",
+      description: "",
+      answer: [],
+      upvote: [],
+      downvote: []
+    },
     content: "",
     title: ""
   },
@@ -165,6 +172,7 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response)
           console.log(`upvote question success`)
+          router.push('/')
         })
         .catch(err => {
           console.log(err)
@@ -182,6 +190,8 @@ export default new Vuex.Store({
         .then(response => {
           console.log(response)
           console.log(`downvote question success`)
+          router.push('/')
+
 
         })
         .catch(err => {
