@@ -11,7 +11,7 @@ export default {
 
 methods :{
   getAllAnswer(){
-    // this.$store.
+    this.$store.dispatch('')
   }
 }
 
