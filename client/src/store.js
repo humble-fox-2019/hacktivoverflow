@@ -7,7 +7,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    baseUrl: 'http://localhost:3000',
+    baseUrl: 'http://3.0.89.125',
     questionList: [],
     token: false,
     user_login: ''
@@ -59,11 +59,11 @@ export default new Vuex.Store({
           context.commit('setUserLogin', result.data.email)
         })
         .catch((err) => {
-          Swal.fire({ 
-          title: 'Please login',
-          text: err.response.data.message,
-          type: 'error',
-          confirmButtonText: 'Cool'})
+          Swal.fire({
+            title: 'Please login',
+            text: err.response.data.message,
+            type: 'error',
+            confirmButtonText: 'Cool' })
         })
     },
     putToken (context) {

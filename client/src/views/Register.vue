@@ -31,7 +31,7 @@ export default {
       name: '',
       email: '',
       password: '',
-      baseUrl: 'http://localhost:3000'
+      baseUrl: 'http://3.0.89.125'
     }
   },
   methods: {

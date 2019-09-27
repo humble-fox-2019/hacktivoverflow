@@ -19,7 +19,7 @@ export default {
     return {
       title: '',
       description: '',
-      baseUrl: 'http://localhost:3000'
+      baseUrl: 'http://3.0.89.125'
     }
   },
   methods: {

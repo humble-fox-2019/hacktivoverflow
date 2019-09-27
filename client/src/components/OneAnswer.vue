@@ -38,7 +38,7 @@ export default {
       createdAt: 0,
       totalVote: 0,
       timePass: 0,
-      baseUrl: 'http://localhost:3000',
+      baseUrl: 'http://3.0.89.125',
       answer: false,
       authz: false,
       up: false,
@@ -79,13 +79,13 @@ export default {
               this.updateVote()
             })
             .catch(err => {
-             if ( err.response.data.message ===  "you cannot like your own answer!") {
+              if (err.response.data.message === 'you cannot like your own answer!') {
                 Swal.fire({
-                  title: "Error",
-                  text: "you cannot like your own answer!",
-                  type: "error",
-                  confirmButtonText: "Error"
-                });
+                  title: 'Error',
+                  text: 'you cannot like your own answer!',
+                  type: 'error',
+                  confirmButtonText: 'Oke'
+                })
               }
               this.normalize()
             })
@@ -142,13 +142,13 @@ export default {
               this.updateVote()
             })
             .catch(err => {
-              if ( err.response.data.message ===  "you cannot dislike your own question!") {
+              if (err.response.data.message === 'you cannot dislike your own question!') {
                 Swal.fire({
-                  title: "Error",
-                  text: "you cannot like your own answer!",
-                  type: "error",
-                  confirmButtonText: "Error"
-                });
+                  title: 'Error',
+                  text: 'you cannot like your own answer!',
+                  type: 'error',
+                  confirmButtonText: 'Oke'
+                })
               }
               this.normalize()
             })
@@ -176,11 +176,11 @@ export default {
         }
       })
         .then(data => {
-          Swal.fire({ 
-          title: 'Success Delete',
-          text: '',
-          type: 'Success',
-          confirmButtonText: 'Cool'})
+          Swal.fire({
+            title: 'Success Delete',
+            text: '',
+            type: 'Success',
+            confirmButtonText: 'Oke' })
           this.$router.push({ path: `/question/${this.$route.params.id}` })
         })
         .catch(err => {

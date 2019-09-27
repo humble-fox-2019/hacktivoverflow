@@ -31,91 +31,91 @@
 </template>
 
 <script>
-import { mapActions, mapState } from "vuex";
-import axios from "axios";
-import Swal from "sweetalert2";
+import { mapActions, mapState } from 'vuex'
+import axios from 'axios'
+import Swal from 'sweetalert2'
 
 export default {
-  props: ["question"],
-  data() {
+  props: ['question'],
+  data () {
     return {
-      createdAt: "",
-      timePass: "",
-      baseUrl: "http://localhost:3000",
+      createdAt: '',
+      timePass: '',
+      baseUrl: 'http://3.0.89.125',
       totalVote: 0,
       authz: false,
       up: false,
       down: false
-    };
+    }
   },
   methods: {
-    upVote() {
+    upVote () {
       // this.checkMyVote()
       if (!localStorage.token) {
-        this.$emit("toLogin");
+        this.$emit('toLogin')
       } else {
         if (!this.down) {
           axios({
-            method: "put",
+            method: 'put',
             url: `${this.baseUrl}/question/like/${this.question._id}`,
             headers: {
               token: localStorage.token
             }
           })
             .then(data => {
-              this.updateVote();
+              this.updateVote()
             })
             .catch(err => {
-              if ( err.response.data.message ===  "you cannot like your own question!") {
+              if (err.response.data.message === 'you cannot like your own question!') {
                 Swal.fire({
-                  title: "Error",
-                  text: "you cannot vote your own question!",
-                  type: "error",
-                  confirmButtonText: "Error"
-                });
+                  title: 'Error',
+                  text: 'you cannot vote your own question!',
+                  type: 'error',
+                  confirmButtonText: 'Oke'
+                })
               }
-              this.normalize();
-            });
+              this.normalize()
+            })
         } else {
-          this.normalize();
+          this.normalize()
         }
       }
     },
-    downVote() {
+    downVote () {
       if (!localStorage.token) {
-        this.$emit("toLogin");
+        this.$emit('toLogin')
       } else {
         if (!this.up) {
           axios({
-            method: "put",
+            method: 'put',
             url: `${this.baseUrl}/question/dislike/${this.question._id}`,
             headers: {
               token: localStorage.token
             }
           })
             .then(data => {
-              this.updateVote();
+              this.updateVote()
             })
             .catch(err => {
-              if ( err.response.data.message ===  "you cannot dislike your own question!") {
+              if (err.response.data.message === 'you cannot dislike your own question!') {
                 Swal.fire({
-                  title: "Error",
-                  text: "you cannot vote your own question!",
-                  type: "error",
-                  confirmButtonText: "Error"
-                });
+                  title: 'Error',
+                  text: 'you cannot vote your own question!',
+                  type: 'error',
+                  confirmButtonText: 'Oke'
+                })
               }
               // console.log(err.response);
-              this.normalize();
-            });
+              this.normalize()
+            })
         } else {
-          this.normalize();
+          this.normalize()
         }
       }
     },
-    normalize() {
+    normalize () {
       axios({
-        method: "put",
+        method: 'put',
         url: `${this.baseUrl}/question/normalize/${this.question._id}`,
         headers: {
           token: localStorage.token
@@ -123,46 +123,46 @@ export default {
       })
         .then(data => {
           // console.log("normalize");
-          this.updateVote();
+          this.updateVote()
         })
         .catch(err => {
-          console.log(err.response);
-        });
+          console.log(err.response)
+        })
     },
-    updateVote() {
+    updateVote () {
       axios({
-        method: "get",
+        method: 'get',
         url: `${this.baseUrl}/question/${this.question._id}`
       }).then(data => {
-        let likes = data.data.question.likes.length;
-        let dislikes = data.data.question.dislikes.length;
-        let total = likes - dislikes;
-        this.totalVote = total;
-        this.checkMyVote(data.data.question);
-      });
+        let likes = data.data.question.likes.length
+        let dislikes = data.data.question.dislikes.length
+        let total = likes - dislikes
+        this.totalVote = total
+        this.checkMyVote(data.data.question)
+      })
     },
-    checkAuthz() {
+    checkAuthz () {
       if (localStorage.token) {
         if (this.question.userId._id === localStorage._id) {
-          this.authz = true;
+          this.authz = true
         }
       }
     },
-    editQuestion() {
-      this.$router.push({ path: `/update/${this.question._id}` });
+    editQuestion () {
+      this.$router.push({ path: `/update/${this.question._id}` })
     },
-    readThis() {
-      this.$router.push({ path: `/question/${this.question._id}` });
+    readThis () {
+      this.$router.push({ path: `/question/${this.question._id}` })
     },
-    checkMyVote(question) {
-      this.up = false;
-      this.down = false;
+    checkMyVote (question) {
+      this.up = false
+      this.down = false
       for (let k = 0; k < question.likes.length; k++) {
         if (
           question.likes[k].userId === localStorage._id &&
           question.likes[k].userId
         ) {
-          this.up = true;
+          this.up = true
         }
       }
       for (let k = 0; k < question.dislikes.length; k++) {
@@ -170,13 +170,13 @@ export default {
           question.dislikes[k].userId === localStorage._id &&
           question.dislikes[k].userId
         ) {
-          this.down = true;
+          this.down = true
         }
       }
     },
-    deleteMe() {
+    deleteMe () {
       axios({
-        method: "delete",
+        method: 'delete',
         url: `${this.baseUrl}/question/${this.question._id}`,
         headers: {
           token: localStorage.token
@@ -184,31 +184,29 @@ export default {
       })
         .then(() => {
           Swal.fire({
-            title: "Success Delete",
-            text: "",
-            type: "Success",
-            confirmButtonText: "Cool"
-          });
-          this.$router.push({ path: `/question/${this.$route.params.id}` });
-          // console.log("done delete");
+            title: 'Success Delete',
+            text: '',
+            type: 'success',
+            confirmButtonText: 'Oke'
+          })
         })
         .catch(err => {
-          console.log(err.data);
-        });
+          console.log(err.data)
+        })
     }
   },
   computed: {
-    ...mapActions(["putToken"]),
-    ...mapState(["token"])
+    ...mapActions(['putToken']),
+    ...mapState(['token'])
   },
-  created() {
-    this.createdAt = new Date(this.question.createdAt).toDateString();
-    this.totalVote = this.question.likes.length - this.question.dislikes.length;
-    this.timePass = moment(new Date(this.question.createdAt)).fromNow();
-    this.checkAuthz();
-    this.updateVote();
+  created () {
+    this.createdAt = new Date(this.question.createdAt).toDateString()
+    this.totalVote = this.question.likes.length - this.question.dislikes.length
+    this.timePass = moment(new Date(this.question.createdAt)).fromNow()
+    this.checkAuthz()
+    this.updateVote()
   }
-};
+}
 </script>
 
 <style scoped>

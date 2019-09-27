@@ -19,7 +19,7 @@ export default {
     return {
       answer: '',
       question: '',
-      baseUrl: 'http://localhost:3000'
+      baseUrl: 'http://3.0.89.125'
     }
   },
   methods: {
