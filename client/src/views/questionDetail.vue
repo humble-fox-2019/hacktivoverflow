@@ -2,10 +2,37 @@
   <div class="container mt-3">
     <!-- <h1>{{questionDetail}}</h1> -->
     <question :question="questionDetail" :isDetail="true"></question>
-    <div class="p-3 mt-2"  style="display:flex;justify-content:center;width:800px;">
+    <div class="p-3 mt-2" style="display:flex;justify-content:center;width:800px;">
       <v-btn color="#FFB300" @click="dialog=true">Answer</v-btn>
     </div>
-    <answerComp v-for="answer in answers" :key="answer._id" :answer="answer" :isDetail="true" ></answerComp>
+
+    <v-data-iterator
+      :items="answers"
+      :items-per-page.sync="itemsPerPage"
+      :page="page"
+      :hide-default-footer="hidefooter"
+    >
+      <template v-slot:default="props">
+        <answerComp
+          v-for="answer in props.items"
+          :key="answer._id"
+          :answer="answer"
+          :isDetail="true"
+        ></answerComp>
+
+        <div class="p-3 mt-2" style="display:flex;justify-content:center;width:800px;">
+          <v-pagination
+            color="#FFB300"
+            v-model="page"
+            :length="getPageslength"
+            class="mt-4 p-3"
+            circle
+          ></v-pagination>
+        </div>
+      </template>
+    </v-data-iterator>
+    <!-- <answerComp v-for="answer in answers" :key="answer._id" :answer="answer" :isDetail="true" ></answerComp> -->
+
     <v-dialog v-model="dialog" persistent max-width="600px">
       <v-card color="#FFB300">
         <v-form @submit.prevent="createAnswer">
@@ -39,7 +66,7 @@
 <script>
 import { mapState } from "vuex";
 import question from "../components/question";
-import answerComp from "../components/answer"
+import answerComp from "../components/answer";
 export default {
   name: "questiondetailpage",
   components: {
@@ -49,6 +76,9 @@ export default {
   data() {
     return {
       dialog: false,
+      page: 1,
+      itemsPerPage: 2,
+      hidefooter: true,
       formAnswer: {
         title: "",
         description: "",
@@ -58,37 +88,40 @@ export default {
   },
   computed: {
     ...mapState(["questionDetail"]),
-    answers(){
-        return this.questionDetail.answers
+    answers() {
+      return this.questionDetail.answers;
+    },
+    getPageslength() {
+      return Math.ceil(this.questionDetail.answers.length / 2);
     }
-
   },
   methods: {
     createAnswer() {
-        
-      this.$swal.showLoading()
+      this.$swal.showLoading();
       //   console.log(this.formAnswer);
-      this.$store.dispatch("createAnswer", this.formAnswer)
-      .then(()=>{
-          
-          this.$swal.close()
-          this.dialog = false
-          this.formAnswer.title = ""
-          this.formAnswer.description = ""
+      this.$store
+        .dispatch("createAnswer", this.formAnswer)
+        .then(() => {
+          this.$swal.close();
+          this.dialog = false;
+          this.formAnswer.title = "";
+          this.formAnswer.description = "";
           this.$swal.fire({
-              type : "success", 
-              title : "success to create answer"
-          })
-      })
-      .catch(err=>{
-          this.$swal.close()
-          let message = err.response.data && err.response.data.message || "failed to create answer"
+            type: "success",
+            title: "success to create answer"
+          });
+        })
+        .catch(err => {
+          this.$swal.close();
+          let message =
+            (err.response.data && err.response.data.message) ||
+            "failed to create answer";
           this.$swal.fire({
-              type : "error",
-              title : "failed to create answer",
-              text : message
-          })
-      })
+            type: "error",
+            title: "failed to create answer",
+            text: message
+          });
+        });
     }
   },
 

@@ -4,7 +4,7 @@
     <v-btn color="#FFB300" small @click="showForm">Edit Tags</v-btn>
 
     <div class="mt-3 mb-3">
-     <v-chip color="#FFB300" class="mb-2 mr-2" v-for="(tag,index) in userTags" :key="index">{{tag}}</v-chip>
+      <v-chip color="#FFB300" class="mb-2 mr-2" v-for="(tag,index) in userTags" :key="index">{{tag}}</v-chip>
     </div>
 
     <!-- dialog edit tags -->
@@ -43,8 +43,7 @@
 </template>
 
 <script>
-
-import {mapState} from "vuex"
+import { mapState } from "vuex";
 
 export default {
   name: "sidebar",
@@ -54,23 +53,38 @@ export default {
       dialog: false
     };
   },
-  computed  :{
+  computed: {
     ...mapState(["userTags"])
   },
-  methods : {
-    addTags(){
-      this.$store.dispatch("addTags", {tags:this.tags})
-      .then(success=>{
-        this.dialog = false
-      })
-      .catch(err=>{
-        console.log(err)
-      })
+  methods: {
+    addTags() {
+      this.$swal.showLoading();
+      this.$store
+        .dispatch("addTags", { tags: this.tags })
+        .then(success => {
+          this.$swal.close();
+          this.$swal.fire({
+            type: "success",
+            title: "success adding tags"
+          });
+          this.dialog = false;
+        })
+        .catch(err => {
+          this.$swal.close();
+          let message =
+            (err.response.data && err.response.data.message) ||
+            "failed to add tags";
+          this.$swal.fire({
+            type: "error",
+            title: "failed to add tags",
+            text: message
+          });
+          // console.log(err)
+        });
     },
-    showForm(){
-      this.dialog = true
-      this.tags = this.userTags
-
+    showForm() {
+      this.dialog = true;
+      this.tags = this.userTags;
     }
   }
 };

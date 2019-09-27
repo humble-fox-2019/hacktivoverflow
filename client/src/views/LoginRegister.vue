@@ -65,23 +65,47 @@ export default {
       this.isLogin = true;
     },
     register() {
+      this.$swal.showLoading()
       this.$store
         .dispatch("register", this.formRegister)
         .then(success => {
+          this.$swal.close()
+          this.$swal.fire({
+            type : "success",
+            title : "you've registered successfully"
+          })
           this.$router.push("/");
         })
         .catch(err => {
+          this.$swal.close()
+          let message = err.response.data && err.response.data.message || "failed to register"
+          this.$swal.fire({
+            type : "error",
+            title : "failed to register",
+            text : message
+          })
           console.log(err.response.data);
         });
     },
     login() {
       //   console.log(this.formLogin);
+      this.$swal.showLoading()
       this.$store
         .dispatch("login", this.formLogin)
         .then(() => {
+          this.$swal.close()
+          this.$swal.fire({
+            type : "success",
+            title : "login successfully"
+          })
           this.$router.push("/");
         })
         .catch(err => {
+          this.$swal.close()
+          this.$swal.fire({
+            type : "error",
+            title : "failed to login"
+          })
           console.log(err.response.data);
         });
     }

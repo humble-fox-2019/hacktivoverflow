@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import axios from 'axios'
 Vue.use(Vuex)
 
-const server_url = "http://localhost:3000"
+const server_url = "http://13.250.110.115"
 
 export default new Vuex.Store({
   state: {
@@ -18,7 +18,8 @@ export default new Vuex.Store({
       downvotes: [],
       upvotes: []
     },
-    userAnswers: []
+    userAnswers: [],
+    textSearch:""
   },
   mutations: {
 
@@ -39,6 +40,9 @@ export default new Vuex.Store({
     },
     USER_ANSWERS(state, payload) {
       state.userAnswers = payload
+    },
+    SEARCH_QUESTION(state, payload){
+      state.textSearch = payload
     }
   },
   actions: {
