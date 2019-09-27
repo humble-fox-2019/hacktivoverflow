@@ -1,11 +1,11 @@
 <template>
   <div class="row">
     <div class="vote">
-      <button @click="upVote">^</button>
+      <button @click="upVote"><i class="fas fa-caret-up fa-3x"></i></button>
       <hr />
       <h1>{{totalVote}}</h1>
       <hr />
-      <button @click="downVote">v</button>
+      <button @click="downVote"><i class="fas fa-caret-down fa-3x"></i></button>
     </div>
     <div class="one">
       <div class="authz" v-if="authz">
@@ -19,6 +19,8 @@
       <p class="date mini">{{createdAt}}</p>
       <h1 class="title" @click="readThis">{{question.title}}</h1>
       <div v-html="question.description"></div>
+      <br>
+      <p class="normal">{{question.userId.name}}</p>
       <p class="mini">{{timePass}}</p>
       <hr />
     </div>
@@ -227,6 +229,7 @@ h1 {
   height: 45px;
   border-radius: 50%;
   align-self: center;
+  color:rgb(12, 67, 131)
 }
 
 .vote h1 {
@@ -243,5 +246,9 @@ h1 {
 .title:hover {
   text-decoration: underline;
   cursor: pointer;
+}
+p.normal{
+  color: rgb(87, 13, 156);
+  font-weight: 450
 }
 </style>

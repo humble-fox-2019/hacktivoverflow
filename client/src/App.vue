@@ -1,90 +1,96 @@
 <template>
   <div id="app">
     <div id="nav">
-      <button @click="toLogin" v-if="!isLogin">Log In</button>
-      <button @click="toLogout" v-else>Log Out</button>
-      <button v-if="isLogin">My Question</button>
-      <button @click="letMeAsk">Ask Question</button>
-      <router-link to="/" >Questions</router-link>
+      <button @click="toLogin" v-if="!isLogin" class="navleft">
+        <p>Log In</p>
+      </button>
+      <router-link v-if="!isLogin" to="/register" class="navleft">Register</router-link>
+      <button @click="toLogout" v-else class="navleft">
+        <p>Log Out</p>
+      </button>
+      <router-link to="/" class="navleft">Questions</router-link>
+      <button @click="letMeAsk" class="navleft">
+        <p>Ask Question</p>
+      </button>
     </div>
     <div class="view">
-    <router-view @toLogin="toLogin"/>
+      <router-view @toLogin="toLogin" />
     </div>
-    <div class="bg-modal"  v-bind:style="{display: show, height: myheight}" >
-    <div class="modal-contents" >
-      <div class="close" @click="falseLogin">+</div>
-      <form action="" @submit.prevent="loginUser">
-        <img src="./assets/fairy.svg" alt="" srcset="" height="220">
-        <input type="email" placeholder="Email" v-model="inputEmail">
-        <input type="password" placeholder="Password" v-model="inputPassword">
-        <button href="#" class="button" type="submit">Submit</button>
-      </form>
+    <div class="bg-modal" v-bind:style="{display: show, height: myheight}">
+      <div class="modal-contents">
+        <div class="close" @click="falseLogin">+</div>
+        <form action @submit.prevent="loginUser">
+          <img src="./assets/fairy.svg" alt srcset height="220" />
+          <input type="email" placeholder="Email" v-model="inputEmail" />
+          <input type="password" placeholder="Password" v-model="inputPassword" />
+          <button href="#" class="button" type="submit">Submit</button>
+        </form>
+      </div>
     </div>
-</div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState } from "vuex";
 export default {
-  name: 'App',
-  data () {
+  name: "App",
+  data() {
     return {
-      inputEmail: '',
-      inputPassword: '',
+      inputEmail: "",
+      inputPassword: "",
       isLogin: false,
-      show: 'none',
+      show: "none",
       myheight: 0
-    }
+    };
   },
   methods: {
-    ...mapActions(['login', 'putToken', 'removeToken']),
-    toLogin () {
-      this.show = 'flex'
-      this.myheight = document.getElementById('app').clientHeight + 'px'
+    ...mapActions(["login", "putToken", "removeToken"]),
+    toLogin() {
+      this.show = "flex";
+      this.myheight = document.getElementById("app").clientHeight + "px";
     },
-    loginUser () {
+    loginUser() {
       let obj = {
         email: this.inputEmail,
         password: this.inputPassword
-      }
-      this.login(obj)
-      this.email = ''
-      this.password = ''
+      };
+      this.login(obj);
+      this.email = "";
+      this.password = "";
     },
-    falseLogin () {
+    falseLogin() {
       // console.log('here')
-      this.show = 'none'
+      this.show = "none";
     },
-    letMeAsk () {
+    letMeAsk() {
       if (!localStorage.token) {
-        this.toLogin()
+        this.toLogin();
       } else {
-        this.$router.push('/create')
+        this.$router.push("/create");
       }
     },
-    toLogout () {
-      localStorage.clear()
-      this.isLogin = false
-      this.removeToken()
+    toLogout() {
+      localStorage.clear();
+      this.isLogin = false;
+      this.removeToken();
     }
   },
   computed: {
-    ...mapState(['token'])
+    ...mapState(["token"])
   },
   watch: {
-    token () {
+    token() {
       if (this.token) {
-        this.falseLogin()
-        this.isLogin = true
+        this.falseLogin();
+        this.isLogin = true;
       }
     }
   },
-  created () {
+  created() {
     if (localStorage.token) {
       // console.log('aaaaa')
-      this.putToken()
-      this.isLogin = true
+      this.putToken();
+      this.isLogin = true;
       // console.log();
     }
   }
@@ -96,19 +102,19 @@ export default {
   //     console.log('here');
   // }
   // },
-}
+};
 </script>
 
 <style scoped>
 @import "~vue-wysiwyg/dist/vueWysiwyg.css";
 
-*{
-  margin : 0;
+* {
+  margin: 0;
   padding: 0;
 }
 
-input{
-  font-size: 12pt ;
+input {
+  font-size: 12pt;
 }
 
 input:hover {
@@ -116,65 +122,66 @@ input:hover {
   border: 1px solid rgb(238, 81, 186);
 }
 
-input:focus{
+input:focus {
   box-shadow: 0 0 5px rgb(209, 107, 212);
   border: 1px solid rgb(238, 81, 186);
 }
 
 .bg-modal {
-background-color: rgba(0, 0, 0, 0.8);
-width: 100%;
-position: absolute;
-top: 0;
-align-items: center;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100%;
+  position: absolute;
+  top: 0;
 }
 
 .modal-contents {
-top: 0;
-margin: 0 auto;
-height: 400px;
-width: 500px;
-background-color: white;
-text-align: center;
-padding: 20px;
-position: relative;
-border-radius: 4px;
+  top: 0;
+  right: 50vw;
+  margin-left: 30vw;
+  margin-top: 10vh;
+  height: 400px;
+  width: 500px;
+  background-color: white;
+  text-align: center;
+  padding: 20px;
+  position: sticky;
+  border-radius: 4px;
 }
 
 input {
-margin: 15px auto;
-display: block;
-width: 50%;
-padding: 8px;
-border: 1px solid gray;
+  margin: 15px auto;
+  display: block;
+  width: 50%;
+  padding: 8px;
+  border: 1px solid gray;
 }
 
 .close {
-position: absolute;
-top: 0;
-right: 10px;
-font-size: 42px;
-color: #333;
-transform: rotate(45deg);
-cursor: pointer;
+  position: absolute;
+  top: 0;
+  right: 10px;
+  font-size: 42px;
+  color: #333;
+  transform: rotate(45deg);
+  cursor: pointer;
 }
 
-.close:hover{
+.close:hover {
   cursor: pointer;
-  color: rgb(179, 16, 16)
+  color: rgb(179, 16, 16);
 }
 
 .button {
-height: 45px;
-font-size: 14px;
-background-color: rgb(179, 9, 179);
-border: 2px solid white;
-border-radius: 30px;
-text-decoration: none;
-padding: 10px 28px;
-color: white;
-margin-top: 10px;
-display: inline-block;
+  height: 45px;
+  font-size: 14px;
+  background-color: rgb(179, 9, 179);
+  border: 2px solid white;
+  border-radius: 30px;
+  text-decoration: none;
+  padding: 10px 28px;
+  color: white;
+  margin-top: 10px;
+  display: inline-block;
 }
 
 .button:hover {
@@ -185,7 +192,7 @@ display: inline-block;
 }
 #app {
   background: rgb(202, 221, 240);
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
@@ -193,22 +200,66 @@ display: inline-block;
   display: flex;
 }
 #nav {
-  padding: 30px;
+  padding-top: 20px;
   width: 18vw;
-  background: rgb(255, 255, 255);
-  min-height: 100vh
+  background: #3b0c40;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-.view{
+.view {
   display: flex;
   justify-content: center;
-  width: calc(100vw - 14vw)
+  width: calc(100vw - 14vw);
 }
 #nav a {
   font-weight: bold;
-  color: #2c3e50;
+  color: white;
+  font-size: 22px;
+  text-decoration: none;
+  font-weight: bolder;
 }
 
 #nav a.router-link-exact-active {
-  color: #42b983;
+  color: #28da89;
+  text-decoration: none;
+  font-weight: bolder;
+}
+
+#nav a:hover {
+  color: #28da89;
+  text-decoration: none;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+p {
+  font-weight: bolder;
+  font-size: 21px;
+  background: #3b0c40;
+  color: white;
+}
+p:hover {
+  color: #10be70;
+  background: white;
+  cursor: pointer;
+}
+
+button.navleft {
+  font-weight: bolder;
+  font-size: 21px;
+  background: #3b0c40;
+  border: #3b0c40;
+}
+
+.navleft {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.navleft:hover {
+  background: white;
 }
 </style>

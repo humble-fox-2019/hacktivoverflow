@@ -8,7 +8,7 @@
             <label class="register">Name</label>
             <input type="text" class="register" v-model="name" />
             <label class="register">Email</label>
-            <input type="text" class="register" v-model="email" />
+            <input type="email" class="register" v-model="email" />
             <label class="register">Password</label>
             <input type="password" class="register" v-model="password" />
             <button type="submit" class="btn btn-dark btn-lg register">Submit</button>
@@ -20,6 +20,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import Swal from 'sweetalert2'
 export default {
   data () {
@@ -43,7 +44,7 @@ export default {
       Swal.showLoading()
       axios({
         method: 'post',
-        url: this.baseUrl + '/user/create',
+        url: this.baseUrl + '/user/register',
         data: {
           name,
           email,
@@ -56,10 +57,10 @@ export default {
           this.name = ''
           this.email = ''
           this.password = ''
-          this.$emit('doneRegister')
         })
         .catch(error => {
           let msg = error.response.data.message || 'Fail to Register'
+          console.log(error.response.data);
           Swal.fire('Error!', msg, 'error')
           this.name = ''
           this.email = ''
@@ -73,6 +74,11 @@ export default {
 </script>
 
 <style scoped>
+*{
+  margin: 0;
+  padding: 0;
+}
+
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.25s ease-out;
@@ -89,7 +95,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: calc(100vw - 18vw);
+  width: calc(100vw - 17.2vw);
   min-height: 100vh;
 }
 .showRegist {
@@ -161,6 +167,7 @@ button.register {
 }
 button.register:hover {
   animation: animate 30s linear infinite;
+  cursor: pointer
 }
 @keyframes animate {
   0% {
